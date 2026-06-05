@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-grass: #54b435;
+  --color-grass-dark: #3d8527;
+  --color-dirt: #79553a;
+  --color-dirt-light: #8a6d3b;
+  --color-stone: #6f6f6f;
+  --color-night: #2b2b2b;
+  --color-sky: #87ceeb;
+  --color-diamond: #4aedd9;
+  --color-gold: #ffd700;
+  --color-paper: #fffef7;
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-body: 'Nunito', sans-serif;
+}
+
+@layer components {
+  .pixel-border {
+    box-shadow: 0 0 0 4px #2b2b2b, 0 0 0 8px #555;
+  }
+  /* Raised Minecraft-button bevel */
+  .mc-bevel {
+    border-width: 4px;
+    border-style: solid;
+    border-color: #ffffff66 #00000055 #00000055 #ffffff66;
+  }
+  .bg-world {
+    background: linear-gradient(
+      to bottom,
+      var(--color-sky) 0%,
+      var(--color-sky) 60%,
+      var(--color-grass) 60%,
+      var(--color-grass) 67%,
+      var(--color-dirt) 67%
+    );
+  }
+}
