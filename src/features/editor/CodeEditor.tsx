@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { EditorView, basicSetup } from 'codemirror';
 import { html } from '@codemirror/lang-html';
 import { autocompletion } from '@codemirror/autocomplete';
+import { codecraftEditorTheme } from './theme';
 
 interface CodeEditorProps {
   /** Initial document. Parent must remount (key=quest.id) to change it. */
@@ -29,10 +30,7 @@ export default function CodeEditor({ initialValue, onChange }: CodeEditorProps) 
         autocompletion({ override: [] }), // no popups while kids type — re-enable deliberately later
         html(),
         EditorView.lineWrapping,
-        EditorView.theme({
-          '&': { fontSize: '15px', height: '100%' },
-          '.cm-scroller': { fontFamily: 'ui-monospace, monospace' },
-        }),
+        codecraftEditorTheme, // kid-friendly dark theme (high contrast, bright comments)
         EditorView.updateListener.of((update) => {
           if (update.docChanged) onChangeRef.current(update.state.doc.toString());
         }),
