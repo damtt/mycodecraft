@@ -33,4 +33,22 @@ describe('storage', () => {
     removeData('k');
     expect(loadData('k', isNum)).toBeNull();
   });
+
+  test('returns null for non-object envelope (primitive stored directly)', () => {
+    localStorage.setItem('k', JSON.stringify(42));
+    expect(loadData('k', isNum)).toBeNull();
+  });
+
+  test('returns null for null envelope', () => {
+    localStorage.setItem('k', JSON.stringify(null));
+    expect(loadData('k', isNum)).toBeNull();
+  });
+
+  test('saveData does not throw when storage is full', () => {
+    const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementationOnce(() => {
+      throw new DOMException('quota', 'QuotaExceededError');
+    });
+    expect(() => saveData('k', 1)).not.toThrow();
+    spy.mockRestore();
+  });
 });
