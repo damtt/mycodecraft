@@ -132,7 +132,7 @@ The repo already exists at `/Users/henry/mydev/codecraft` with `docs/` committed
     "jsdom": "^25.0.1",
     "typescript": "~5.7.0",
     "vite": "^6.0.0",
-    "vitest": "^2.1.8"
+    "vitest": "^3.2.6"
   }
 }
 ```
@@ -142,8 +142,8 @@ If `npm install` fails on a version, bump that range to the latest major and not
 - [ ] **Step 2: Write `vite.config.ts`**
 
 ```ts
-/// <reference types="vitest/config" />
-import { defineConfig } from 'vite';
+// defineConfig from 'vitest/config' (not 'vite') so the `test` block typechecks
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -176,7 +176,7 @@ export default defineConfig({
     "esModuleInterop": true,
     "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
-  "include": ["src"]
+  "include": ["src", "vite.config.ts"]
 }
 ```
 
