@@ -17,6 +17,7 @@ export const UI = {
   settings: { en: 'Settings', vi: 'Cài đặt' },
   locked: { en: 'Locked', vi: 'Đã khóa' },
   questLabel: { en: 'Quest', vi: 'Nhiệm vụ' },
+  questNotFound: { en: 'Quest not found.', vi: 'Không tìm thấy nhiệm vụ.' },
   checkMyCode: { en: 'Check my code', vi: 'Kiểm tra code' },
   hint: { en: 'Hint', vi: 'Gợi ý' },
   preview: { en: 'Preview', vi: 'Xem trước' },

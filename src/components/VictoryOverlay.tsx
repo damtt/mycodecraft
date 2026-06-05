@@ -7,12 +7,13 @@ import PixelButton from './PixelButton';
 
 interface VictoryOverlayProps {
   rewards: Rewards;
+  worldComplete?: boolean;
   hasNext: boolean;
   onNext(): void;
   onBackToMap(): void;
 }
 
-export default function VictoryOverlay({ rewards, hasNext, onNext, onBackToMap }: VictoryOverlayProps) {
+export default function VictoryOverlay({ rewards, worldComplete, hasNext, onNext, onBackToMap }: VictoryOverlayProps) {
   const { t, tl } = useT();
   const badge = rewards.newBadge ? BADGES.find((b) => b.id === rewards.newBadge) : null;
 
@@ -40,6 +41,11 @@ export default function VictoryOverlay({ rewards, hasNext, onNext, onBackToMap }
             </p>
           ) : null;
         })}
+        {worldComplete && (
+          <p className="mt-3 animate-pulse font-pixel text-xs text-grass-dark" data-testid="world-complete">
+            🌍 {t('worldComplete')}
+          </p>
+        )}
         <div className="mt-5 flex justify-center gap-3">
           <PixelButton variant="stone" onClick={onBackToMap}>{t('backToMap')}</PixelButton>
           {hasNext && <PixelButton onClick={onNext}>{t('nextQuest')} →</PixelButton>}

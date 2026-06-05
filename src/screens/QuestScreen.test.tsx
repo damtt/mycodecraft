@@ -31,7 +31,7 @@ const { QUEST, QUEST2, runDomChecks } = vi.hoisted(() => {
 vi.mock('../content/quests', () => ({
   ALL_QUESTS: [QUEST, QUEST2],
   QUESTS_BY_WORLD: { html: [QUEST, QUEST2], css: [], js: [] },
-  QUESTS_BY_WORLD_IDS: { html: ['html-01', 'html-02'], css: [], js: [] },
+  QUESTS_BY_WORLD_IDS: { html: ['html-01'], css: [], js: [] },
   questById: (id: string) => [QUEST, QUEST2].find((q) => q.id === id),
   nextQuest: (id: string) => (id === 'html-01' ? QUEST2 : null),
 }));
@@ -96,6 +96,7 @@ describe('QuestScreen', () => {
     fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
     expect(await screen.findByRole('dialog')).toBeInTheDocument();
     expect(useProfiles.getState().profiles[0].quests['html-01']).toBeDefined();
+    expect(screen.getByTestId('world-complete')).toBeInTheDocument();
   });
 
   test('opening a hint marks completion as hint-assisted', async () => {

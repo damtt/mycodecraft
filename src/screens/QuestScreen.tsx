@@ -43,7 +43,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
     return () => clearTimeout(timer);
   }, [code]);
 
-  if (!quest || !profile) return <Panel className="m-8">Quest not found.</Panel>;
+  if (!quest || !profile) return <Panel className="m-8">{t('questNotFound')}</Panel>;
 
   const alreadyDone = quest.id in profile.quests;
   const next = nextQuest(quest.id);
@@ -153,6 +153,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
       {rewards && (
         <VictoryOverlay
           rewards={rewards}
+          worldComplete={rewards.newAchievements.some((a) => a.startsWith('world-'))}
           hasNext={next !== null}
           onNext={() => next && navigate(`/quest/${next.id}`)}
           onBackToMap={() => navigate('/map')}
