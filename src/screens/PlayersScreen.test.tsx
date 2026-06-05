@@ -41,6 +41,15 @@ describe('PlayersScreen', () => {
     expect(router.state.location.pathname).toBe('/map');
   });
 
+  test('pressing Enter in the name field creates the profile', async () => {
+    renderAt();
+    fireEvent.click(await screen.findByRole('button', { name: /new player/i }));
+    const input = screen.getByPlaceholderText(/your name/i);
+    fireEvent.change(input, { target: { value: 'Lan' } });
+    fireEvent.submit(input.closest('form')!);
+    expect(useProfiles.getState().profiles[0]).toMatchObject({ name: 'Lan' });
+  });
+
   test('hold-to-delete removes a profile', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     useProfiles.getState().create('Tom', '🐺');
