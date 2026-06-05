@@ -1,5 +1,20 @@
 @import 'tailwindcss';
 
+/*
+ * Pixel/bitmap heading font. GNU Unifont, subset to Latin + Vietnamese +
+ * punctuation (12.8KB woff2). Replaces Press Start 2P, which has no Vietnamese
+ * glyphs — its per-glyph fallback mangled tone marks (e.g. "Nhiệm vụ").
+ * Unifont covers the full precomposed Vietnamese block, so EN and VI both
+ * render in one consistent pixel font. © GNU Unifont authors, OFL-1.1.
+ */
+@font-face {
+  font-family: 'CodeCraft Pixel';
+  src: url('./assets/fonts/codecraft-pixel.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-grass: #54b435;
   --color-grass-dark: #3d8527;
@@ -11,7 +26,7 @@
   --color-diamond: #4aedd9;
   --color-gold: #ffd700;
   --color-paper: #fffef7;
-  --font-pixel: 'Press Start 2P', monospace;
+  --font-pixel: 'CodeCraft Pixel', monospace;
   --font-body: 'Nunito', sans-serif;
 }
 
