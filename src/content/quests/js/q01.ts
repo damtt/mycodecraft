@@ -13,18 +13,18 @@ export const q01: Quest = {
   steps: [
     {
       text: {
-        en: 'JavaScript lives inside a <script> tag. Find it in the editor.',
-        vi: 'JavaScript nằm trong tag <script>. Hãy tìm nó trong trình soạn thảo.',
+        en: 'JavaScript lives inside a `<script>` tag. Find it in the editor.',
+        vi: 'JavaScript nằm trong tag `<script>`. Hãy tìm nó trong trình soạn thảo.',
       },
     },
     {
       text: {
-        en: 'Use console.log to print exactly: Hello, miner!  Watch it appear in the Console panel below the preview.',
-        vi: 'Dùng console.log để in ra đúng dòng: Hello, miner!  Xem nó hiện ra ở bảng Console bên dưới phần xem trước.',
+        en: 'Use `console.log` to print exactly: Hello, miner!  Watch it appear in the Console panel below the preview.',
+        vi: 'Dùng `console.log` để in ra đúng dòng: Hello, miner!  Xem nó hiện ra ở bảng Console bên dưới phần xem trước.',
       },
       hint: {
-        en: "It looks like this: console.log('Hello, miner!');",
-        vi: "Nó trông như thế này: console.log('Hello, miner!');",
+        en: "It looks like this: `console.log('Hello, miner!');`",
+        vi: "Nó trông như thế này: `console.log('Hello, miner!');`",
       },
     },
   ],
@@ -35,8 +35,8 @@ export const q01: Quest = {
       type: 'consoleIncludes',
       value: 'Hello, miner!',
       failMessage: {
-        en: "I don't see Hello, miner! in the console yet. Try console.log('Hello, miner!');",
-        vi: "Mình chưa thấy Hello, miner! trong console. Thử console.log('Hello, miner!'); nhé",
+        en: "I don't see Hello, miner! in the console yet. Try `console.log('Hello, miner!');`",
+        vi: "Mình chưa thấy Hello, miner! trong console. Thử `console.log('Hello, miner!');` nhé",
       },
     },
   ],

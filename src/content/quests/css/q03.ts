@@ -13,18 +13,18 @@ export const q03: Quest = {
   steps: [
     {
       text: {
-        en: 'Find the <style> tag at the top of the editor.',
-        vi: 'Tìm tag <style> ở đầu trình soạn thảo.',
+        en: 'Find the `<style>` tag at the top of the editor.',
+        vi: 'Tìm tag `<style>` ở đầu trình soạn thảo.',
       },
     },
     {
       text: {
-        en: 'Paint the whole page sky blue: select body and set background-color to skyblue. body means the whole page.',
-        vi: 'Tô cả trang màu xanh trời: chọn body và đặt background-color thành skyblue. body nghĩa là toàn bộ trang.',
+        en: 'Paint the whole page sky blue: select `body` and set `background-color` to `skyblue`. `body` means the whole page.',
+        vi: 'Tô cả trang màu xanh trời: chọn `body` và đặt `background-color` thành `skyblue`. `body` nghĩa là toàn bộ trang.',
       },
       hint: {
-        en: 'It looks like this:\nbody {\n  background-color: skyblue;\n}',
-        vi: 'Nó trông như thế này:\nbody {\n  background-color: skyblue;\n}',
+        en: "It looks like this:\n```\nbody {\n  background-color: skyblue;\n}\n```",
+        vi: "Nó trông như thế này:\n```\nbody {\n  background-color: skyblue;\n}\n```",
       },
     },
   ],
@@ -37,8 +37,8 @@ export const q03: Quest = {
       prop: 'background-color',
       equalsAny: ['skyblue', 'rgb(135, 206, 235)'],
       failMessage: {
-        en: 'The page is still plain. Inside <style>, write: body { background-color: skyblue; }',
-        vi: 'Trang vẫn còn trống trơn. Bên trong <style>, hãy viết: body { background-color: skyblue; }',
+        en: 'The page is still plain. Inside `<style>`, write: `body { background-color: skyblue; }`',
+        vi: 'Trang vẫn còn trống trơn. Bên trong `<style>`, hãy viết: `body { background-color: skyblue; }`',
       },
     },
   ],

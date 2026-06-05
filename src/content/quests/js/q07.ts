@@ -13,22 +13,22 @@ export const q07: Quest = {
   steps: [
     {
       text: {
-        en: 'There is a <p id="status"> on the page that says Idle. Grab it with document.getElementById using its id, status.',
-        vi: 'Trên trang có một <p id="status"> ghi Idle. Hãy lấy nó bằng document.getElementById với id của nó là status.',
+        en: 'There is a `<p id="status">` on the page that says Idle. Grab it with `document.getElementById` using its id, `status`.',
+        vi: 'Trên trang có một `<p id="status">` ghi Idle. Hãy lấy nó bằng `document.getElementById` với id của nó là `status`.',
       },
       hint: {
-        en: "Save it in a variable: let status = document.getElementById('status');",
-        vi: "Lưu nó vào một variable: let status = document.getElementById('status');",
+        en: "Save it in a variable: `let status = document.getElementById('status');`",
+        vi: "Lưu nó vào một variable: `let status = document.getElementById('status');`",
       },
     },
     {
       text: {
-        en: "Change its words with textContent so the page now reads exactly: Mining...",
-        vi: 'Thay đổi chữ của nó bằng textContent để trang giờ hiện đúng dòng: Mining...',
+        en: "Change its words with `textContent` so the page now reads exactly: Mining...",
+        vi: 'Thay đổi chữ của nó bằng `textContent` để trang giờ hiện đúng dòng: Mining...',
       },
       hint: {
-        en: "Set the new text: status.textContent = 'Mining...';",
-        vi: "Đặt văn bản mới: status.textContent = 'Mining...';",
+        en: "Set the new text: `status.textContent = 'Mining...';`",
+        vi: "Đặt văn bản mới: `status.textContent = 'Mining...';`",
       },
     },
   ],
@@ -39,8 +39,8 @@ export const q07: Quest = {
       type: 'codeIncludes',
       value: 'getElementById',
       failMessage: {
-        en: "I don't see getElementById yet. Grab the paragraph with document.getElementById('status').",
-        vi: "Mình chưa thấy getElementById. Lấy đoạn văn bằng document.getElementById('status') nhé.",
+        en: "I don't see `getElementById` yet. Grab the paragraph with `document.getElementById('status')`.",
+        vi: "Mình chưa thấy `getElementById`. Lấy đoạn văn bằng `document.getElementById('status')` nhé.",
       },
     },
     {
@@ -48,8 +48,8 @@ export const q07: Quest = {
       selector: '#status',
       value: 'Mining...',
       failMessage: {
-        en: "The status should read Mining... Set it with status.textContent = 'Mining...';",
-        vi: "Status cần hiện Mining... Đặt nó bằng status.textContent = 'Mining...'; nhé",
+        en: "The status should read Mining... Set it with `status.textContent = 'Mining...';`",
+        vi: "Status cần hiện Mining... Đặt nó bằng `status.textContent = 'Mining...';` nhé",
       },
     },
   ],

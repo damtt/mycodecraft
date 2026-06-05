@@ -13,42 +13,42 @@ export const q10: Quest = {
   steps: [
     {
       text: {
-        en: 'The page has a <button id="mine">Mine!</button> and a <span id="score">0</span>. Grab both with document.getElementById.',
-        vi: 'Trang có một <button id="mine">Mine!</button> và một <span id="score">0</span>. Hãy lấy cả hai bằng document.getElementById.',
+        en: 'The page has a `<button id="mine">Mine!</button>` and a `<span id="score">0</span>`. Grab both with `document.getElementById`.',
+        vi: 'Trang có một `<button id="mine">Mine!</button>` và một `<span id="score">0</span>`. Hãy lấy cả hai bằng `document.getElementById`.',
       },
       hint: {
-        en: "let mine = document.getElementById('mine');\nlet scoreEl = document.getElementById('score');",
-        vi: "let mine = document.getElementById('mine');\nlet scoreEl = document.getElementById('score');",
+        en: "```\nlet mine = document.getElementById('mine');\nlet scoreEl = document.getElementById('score');\n```",
+        vi: "```\nlet mine = document.getElementById('mine');\nlet scoreEl = document.getElementById('score');\n```",
       },
     },
     {
       text: {
-        en: 'Make a variable with let to remember the score. Start it at 0.',
-        vi: 'Tạo một variable bằng let để nhớ điểm số. Bắt đầu từ 0.',
+        en: 'Make a variable with `let` to remember the score. Start it at 0.',
+        vi: 'Tạo một variable bằng `let` để nhớ điểm số. Bắt đầu từ 0.',
       },
       hint: {
-        en: 'let score = 0;',
-        vi: 'let score = 0;',
+        en: '`let score = 0;`',
+        vi: '`let score = 0;`',
       },
     },
     {
       text: {
-        en: "Use addEventListener to wait for a 'click' on the Mine button.",
-        vi: "Dùng addEventListener để chờ một cú 'click' trên nút Mine.",
+        en: "Use `addEventListener` to wait for a `'click'` on the Mine button.",
+        vi: "Dùng `addEventListener` để chờ một cú `'click'` trên nút Mine.",
       },
       hint: {
-        en: "mine.addEventListener('click', function () {\n  // runs on every click\n});",
-        vi: "mine.addEventListener('click', function () {\n  // chạy mỗi lần click\n});",
+        en: "```\nmine.addEventListener('click', function () {\n  // runs on every click\n});\n```",
+        vi: "```\nmine.addEventListener('click', function () {\n  // chạy mỗi lần click\n});\n```",
       },
     },
     {
       text: {
-        en: 'Inside the click, add 1 to score, then show it by setting scoreEl.textContent to score. Click the button and watch the number grow!',
-        vi: 'Bên trong cú click, cộng 1 vào score, rồi hiển thị nó bằng cách đặt scoreEl.textContent bằng score. Bấm nút và xem con số lớn dần!',
+        en: 'Inside the click, add 1 to `score`, then show it by setting `scoreEl.textContent` to `score`. Click the button and watch the number grow!',
+        vi: 'Bên trong cú click, cộng 1 vào `score`, rồi hiển thị nó bằng cách đặt `scoreEl.textContent` bằng `score`. Bấm nút và xem con số lớn dần!',
       },
       hint: {
-        en: 'score = score + 1;\nscoreEl.textContent = score;',
-        vi: 'score = score + 1;\nscoreEl.textContent = score;',
+        en: "```\nscore = score + 1;\nscoreEl.textContent = score;\n```",
+        vi: "```\nscore = score + 1;\nscoreEl.textContent = score;\n```",
       },
     },
   ],
@@ -59,32 +59,32 @@ export const q10: Quest = {
       type: 'elementExists',
       selector: 'button',
       failMessage: {
-        en: "I can't find the Mine button. Keep <button id=\"mine\">Mine!</button> on the page.",
-        vi: 'Mình không tìm thấy nút Mine. Hãy giữ <button id="mine">Mine!</button> trên trang.',
+        en: "I can't find the Mine button. Keep `<button id=\"mine\">Mine!</button>` on the page.",
+        vi: 'Mình không tìm thấy nút Mine. Hãy giữ `<button id="mine">Mine!</button>` trên trang.',
       },
     },
     {
       type: 'elementExists',
       selector: '#score',
       failMessage: {
-        en: "I can't find the score. Keep <span id=\"score\">0</span> on the page.",
-        vi: 'Mình không tìm thấy điểm số. Hãy giữ <span id="score">0</span> trên trang.',
+        en: "I can't find the score. Keep `<span id=\"score\">0</span>` on the page.",
+        vi: 'Mình không tìm thấy điểm số. Hãy giữ `<span id="score">0</span>` trên trang.',
       },
     },
     {
       type: 'codeIncludes',
       value: 'addEventListener',
       failMessage: {
-        en: "I don't see addEventListener yet. Use mine.addEventListener('click', ...) to react to clicks.",
-        vi: "Mình chưa thấy addEventListener. Dùng mine.addEventListener('click', ...) để phản ứng với click nhé.",
+        en: "I don't see `addEventListener` yet. Use `mine.addEventListener('click', ...)` to react to clicks.",
+        vi: "Mình chưa thấy `addEventListener`. Dùng `mine.addEventListener('click', ...)` để phản ứng với click nhé.",
       },
     },
     {
       type: 'codeIncludes',
       value: 'score',
       failMessage: {
-        en: 'I don\'t see a score yet. Make a let score = 0; and add 1 to it on every click.',
-        vi: 'Mình chưa thấy score nào. Tạo let score = 0; và cộng thêm 1 cho nó mỗi lần click nhé.',
+        en: 'I don\'t see a score yet. Make a `let score = 0;` and add 1 to it on every click.',
+        vi: 'Mình chưa thấy score nào. Tạo `let score = 0;` và cộng thêm 1 cho nó mỗi lần click nhé.',
       },
     },
   ],

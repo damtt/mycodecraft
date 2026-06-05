@@ -13,28 +13,28 @@ export const q02: Quest = {
   steps: [
     {
       text: {
-        en: 'Find the <style> tag at the top — that is where every rule goes.',
-        vi: 'Tìm tag <style> ở trên cùng — đó là nơi mọi quy tắc nằm.',
+        en: 'Find the `<style>` tag at the top — that is where every rule goes.',
+        vi: 'Tìm tag `<style>` ở trên cùng — đó là nơi mọi quy tắc nằm.',
       },
     },
     {
       text: {
-        en: 'Make the paragraph bigger: select p and set font-size to 32px. font-size means how tall the letters are.',
-        vi: 'Làm đoạn văn to hơn: chọn p và đặt font-size thành 32px. font-size nghĩa là chữ cao bao nhiêu.',
+        en: 'Make the paragraph bigger: select `p` and set `font-size` to `32px`. `font-size` means how tall the letters are.',
+        vi: 'Làm đoạn văn to hơn: chọn `p` và đặt `font-size` thành `32px`. `font-size` nghĩa là chữ cao bao nhiêu.',
       },
       hint: {
-        en: 'It looks like this:\np {\n  font-size: 32px;\n}',
-        vi: 'Nó trông như thế này:\np {\n  font-size: 32px;\n}',
+        en: "It looks like this:\n```\np {\n  font-size: 32px;\n}\n```",
+        vi: "Nó trông như thế này:\n```\np {\n  font-size: 32px;\n}\n```",
       },
     },
     {
       text: {
-        en: 'Now center the heading: select h1 and set text-align to center. text-align means which side the text sits on.',
-        vi: 'Giờ căn giữa tiêu đề: chọn h1 và đặt text-align thành center. text-align nghĩa là chữ nằm ở phía nào.',
+        en: 'Now center the heading: select `h1` and set `text-align` to `center`. `text-align` means which side the text sits on.',
+        vi: 'Giờ căn giữa tiêu đề: chọn `h1` và đặt `text-align` thành `center`. `text-align` nghĩa là chữ nằm ở phía nào.',
       },
       hint: {
-        en: 'It looks like this:\nh1 {\n  text-align: center;\n}',
-        vi: 'Nó trông như thế này:\nh1 {\n  text-align: center;\n}',
+        en: "It looks like this:\n```\nh1 {\n  text-align: center;\n}\n```",
+        vi: "Nó trông như thế này:\n```\nh1 {\n  text-align: center;\n}\n```",
       },
     },
   ],
@@ -47,8 +47,8 @@ export const q02: Quest = {
       prop: 'font-size',
       equalsAny: ['32px'],
       failMessage: {
-        en: 'The paragraph is still small. Inside <style>, write: p { font-size: 32px; }',
-        vi: 'Đoạn văn vẫn còn nhỏ. Bên trong <style>, hãy viết: p { font-size: 32px; }',
+        en: 'The paragraph is still small. Inside `<style>`, write: `p { font-size: 32px; }`',
+        vi: 'Đoạn văn vẫn còn nhỏ. Bên trong `<style>`, hãy viết: `p { font-size: 32px; }`',
       },
     },
     {
@@ -57,8 +57,8 @@ export const q02: Quest = {
       prop: 'text-align',
       equalsAny: ['center'],
       failMessage: {
-        en: "The heading isn't centered yet. Inside <style>, write: h1 { text-align: center; }",
-        vi: 'Tiêu đề chưa được căn giữa. Bên trong <style>, hãy viết: h1 { text-align: center; }',
+        en: "The heading isn't centered yet. Inside `<style>`, write: `h1 { text-align: center; }`",
+        vi: 'Tiêu đề chưa được căn giữa. Bên trong `<style>`, hãy viết: `h1 { text-align: center; }`',
       },
     },
   ],

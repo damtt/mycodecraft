@@ -13,22 +13,22 @@ export const q03: Quest = {
   steps: [
     {
       text: {
-        en: 'JavaScript can multiply with the * sign. Multiply 64 by 2 to count two full stacks.',
-        vi: 'JavaScript có thể nhân bằng dấu *. Hãy nhân 64 với 2 để đếm hai chồng đầy.',
+        en: 'JavaScript can multiply with the `*` sign. Multiply 64 by 2 to count two full stacks.',
+        vi: 'JavaScript có thể nhân bằng dấu `*`. Hãy nhân 64 với 2 để đếm hai chồng đầy.',
       },
       hint: {
-        en: 'The * means times: 64 * 2',
-        vi: 'Dấu * nghĩa là nhân: 64 * 2',
+        en: 'The `*` means times: `64 * 2`',
+        vi: 'Dấu `*` nghĩa là nhân: `64 * 2`',
       },
     },
     {
       text: {
-        en: 'Print the answer with console.log. The number 128 should appear in the Console panel.',
-        vi: 'In kết quả ra bằng console.log. Số 128 sẽ hiện ra ở bảng Console.',
+        en: 'Print the answer with `console.log`. The number 128 should appear in the Console panel.',
+        vi: 'In kết quả ra bằng `console.log`. Số 128 sẽ hiện ra ở bảng Console.',
       },
       hint: {
-        en: 'Put the math right inside the log: console.log(64 * 2);',
-        vi: 'Đặt phép tính ngay trong log: console.log(64 * 2);',
+        en: 'Put the math right inside the log: `console.log(64 * 2);`',
+        vi: 'Đặt phép tính ngay trong log: `console.log(64 * 2);`',
       },
     },
   ],
@@ -39,16 +39,16 @@ export const q03: Quest = {
       type: 'codeIncludes',
       value: '*',
       failMessage: {
-        en: "I don't see a multiply sign yet. Use * to multiply, like 64 * 2.",
-        vi: 'Mình chưa thấy dấu nhân nào. Dùng * để nhân nhé, ví dụ 64 * 2.',
+        en: "I don't see a multiply sign yet. Use `*` to multiply, like `64 * 2`.",
+        vi: 'Mình chưa thấy dấu nhân nào. Dùng `*` để nhân nhé, ví dụ `64 * 2`.',
       },
     },
     {
       type: 'consoleIncludes',
       value: '128',
       failMessage: {
-        en: 'The console should show 128. Try console.log(64 * 2);',
-        vi: 'Console cần hiện số 128. Thử console.log(64 * 2); nhé',
+        en: 'The console should show 128. Try `console.log(64 * 2);`',
+        vi: 'Console cần hiện số 128. Thử `console.log(64 * 2);` nhé',
       },
     },
   ],

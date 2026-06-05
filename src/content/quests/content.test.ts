@@ -70,4 +70,23 @@ describe('quest content integrity', () => {
       expect(filled(w.tagline)).toBe(true);
     }
   });
+
+  // Lesson prose renders through react-markdown, which drops raw HTML. So every
+  // tag in story/steps/hints/failMessages MUST live inside a backtick span or a
+  // fenced block — otherwise it silently vanishes for kids.
+  test.each(ALL_QUESTS.map((q) => [q.id, q] as const))(
+    '%s has no raw HTML tags outside code spans',
+    (_id, q) => {
+      const stripCode = (s: string) =>
+        s.replace(/```[\s\S]*?```/g, '').replace(/`[^`]*`/g, ''); // drop fences then inline code
+      const fields: string[] = [
+        q.story.en, q.story.vi,
+        ...q.steps.flatMap((s) => [s.text.en, s.text.vi, s.hint?.en ?? '', s.hint?.vi ?? '']),
+        ...q.checks.flatMap((c) => [c.failMessage.en, c.failMessage.vi]),
+      ];
+      for (const field of fields) {
+        expect(stripCode(field)).not.toMatch(/<\/?[a-zA-Z][^>]*>/);
+      }
+    },
+  );
 });

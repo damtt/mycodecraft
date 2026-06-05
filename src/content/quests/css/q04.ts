@@ -13,28 +13,28 @@ export const q04: Quest = {
   steps: [
     {
       text: {
-        en: 'Find the <style> tag. You will style the box with class box.',
-        vi: 'Tìm tag <style>. Bạn sẽ tạo kiểu cho cái hộp có class box.',
+        en: 'Find the `<style>` tag. You will style the box with class `box`.',
+        vi: 'Tìm tag `<style>`. Bạn sẽ tạo kiểu cho cái hộp có class `box`.',
       },
     },
     {
       text: {
-        en: 'Add a border: select .box and set border to 2px solid black. A border is the line around the edge.',
-        vi: 'Thêm một viền: chọn .box và đặt border thành 2px solid black. Viền là đường bao quanh mép.',
+        en: 'Add a border: select `.box` and set `border` to `2px solid black`. A border is the line around the edge.',
+        vi: 'Thêm một viền: chọn `.box` và đặt `border` thành `2px solid black`. Viền là đường bao quanh mép.',
       },
       hint: {
-        en: 'It looks like this:\n.box {\n  border: 2px solid black;\n}',
-        vi: 'Nó trông như thế này:\n.box {\n  border: 2px solid black;\n}',
+        en: "It looks like this:\n```\n.box {\n  border: 2px solid black;\n}\n```",
+        vi: "Nó trông như thế này:\n```\n.box {\n  border: 2px solid black;\n}\n```",
       },
     },
     {
       text: {
-        en: 'Add padding: in the same .box rule set padding to 16px. padding is the space inside, between the border and the text.',
-        vi: 'Thêm padding: trong cùng quy tắc .box đặt padding thành 16px. padding là khoảng trống bên trong, giữa viền và chữ.',
+        en: 'Add padding: in the same `.box` rule set `padding` to `16px`. `padding` is the space inside, between the border and the text.',
+        vi: 'Thêm padding: trong cùng quy tắc `.box` đặt `padding` thành `16px`. `padding` là khoảng trống bên trong, giữa viền và chữ.',
       },
       hint: {
-        en: 'Add this line inside the rule:\n  padding: 16px;',
-        vi: 'Thêm dòng này vào trong quy tắc:\n  padding: 16px;',
+        en: "Add this line inside the rule:\n```\n  padding: 16px;\n```",
+        vi: "Thêm dòng này vào trong quy tắc:\n```\n  padding: 16px;\n```",
       },
     },
   ],
@@ -47,8 +47,8 @@ export const q04: Quest = {
       prop: 'border-top-style',
       equalsAny: ['solid'],
       failMessage: {
-        en: 'The box has no border yet. Inside <style>, write: .box { border: 2px solid black; }',
-        vi: 'Cái hộp chưa có viền. Bên trong <style>, hãy viết: .box { border: 2px solid black; }',
+        en: 'The box has no border yet. Inside `<style>`, write: `.box { border: 2px solid black; }`',
+        vi: 'Cái hộp chưa có viền. Bên trong `<style>`, hãy viết: `.box { border: 2px solid black; }`',
       },
     },
     {
@@ -57,8 +57,8 @@ export const q04: Quest = {
       prop: 'padding-top',
       equalsAny: ['16px'],
       failMessage: {
-        en: 'The box needs padding inside. In the .box rule, add: padding: 16px;',
-        vi: 'Cái hộp cần padding bên trong. Trong quy tắc .box, thêm: padding: 16px;',
+        en: 'The box needs padding inside. In the `.box` rule, add: `padding: 16px;`',
+        vi: 'Cái hộp cần padding bên trong. Trong quy tắc `.box`, thêm: `padding: 16px;`',
       },
     },
   ],

@@ -13,48 +13,48 @@ export const q10: Quest = {
   steps: [
     {
       text: {
-        en: 'Find the empty <style> tag at the top. Every rule below goes inside it.',
-        vi: 'Tìm tag <style> trống ở trên cùng. Mọi quy tắc bên dưới đều nằm trong nó.',
+        en: 'Find the empty `<style>` tag at the top. Every rule below goes inside it.',
+        vi: 'Tìm tag `<style>` trống ở trên cùng. Mọi quy tắc bên dưới đều nằm trong nó.',
       },
     },
     {
       text: {
-        en: 'Paint the page: select body and set background-color to lightyellow. body means the whole page.',
-        vi: 'Tô màu trang: chọn body và đặt background-color thành lightyellow. body nghĩa là toàn bộ trang.',
+        en: 'Paint the page: select `body` and set `background-color` to `lightyellow`. `body` means the whole page.',
+        vi: 'Tô màu trang: chọn `body` và đặt `background-color` thành `lightyellow`. `body` nghĩa là toàn bộ trang.',
       },
       hint: {
-        en: 'It looks like this:\nbody {\n  background-color: lightyellow;\n}',
-        vi: 'Nó trông như thế này:\nbody {\n  background-color: lightyellow;\n}',
+        en: "It looks like this:\n```\nbody {\n  background-color: lightyellow;\n}\n```",
+        vi: "Nó trông như thế này:\n```\nbody {\n  background-color: lightyellow;\n}\n```",
       },
     },
     {
       text: {
-        en: 'Color the title: select h1 and set color to green.',
-        vi: 'Tô màu tiêu đề: chọn h1 và đặt color thành green.',
+        en: 'Color the title: select `h1` and set `color` to `green`.',
+        vi: 'Tô màu tiêu đề: chọn `h1` và đặt `color` thành `green`.',
       },
       hint: {
-        en: 'It looks like this:\nh1 {\n  color: green;\n}',
-        vi: 'Nó trông như thế này:\nh1 {\n  color: green;\n}',
+        en: "It looks like this:\n```\nh1 {\n  color: green;\n}\n```",
+        vi: "Nó trông như thế này:\n```\nh1 {\n  color: green;\n}\n```",
       },
     },
     {
       text: {
-        en: 'Round the card corners: select .card and set border-radius to 12px. border-radius rounds the corners.',
-        vi: 'Bo tròn góc thẻ: chọn .card và đặt border-radius thành 12px. border-radius làm cho các góc tròn lại.',
+        en: 'Round the card corners: select `.card` and set `border-radius` to `12px`. `border-radius` rounds the corners.',
+        vi: 'Bo tròn góc thẻ: chọn `.card` và đặt `border-radius` thành `12px`. `border-radius` làm cho các góc tròn lại.',
       },
       hint: {
-        en: 'It looks like this:\n.card {\n  border-radius: 12px;\n}',
-        vi: 'Nó trông như thế này:\n.card {\n  border-radius: 12px;\n}',
+        en: "It looks like this:\n```\n.card {\n  border-radius: 12px;\n}\n```",
+        vi: "Nó trông như thế này:\n```\n.card {\n  border-radius: 12px;\n}\n```",
       },
     },
     {
       text: {
-        en: 'Lay the cards side by side: select .cards and set display to flex.',
-        vi: 'Đặt các thẻ cạnh nhau: chọn .cards và đặt display thành flex.',
+        en: 'Lay the cards side by side: select `.cards` and set `display` to `flex`.',
+        vi: 'Đặt các thẻ cạnh nhau: chọn `.cards` và đặt `display` thành `flex`.',
       },
       hint: {
-        en: 'It looks like this:\n.cards {\n  display: flex;\n}',
-        vi: 'Nó trông như thế này:\n.cards {\n  display: flex;\n}',
+        en: "It looks like this:\n```\n.cards {\n  display: flex;\n}\n```",
+        vi: "Nó trông như thế này:\n```\n.cards {\n  display: flex;\n}\n```",
       },
     },
     {
@@ -73,8 +73,8 @@ export const q10: Quest = {
       prop: 'background-color',
       equalsAny: ['lightyellow', 'rgb(255, 255, 224)'],
       failMessage: {
-        en: 'The page is still plain. Inside <style>, write: body { background-color: lightyellow; }',
-        vi: 'Trang vẫn còn trống trơn. Bên trong <style>, hãy viết: body { background-color: lightyellow; }',
+        en: 'The page is still plain. Inside `<style>`, write: `body { background-color: lightyellow; }`',
+        vi: 'Trang vẫn còn trống trơn. Bên trong `<style>`, hãy viết: `body { background-color: lightyellow; }`',
       },
     },
     {
@@ -83,8 +83,8 @@ export const q10: Quest = {
       prop: 'color',
       equalsAny: ['green', 'rgb(0, 128, 0)'],
       failMessage: {
-        en: 'The title is not green yet. Inside <style>, write: h1 { color: green; }',
-        vi: 'Tiêu đề chưa có màu xanh lá. Bên trong <style>, hãy viết: h1 { color: green; }',
+        en: 'The title is not green yet. Inside `<style>`, write: `h1 { color: green; }`',
+        vi: 'Tiêu đề chưa có màu xanh lá. Bên trong `<style>`, hãy viết: `h1 { color: green; }`',
       },
     },
     {
@@ -93,8 +93,8 @@ export const q10: Quest = {
       prop: 'border-radius',
       equalsAny: ['12px'],
       failMessage: {
-        en: 'The cards still have sharp corners. Inside <style>, write: .card { border-radius: 12px; }',
-        vi: 'Các thẻ vẫn còn góc nhọn. Bên trong <style>, hãy viết: .card { border-radius: 12px; }',
+        en: 'The cards still have sharp corners. Inside `<style>`, write: `.card { border-radius: 12px; }`',
+        vi: 'Các thẻ vẫn còn góc nhọn. Bên trong `<style>`, hãy viết: `.card { border-radius: 12px; }`',
       },
     },
     {
@@ -103,8 +103,8 @@ export const q10: Quest = {
       prop: 'display',
       equalsAny: ['flex'],
       failMessage: {
-        en: 'The cards are not in a flex row yet. Inside <style>, write: .cards { display: flex; }',
-        vi: 'Các thẻ chưa thành hàng flex. Bên trong <style>, hãy viết: .cards { display: flex; }',
+        en: 'The cards are not in a flex row yet. Inside `<style>`, write: `.cards { display: flex; }`',
+        vi: 'Các thẻ chưa thành hàng flex. Bên trong `<style>`, hãy viết: `.cards { display: flex; }`',
       },
     },
   ],

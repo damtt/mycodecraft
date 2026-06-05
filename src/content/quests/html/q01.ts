@@ -13,18 +13,18 @@ export const q01: Quest = {
   steps: [
     {
       text: {
-        en: 'HTML is written in tags. A tag is a word inside angle brackets, like <p>. Find the comment in the editor.',
-        vi: 'HTML được viết bằng các tag. Tag là một từ nằm trong dấu ngoặc nhọn, ví dụ <p>. Hãy tìm dòng ghi chú trong trình soạn thảo.',
+        en: 'HTML is written in tags. A tag is a word inside angle brackets, like `<p>`. Find the comment in the editor.',
+        vi: 'HTML được viết bằng các tag. Tag là một từ nằm trong dấu ngoặc nhọn, ví dụ `<p>`. Hãy tìm dòng ghi chú trong trình soạn thảo.',
       },
     },
     {
       text: {
-        en: 'Write a paragraph that says Hello, world! using the <p> tag.',
-        vi: 'Viết một đoạn văn nói Hello, world! bằng tag <p>.',
+        en: 'Write a paragraph that says Hello, world! using the `<p>` tag.',
+        vi: 'Viết một đoạn văn nói Hello, world! bằng tag `<p>`.',
       },
       hint: {
-        en: 'A paragraph looks like this: <p>Hello, world!</p> — the second tag with the / closes it.',
-        vi: 'Một đoạn văn trông như thế này: <p>Hello, world!</p> — tag thứ hai có dấu / để đóng lại.',
+        en: 'A paragraph looks like this: `<p>Hello, world!</p>` — the second tag with the / closes it.',
+        vi: 'Một đoạn văn trông như thế này: `<p>Hello, world!</p>` — tag thứ hai có dấu / để đóng lại.',
       },
     },
   ],
@@ -34,8 +34,8 @@ export const q01: Quest = {
       type: 'elementExists',
       selector: 'p',
       failMessage: {
-        en: "Hmm, I don't see a <p> tag yet. Paragraphs start with <p> and end with </p>!",
-        vi: 'Hmm, mình chưa thấy tag <p> nào. Đoạn văn bắt đầu bằng <p> và kết thúc bằng </p> nhé!',
+        en: "Hmm, I don't see a `<p>` tag yet. Paragraphs start with `<p>` and end with `</p>`!",
+        vi: 'Hmm, mình chưa thấy tag `<p>` nào. Đoạn văn bắt đầu bằng `<p>` và kết thúc bằng `</p>` nhé!',
       },
     },
     {

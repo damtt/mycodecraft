@@ -9,12 +9,12 @@ const { QUEST, QUEST2, runDomChecks } = vi.hoisted(() => {
     id: 'html-01', world: 'html', xp: 50, badge: 'b-wood',
     title: L('Hello, World!'), story: L('A villager needs a sign.'),
     steps: [
-      { text: L('Write a p tag'), hint: L('Like <p>hi</p>') },
+      { text: L('Write a p tag'), hint: L('Like `<p>hi</p>`') },
       { text: L('Say Hello') },
     ],
     starterCode: '<!-- type here -->',
     checks: [
-      { type: 'codeIncludes', value: '<p>', failMessage: L('No <p> yet!') },
+      { type: 'codeIncludes', value: '<p>', failMessage: L('No `<p>` yet!') },
     ],
   };
   const QUEST2: Quest = {
@@ -22,7 +22,7 @@ const { QUEST, QUEST2, runDomChecks } = vi.hoisted(() => {
     title: L('Big Signs'), story: L('Another villager appears.'),
     steps: [{ text: L('Write an h2 tag') }],
     starterCode: '<!-- second -->',
-    checks: [{ type: 'codeIncludes', value: '<h2>', failMessage: L('No <h2> yet!') }],
+    checks: [{ type: 'codeIncludes', value: '<h2>', failMessage: L('No `<h2>` yet!') }],
   };
   const runDomChecks = vi.fn(async (checks: unknown[]) => checks.map(() => true));
   return { QUEST, QUEST2, runDomChecks };
@@ -86,7 +86,8 @@ describe('QuestScreen', () => {
   test('failing check shows friendly message, no victory', async () => {
     renderQuest();
     fireEvent.click(await screen.findByRole('button', { name: /check my code/i }));
-    expect(await screen.findByText('No <p> yet!')).toBeInTheDocument();
+    // LessonText wraps the <p> in a <code> chip, so the message spans nodes.
+    expect(await screen.findByRole('alert')).toHaveTextContent('No <p> yet!');
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
@@ -102,7 +103,8 @@ describe('QuestScreen', () => {
   test('opening a hint marks completion as hint-assisted', async () => {
     renderQuest();
     fireEvent.click(await screen.findByRole('button', { name: /hint/i }));
-    expect(await screen.findByText(/like <p>hi<\/p>/i)).toBeInTheDocument();
+    // Hint text is split by LessonText's <code> chips — assert on the list's text.
+    expect(await screen.findByRole('list')).toHaveTextContent('Like <p>hi</p>');
     fireEvent.change(screen.getByTestId('code-editor'), { target: { value: '<p>Hello</p>' } });
     fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
     await screen.findByRole('dialog');

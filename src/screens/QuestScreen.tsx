@@ -11,6 +11,7 @@ import CodeEditor from '../features/editor/CodeEditor';
 import Panel from '../components/Panel';
 import PixelButton from '../components/PixelButton';
 import VictoryOverlay from '../components/VictoryOverlay';
+import LessonText from '../components/LessonText';
 
 const DEBOUNCE_MS = 300;
 
@@ -82,13 +83,15 @@ function QuestScreenInner({ questId }: { questId: string }) {
           ⛏️ {t('questLabel')}: {tl(quest.title)}
         </h1>
         {alreadyDone && <p className="font-body text-sm font-bold text-gold">★ {t('replayDone')}</p>}
-        <p className="font-body font-bold italic text-dirt">{tl(quest.story)}</p>
+        <div className="font-body font-bold italic text-dirt">
+          <LessonText text={tl(quest.story)} />
+        </div>
         <h2 className="font-pixel text-xs">{t('steps')}</h2>
         <ol className="flex flex-col gap-2">
           {quest.steps.map((step, i) => (
             <li key={i} className="font-body font-bold">
               <span className="mr-1 font-pixel text-[10px] text-grass-dark">{i + 1}.</span>
-              {tl(step.text)}
+              <LessonText text={tl(step.text)} />
               {step.hint && !openHints.has(i) && (
                 <button
                   onClick={() => onHint(i)}
@@ -98,14 +101,16 @@ function QuestScreenInner({ questId }: { questId: string }) {
                 </button>
               )}
               {step.hint && openHints.has(i) && (
-                <span className="mt-1 block rounded bg-gold/20 p-2 text-sm">💡 {tl(step.hint)}</span>
+                <div className="mt-1 rounded bg-gold/20 p-2 text-sm">
+                  💡 <LessonText text={tl(step.hint)} />
+                </div>
               )}
             </li>
           ))}
         </ol>
         {failMessage && (
           <p role="alert" className="rounded-md border-2 border-red-400 bg-red-50 p-2 font-body font-bold text-red-700">
-            🟥 <span>{tl(failMessage)}</span>
+            🟥 <span><LessonText text={tl(failMessage)} /></span>
           </p>
         )}
         {preview.runtimeError && (

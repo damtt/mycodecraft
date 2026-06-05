@@ -13,38 +13,38 @@ export const q08: Quest = {
   steps: [
     {
       text: {
-        en: 'Find the <style> tag. The box already has class center and display: flex is the first step.',
-        vi: 'Tìm tag <style>. Cái hộp đã có class center và display: flex là bước đầu tiên.',
+        en: 'Find the `<style>` tag. The box already has class `center` and `display: flex` is the first step.',
+        vi: 'Tìm tag `<style>`. Cái hộp đã có class `center` và `display: flex` là bước đầu tiên.',
       },
     },
     {
       text: {
-        en: 'Turn on flex first: select .center and set display to flex so the next two lines work.',
-        vi: 'Bật flex trước: chọn .center và đặt display thành flex để hai dòng tiếp theo hoạt động.',
+        en: 'Turn on flex first: select `.center` and set `display` to `flex` so the next two lines work.',
+        vi: 'Bật flex trước: chọn `.center` và đặt `display` thành `flex` để hai dòng tiếp theo hoạt động.',
       },
       hint: {
-        en: 'Start the rule like this:\n.center {\n  display: flex;\n}',
-        vi: 'Bắt đầu quy tắc như thế này:\n.center {\n  display: flex;\n}',
+        en: "Start the rule like this:\n```\n.center {\n  display: flex;\n}\n```",
+        vi: "Bắt đầu quy tắc như thế này:\n```\n.center {\n  display: flex;\n}\n```",
       },
     },
     {
       text: {
-        en: 'Center left-to-right: in the .center rule set justify-content to center. It centers items across the row.',
-        vi: 'Căn giữa theo chiều ngang: trong quy tắc .center đặt justify-content thành center. Nó căn giữa các món theo hàng.',
+        en: 'Center left-to-right: in the `.center` rule set `justify-content` to `center`. It centers items across the row.',
+        vi: 'Căn giữa theo chiều ngang: trong quy tắc `.center` đặt `justify-content` thành `center`. Nó căn giữa các món theo hàng.',
       },
       hint: {
-        en: 'Add this line inside the rule:\n  justify-content: center;',
-        vi: 'Thêm dòng này vào trong quy tắc:\n  justify-content: center;',
+        en: "Add this line inside the rule:\n```\n  justify-content: center;\n```",
+        vi: "Thêm dòng này vào trong quy tắc:\n```\n  justify-content: center;\n```",
       },
     },
     {
       text: {
-        en: 'Center top-to-bottom: in the .center rule set align-items to center. It centers items up and down.',
-        vi: 'Căn giữa theo chiều dọc: trong quy tắc .center đặt align-items thành center. Nó căn giữa các món theo chiều trên dưới.',
+        en: 'Center top-to-bottom: in the `.center` rule set `align-items` to `center`. It centers items up and down.',
+        vi: 'Căn giữa theo chiều dọc: trong quy tắc `.center` đặt `align-items` thành `center`. Nó căn giữa các món theo chiều trên dưới.',
       },
       hint: {
-        en: 'Add this line inside the rule:\n  align-items: center;',
-        vi: 'Thêm dòng này vào trong quy tắc:\n  align-items: center;',
+        en: "Add this line inside the rule:\n```\n  align-items: center;\n```",
+        vi: "Thêm dòng này vào trong quy tắc:\n```\n  align-items: center;\n```",
       },
     },
   ],
@@ -57,8 +57,8 @@ export const q08: Quest = {
       prop: 'justify-content',
       equalsAny: ['center'],
       failMessage: {
-        en: 'The star is not centered across yet. In the .center rule, add: justify-content: center;',
-        vi: 'Ngôi sao chưa được căn giữa theo chiều ngang. Trong quy tắc .center, thêm: justify-content: center;',
+        en: 'The star is not centered across yet. In the `.center` rule, add: `justify-content: center;`',
+        vi: 'Ngôi sao chưa được căn giữa theo chiều ngang. Trong quy tắc `.center`, thêm: `justify-content: center;`',
       },
     },
     {
@@ -67,8 +67,8 @@ export const q08: Quest = {
       prop: 'align-items',
       equalsAny: ['center'],
       failMessage: {
-        en: 'The star is not centered up and down yet. In the .center rule, add: align-items: center;',
-        vi: 'Ngôi sao chưa được căn giữa theo chiều dọc. Trong quy tắc .center, thêm: align-items: center;',
+        en: 'The star is not centered up and down yet. In the `.center` rule, add: `align-items: center;`',
+        vi: 'Ngôi sao chưa được căn giữa theo chiều dọc. Trong quy tắc `.center`, thêm: `align-items: center;`',
       },
     },
   ],
