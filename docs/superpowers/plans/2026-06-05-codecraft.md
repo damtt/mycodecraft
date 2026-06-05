@@ -2972,7 +2972,13 @@ const DEBOUNCE_MS = 300;
 
 export default function QuestScreen() {
   const { id = '' } = useParams();
-  const quest = questById(id);
+  // React Router does NOT remount route elements on param change — the key
+  // forces a full remount per quest so all useState initializers re-run.
+  return <QuestScreenInner key={id} questId={id} />;
+}
+
+function QuestScreenInner({ questId }: { questId: string }) {
+  const quest = questById(questId);
   const navigate = useNavigate();
   const profile = useActiveProfile();
   const completeQuest = useProfiles((s) => s.completeQuest);
@@ -3117,7 +3123,7 @@ export default function QuestScreen() {
 ```
 
 Implementation notes:
-- Navigating to the next quest remounts the screen via route param change; all `useState` initializers re-run because the router renders a fresh element per `:id`. If state leaks between quests, add `key={quest.id}` to the screen's root from the router (verify in the smoke test).
+- ⚠️ React Router v7 does NOT remount route elements on `:id` param change — `useState` initializers do NOT re-run. The screen MUST be split into a keyed wrapper + inner component (`<QuestScreenInner key={id} questId={id} />`) so every quest change is a true remount; otherwise the victory overlay, code, hints, and fail message all leak into the next quest. A regression test ("next-quest navigation resets all quest state") pins this.
 - The JS-world console panel doubles as the data source for `consoleIncludes` checks — those read `preview.consoleLines`, which exist because the preview ran the code already.
 
 - [ ] **Step 4: Run tests to verify they pass**
