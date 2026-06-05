@@ -15,6 +15,11 @@ export function isDomCheck(check: Check): check is DomCheck {
  * enums. Its compiled source is injected into the preview iframe via
  * `evaluateDomCheck.toString()` (see features/preview/runtime.ts). The test
  * "is self-contained" enforces this.
+ *
+ * Caller contract: kid code can sabotage the DOM (e.g., override
+ * document.querySelector or add throwing getters) — callers MUST wrap each
+ * invocation in try/catch and treat a throw as `false`. The iframe-side
+ * runner (features/preview/runtime.ts) does this.
  */
 export function evaluateDomCheck(
   check: {
@@ -55,6 +60,8 @@ export function evaluateLocalCheck(check: LocalCheck, ctx: LocalContext): boolea
   switch (check.type) {
     case 'codeIncludes':
       return norm(ctx.code).includes(norm(check.value));
+    // Deliberately case- and whitespace-SENSITIVE (unlike codeIncludes):
+    // console checks assert on exact program output, e.g. 'Hello, miner!'.
     case 'consoleIncludes':
       return ctx.consoleLines.some((line) => line.includes(check.value));
   }
