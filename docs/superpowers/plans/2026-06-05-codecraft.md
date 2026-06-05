@@ -720,15 +720,16 @@ export function completeQuest(
   const newBadge =
     firstTime && !profile.badges.includes(quest.badge) ? quest.badge : null;
 
+  // Always fresh objects — the replay path must not share references with the input
   const next: Profile = {
     ...profile,
     xp: profile.xp + xpGained,
     quests: firstTime
       ? { ...profile.quests, [quest.id]: { completedAt: opts.today, usedHint: opts.usedHint } }
-      : profile.quests,
+      : { ...profile.quests },
     streak,
     bestStreak: Math.max(profile.bestStreak, streak.count),
-    badges: newBadge ? [...profile.badges, newBadge] : profile.badges,
+    badges: newBadge ? [...profile.badges, newBadge] : [...profile.badges],
   };
 
   const newAchievements = computeNewAchievements(next, opts.questsByWorld);
@@ -764,7 +765,9 @@ export function worldUnlocked(
   const idx = WORLD_ORDER.indexOf(world);
   if (idx === 0) return true;
   const prev = questsByWorld[WORLD_ORDER[idx - 1]];
-  return prev.every((q) => q.id in profile.quests);
+  // length guard: with content not yet loaded, [].every() is vacuously true —
+  // an empty previous world must read as "not finished", not "finished"
+  return prev.length > 0 && prev.every((q) => q.id in profile.quests);
 }
 
 export type QuestStatus = 'done' | 'current' | 'locked';
@@ -900,6 +903,8 @@ describe('unlocks', () => {
   });
 });
 ```
+
+Review-approved additions to the test file (pin-down tests): streakDisplay non-mutation; completeQuest input immutability + no shared references (first-time and replay paths); leveledUp threshold-crossing comparison (multi-rank jumps unreachable: max gain 120 XP < smallest gap 200); bestStreak surviving a gap reset; worldUnlocked false for empty content arrays.
 
 - [ ] **Step 7: Run tests — the suite must pass now** (implementation was written first for data-heavy modules; the tests are the spec lock)
 
