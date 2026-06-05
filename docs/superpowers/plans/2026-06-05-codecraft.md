@@ -2673,14 +2673,20 @@ import { createMemoryRouter, RouterProvider } from 'react-router';
 import { vi } from 'vitest';
 import type { Quest, WorldId } from '../lib/types';
 
-const L = (s: string) => ({ en: s, vi: s });
-const makeQuest = (id: string, world: WorldId): Quest => ({
-  id, world, xp: 50, badge: `b-${id}`,
-  title: L(`Quest ${id}`), story: L('s'), steps: [], starterCode: '',
-  checks: [{ type: 'codeIncludes', value: 'x', failMessage: L('f') }],
+// vi.hoisted: vi.mock factories are hoisted above top-level consts — the
+// entire fixture factory must live inside it or the mock would reference
+// QUESTS before initialization.
+const { QUESTS } = vi.hoisted(() => {
+  const L = (s: string) => ({ en: s, vi: s });
+  const makeQuest = (id: string, world: WorldId): Quest => ({
+    id, world, xp: 50, badge: `b-${id}`,
+    title: L(`Quest ${id}`), story: L('s'), steps: [], starterCode: '',
+    checks: [{ type: 'codeIncludes', value: 'x', failMessage: L('f') }],
+  });
+  return {
+    QUESTS: [makeQuest('html-01', 'html'), makeQuest('html-02', 'html'), makeQuest('css-01', 'css')],
+  };
 });
-
-const QUESTS = [makeQuest('html-01', 'html'), makeQuest('html-02', 'html'), makeQuest('css-01', 'css')];
 
 vi.mock('../content/quests', () => {
   const byWorld = (w: string) => QUESTS.filter((q) => q.world === w);
@@ -2713,9 +2719,10 @@ beforeEach(() => {
 describe('MapScreen', () => {
   test('first quest is current (clickable), rest locked', async () => {
     const router = renderMap();
-    fireEvent.click(await screen.findByRole('button', { name: /quest html-01/i }));
+    // Assert the locked state BEFORE clicking — navigation unmounts the map.
+    expect(await screen.findByRole('button', { name: /quest html-02/i })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: /quest html-01/i }));
     expect(router.state.location.pathname).toBe('/quest/html-01');
-    expect(screen.getByRole('button', { name: /quest html-02/i })).toBeDisabled();
   });
 
   test('locked world shows lock and disabled quests', async () => {
