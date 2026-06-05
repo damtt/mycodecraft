@@ -29,7 +29,7 @@ export interface Quest {
   story: Localized; // 1–2 sentence Minecraft-flavored intro
   steps: Step[];
   starterCode: string;
-  checks: Check[];
+  checks: [Check, ...Check[]]; // non-empty — a quest with no checks would vacuously pass
   xp: 50 | 75 | 100; // easy / medium / boss
   badge: string; // BadgeId — every quest drops one collectible
 }
@@ -54,7 +54,7 @@ export interface QuestRecord {
 
 export interface Streak {
   count: number;
-  lastDay: string; // YYYY-MM-DD, '' = never played
+  lastDay: string; // YYYY-MM-DD; '' = never played (callers must never pass '' to dayBefore())
 }
 
 export interface Profile {
