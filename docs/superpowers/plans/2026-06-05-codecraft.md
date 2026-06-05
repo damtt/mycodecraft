@@ -1617,12 +1617,18 @@ export interface RuntimeError {
 
 const WATCHDOG_MS = 2000;
 const CHECK_TIMEOUT_MS = 1500;
+const MAX_CONSOLE_LINES = 200; // runaway kid loops must not re-render-storm the screen
 
 /**
  * Owns the sandboxed preview iframe state. `code` should already be
  * debounced by the caller. Watchdog: if cc-ready doesn't arrive within 2s of
  * a srcdoc change, the frame is declared stuck (likely infinite loop) —
  * caller shows a friendly message and we force a reload via key bump.
+ *
+ * Binding contract for consumers: render the iframe as
+ *   <iframe key={reloadKey} ref={iframeRef} srcDoc={srcdoc} sandbox="allow-scripts" />
+ * The key={reloadKey} binding is REQUIRED — reload() only bumps the key; without
+ * it the frame never actually reloads (srcdoc may be unchanged).
  */
 export function usePreview(code: string) {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
@@ -1638,11 +1644,17 @@ export function usePreview(code: string) {
 
   useEffect(() => {
     function onMessage(event: MessageEvent) {
+      // Only accept messages from the CURRENT frame. A reloadKey bump abandons
+      // in-flight checks from the old frame — they resolve all-false via timeout.
       if (event.source !== iframeRef.current?.contentWindow) return;
       const data = event.data ?? {};
       switch (data.type) {
         case 'cc-console':
-          setConsoleLines((lines) => [...lines, String(data.text)]);
+          setConsoleLines((lines) => {
+            if (lines.length > MAX_CONSOLE_LINES) return lines; // already truncated
+            if (lines.length === MAX_CONSOLE_LINES) return [...lines, '… output truncated'];
+            return [...lines, String(data.text)];
+          });
           break;
         case 'cc-error':
           setRuntimeError({ message: String(data.message), line: Number(data.line) });
