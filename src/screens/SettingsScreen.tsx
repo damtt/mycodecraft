@@ -32,7 +32,6 @@ export default function SettingsScreen() {
                   name="lang"
                   checked={lang === value}
                   onChange={() => setLang(value)}
-                  aria-label={label}
                 />
                 {label}
               </label>
@@ -41,7 +40,7 @@ export default function SettingsScreen() {
         </fieldset>
 
         <label className="flex cursor-pointer items-center gap-2 font-body font-black">
-          <input type="checkbox" checked={soundOn} onChange={toggleSound} aria-label={t('sound')} />
+          <input type="checkbox" checked={soundOn} onChange={toggleSound} />
           🔊 {t('sound')}: {soundOn ? t('on') : t('off')}
         </label>
 
