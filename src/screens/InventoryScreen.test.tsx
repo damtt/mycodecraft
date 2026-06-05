@@ -45,4 +45,15 @@ describe('InventoryScreen', () => {
     expect(screen.getByTestId('stat-quests')).toHaveTextContent('1');
     expect(screen.getByTestId('stat-streak')).toHaveTextContent('4');
   });
+
+  test('earned achievements bright, unearned dimmed', async () => {
+    renderInventory();
+    useProfiles.setState((s) => ({
+      profiles: s.profiles.map((p) => ({ ...p, achievements: ['first-quest'] })),
+    }));
+    const first = await screen.findByText(/First Quest —/, { selector: 'li' });
+    expect(first).not.toHaveClass('opacity-40');
+    const streak7 = screen.getByText(/7-Day Streak —/, { selector: 'li' });
+    expect(streak7).toHaveClass('opacity-40');
+  });
 });
