@@ -1,7 +1,10 @@
 import type { Quest, WorldId } from '../../lib/types';
+import { HTML_QUESTS } from './html';
+import { CSS_QUESTS } from './css';
+import { JS_QUESTS } from './js';
 
-// Tasks 18–20 fill these from real quest files.
-export const ALL_QUESTS: Quest[] = [];
+/** Global quest order: html → css → js. nextQuest() relies on this ordering. */
+export const ALL_QUESTS: Quest[] = [...HTML_QUESTS, ...CSS_QUESTS, ...JS_QUESTS];
 
 export const QUESTS_BY_WORLD: Record<WorldId, Quest[]> = {
   html: ALL_QUESTS.filter((q) => q.world === 'html'),
@@ -18,7 +21,7 @@ export const QUESTS_BY_WORLD_IDS: Record<WorldId, string[]> = {
 export const questById = (id: string): Quest | undefined =>
   ALL_QUESTS.find((q) => q.id === id);
 
-/** Next quest in the same world, else first quest of the next world, else null. */
+/** Next quest in global ALL_QUESTS order (html → css → js). Relies on quests being appended world-by-world. Returns null at end of all content. */
 export function nextQuest(id: string): Quest | null {
   const idx = ALL_QUESTS.findIndex((q) => q.id === id);
   if (idx === -1 || idx === ALL_QUESTS.length - 1) return null;

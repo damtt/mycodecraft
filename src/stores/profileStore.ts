@@ -1,11 +1,9 @@
 import { create } from 'zustand';
-import type { Profile, Quest, Rewards, WorldId } from '../lib/types';
+import type { Profile, Quest, Rewards } from '../lib/types';
 import { saveData, loadData, removeData } from '../lib/storage';
 import { completeQuest as completeQuestPure } from '../features/progress/complete';
 import { todayString } from '../features/progress/streak';
-
-// Task 18 replaces this with: import { QUESTS_BY_WORLD_IDS } from '../content/quests';
-const QUESTS_BY_WORLD_IDS: Record<WorldId, string[]> = { html: [], css: [], js: [] };
+import { QUESTS_BY_WORLD_IDS } from '../content/quests';
 
 export const INDEX_KEY = 'codecraft:profile-index';
 export const profileKey = (id: string) => `codecraft:profile:${id}`;
