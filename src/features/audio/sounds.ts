@@ -20,7 +20,12 @@ export function playSound(name: SoundName): void {
   if (!useSettings.getState().soundOn) return;
   try {
     if (!ctx) ctx = new AudioContext();
-    void ctx.resume();
+    if (ctx.state !== 'running') {
+      // Created outside a user gesture (e.g., effect) — resume for next time;
+      // scheduling on a suspended ctx would silently drop offset-0 notes.
+      void ctx.resume();
+      return;
+    }
     const t0 = ctx.currentTime;
     for (const [freq, offset, dur] of TUNES[name]) {
       const osc = ctx.createOscillator();

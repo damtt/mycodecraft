@@ -1,5 +1,6 @@
 import { vi } from 'vitest';
 import { playSound, _resetAudioForTests } from './sounds';
+import type { SoundName } from './sounds';
 import { useSettings } from '../../stores/settingsStore';
 
 function mockAudioContext() {
@@ -13,6 +14,7 @@ function mockAudioContext() {
   };
   const ctx = {
     currentTime: 0, destination: {},
+    state: 'running' as AudioContextState,
     createOscillator: vi.fn(() => osc),
     createGain: vi.fn(() => gain),
     resume: vi.fn(),
@@ -27,11 +29,13 @@ describe('playSound', () => {
     useSettings.setState({ soundOn: true });
   });
 
+  afterEach(() => vi.unstubAllGlobals());
+
   test('plays notes when sound is on', () => {
     const { ctx, osc } = mockAudioContext();
-    playSound('pop');
-    expect(ctx.createOscillator).toHaveBeenCalled();
-    expect(osc.start).toHaveBeenCalled();
+    playSound('success');
+    expect(ctx.createOscillator).toHaveBeenCalledTimes(3);
+    expect(osc.start).toHaveBeenCalledTimes(3);
   });
 
   test('silent when sound is off', () => {
@@ -44,5 +48,15 @@ describe('playSound', () => {
   test('never throws when AudioContext is unavailable', () => {
     vi.stubGlobal('AudioContext', undefined);
     expect(() => playSound('levelup')).not.toThrow();
+  });
+
+  test('every SoundName has a tune', () => {
+    const names: SoundName[] = ['pop', 'success', 'levelup', 'badge'];
+    for (const n of names) {
+      const { ctx } = mockAudioContext();
+      playSound(n);
+      expect(ctx.createOscillator).toHaveBeenCalled();
+      _resetAudioForTests();
+    }
   });
 });
