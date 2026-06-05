@@ -3384,12 +3384,12 @@ export default function SettingsScreen() {
           <div className="mt-2 flex gap-4">
             {LANGS.map(({ value, label }) => (
               <label key={value} className="flex cursor-pointer items-center gap-1 font-body font-bold">
+                {/* No aria-label — the wrapping <label>'s text is the accessible name */}
                 <input
                   type="radio"
                   name="lang"
                   checked={lang === value}
                   onChange={() => setLang(value)}
-                  aria-label={label}
                 />
                 {label}
               </label>
@@ -3398,7 +3398,7 @@ export default function SettingsScreen() {
         </fieldset>
 
         <label className="flex cursor-pointer items-center gap-2 font-body font-black">
-          <input type="checkbox" checked={soundOn} onChange={toggleSound} aria-label={t('sound')} />
+          <input type="checkbox" checked={soundOn} onChange={toggleSound} />
           🔊 {t('sound')}: {soundOn ? t('on') : t('off')}
         </label>
 
