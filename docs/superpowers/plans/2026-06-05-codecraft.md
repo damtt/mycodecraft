@@ -1695,10 +1695,12 @@ export function usePreview(code: string) {
 }
 ```
 
-- [ ] **Step 6: Typecheck and commit**
+- [ ] **Step 6: Verify the injected evaluator survives the production bundle** (carried from Task 7 review)
 
-Run: `npm run typecheck`
-Expected: clean.
+Run: `npm run typecheck && npm run build && grep -l 'elementExists' dist/assets/*.js`
+Expected: typecheck clean; build succeeds; grep finds at least one bundle file — proving `evaluateDomCheck`'s source ships in the minified bundle with no hoisted esbuild helpers (the iframe reconstructs it from `.toString()`, so a helper reference outside the function body would break checks at runtime, invisible to jsdom tests).
+
+- [ ] **Step 7: Commit**
 
 ```bash
 git add src/features/preview && git commit -m "feat: add sandboxed preview runtime with console bridge and watchdog"
