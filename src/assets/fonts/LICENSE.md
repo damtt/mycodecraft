@@ -1,16 +1,17 @@
 # Font license — `codecraft-pixel.woff2`
 
-`codecraft-pixel.woff2` is a **subset of GNU Unifont** (Latin + Vietnamese +
-punctuation ranges only), used as CodeCraft's pixel heading font because it
-fully covers the precomposed Vietnamese block that Press Start 2P lacks.
+`codecraft-pixel.woff2` is a **subset of DeArPix 2.01** (Latin + Vietnamese +
+punctuation ranges only), used as CodeCraft's pixel heading font. DeArPix is a
+pixel/bitmap font with full precomposed Vietnamese coverage, so EN and VI both
+render in one consistent pixel font.
 
-- **Font:** GNU Unifont — https://unifoundry.com/unifont/
-- **Copyright:** © 1998–2024 Roman Czyborra, Paul Hardy, Qianqian Fang,
-  Andrew Miller, Johnnie Weaver, David Corbett, Nils Moskopp, and others.
-- **License:** Dual-licensed under the SIL Open Font License v1.1 and the
-  GNU GPL v2+ with the GNU Font Embedding Exception. This subset is used under
-  the **SIL Open Font License v1.1** (https://openfontlicense.org).
+- **Font:** DeArPix 2.01 by **ygygfu** —
+  https://fontstruct.com/fontstructors/2547878/ygygfu
+- **Copyright:** © 2026 ygygfu.
+- **License:** SIL Open Font License v1.1 — full text in `DeArPix-OFL.txt`
+  (also at https://openfontlicense.org).
 
-The full OFL text and original font are available at the upstream project.
-This file was produced with `fonttools pyftsubset` (woff2 flavor); no glyph
-outlines were modified.
+This subset is a "Modified Version" under the OFL: produced with
+`fonttools pyftsubset` (woff2 flavor); glyph outlines are unchanged, only the
+character set was reduced. The OFL copyright notice and license travel with the
+font in `DeArPix-OFL.txt` as required.

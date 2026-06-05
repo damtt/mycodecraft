@@ -1,11 +1,12 @@
 @import 'tailwindcss';
 
 /*
- * Pixel/bitmap heading font. GNU Unifont, subset to Latin + Vietnamese +
- * punctuation (12.8KB woff2). Replaces Press Start 2P, which has no Vietnamese
- * glyphs — its per-glyph fallback mangled tone marks (e.g. "Nhiệm vụ").
- * Unifont covers the full precomposed Vietnamese block, so EN and VI both
- * render in one consistent pixel font. © GNU Unifont authors, OFL-1.1.
+ * Pixel/bitmap heading font. DeArPix 2.01 by ygygfu, subset to Latin +
+ * Vietnamese + punctuation (woff2). A pixel font with full precomposed
+ * Vietnamese coverage — unlike Press Start 2P, whose missing tone-mark glyphs
+ * caused a per-glyph fallback that mangled headings (e.g. "Nhiệm vụ"). EN and
+ * VI both render in one consistent pixel font. SIL OFL-1.1; see
+ * src/assets/fonts/DeArPix-OFL.txt.
  */
 @font-face {
   font-family: 'CodeCraft Pixel';
@@ -13,6 +14,10 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  /* DeArPix glyphs fill ~half the em, so they render small at our font sizes.
+     size-adjust scales every pixel heading up in one place (no per-component
+     font-size changes) to match the chunkier look the design expects. */
+  size-adjust: 175%;
 }
 
 @theme {
