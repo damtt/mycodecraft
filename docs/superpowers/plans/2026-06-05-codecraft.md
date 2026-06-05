@@ -470,6 +470,24 @@ describe('storage', () => {
     removeData('k');
     expect(loadData('k', isNum)).toBeNull();
   });
+
+  test('returns null for non-object envelope (primitive stored directly)', () => {
+    localStorage.setItem('k', JSON.stringify(42));
+    expect(loadData('k', isNum)).toBeNull();
+  });
+
+  test('returns null for null envelope', () => {
+    localStorage.setItem('k', JSON.stringify(null));
+    expect(loadData('k', isNum)).toBeNull();
+  });
+
+  test('saveData does not throw when storage is full', () => {
+    const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementationOnce(() => {
+      throw new DOMException('quota', 'QuotaExceededError');
+    });
+    expect(() => saveData('k', 1)).not.toThrow();
+    spy.mockRestore();
+  });
 });
 ```
 
@@ -481,10 +499,16 @@ Expected: FAIL — `Cannot find module './storage'`.
 - [ ] **Step 3: Write `src/lib/storage.ts`**
 
 ```ts
-const VERSION = 1;
+export const STORAGE_VERSION = 1;
 
 export function saveData(key: string, data: unknown): void {
-  localStorage.setItem(key, JSON.stringify({ version: VERSION, data }));
+  try {
+    localStorage.setItem(key, JSON.stringify({ version: STORAGE_VERSION, data }));
+  } catch (err) {
+    // Quota exceeded or storage unavailable — saves are <50KB so this is
+    // exceptional; warn instead of crashing the caller (e.g., victory flow).
+    console.warn('codecraft: failed to save', key, err);
+  }
 }
 
 export function loadData<T>(key: string, validate: (v: unknown) => v is T): T | null {
@@ -494,7 +518,7 @@ export function loadData<T>(key: string, validate: (v: unknown) => v is T): T | 
     const parsed: unknown = JSON.parse(raw);
     if (
       typeof parsed !== 'object' || parsed === null ||
-      (parsed as { version?: unknown }).version !== VERSION
+      (parsed as { version?: unknown }).version !== STORAGE_VERSION
     ) {
       return null;
     }
@@ -513,7 +537,7 @@ export function removeData(key: string): void {
 - [ ] **Step 4: Run tests to verify they pass**
 
 Run: `npx vitest run src/lib/storage.test.ts`
-Expected: 6 passed.
+Expected: 9 passed.
 
 - [ ] **Step 5: Commit**
 
