@@ -3007,8 +3007,11 @@ export default function QuestScreen() {
   const onCheck = async () => {
     setChecking(true);
     setFailMessage(null);
+    // Check against the CURRENT code (what the kid just typed), not the
+    // debounced copy — clicking Check within the debounce window must not
+    // judge stale code. The iframe (DOM checks) may lag ≤300ms; acceptable.
     const result = await runChecks(quest.checks, {
-      code: debounced,
+      code,
       consoleLines: preview.consoleLines,
       runDomChecks: preview.runDomChecks,
     });
