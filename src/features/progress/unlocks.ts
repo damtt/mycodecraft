@@ -10,7 +10,7 @@ export function worldUnlocked(
   const idx = WORLD_ORDER.indexOf(world);
   if (idx === 0) return true;
   const prev = questsByWorld[WORLD_ORDER[idx - 1]];
-  return prev.every((q) => q.id in profile.quests);
+  return prev.length > 0 && prev.every((q) => q.id in profile.quests);
 }
 
 export type QuestStatus = 'done' | 'current' | 'locked';

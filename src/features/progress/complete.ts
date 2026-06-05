@@ -29,10 +29,10 @@ export function completeQuest(
     xp: profile.xp + xpGained,
     quests: firstTime
       ? { ...profile.quests, [quest.id]: { completedAt: opts.today, usedHint: opts.usedHint } }
-      : profile.quests,
+      : { ...profile.quests },
     streak,
     bestStreak: Math.max(profile.bestStreak, streak.count),
-    badges: newBadge ? [...profile.badges, newBadge] : profile.badges,
+    badges: newBadge ? [...profile.badges, newBadge] : [...profile.badges],
   };
 
   const newAchievements = computeNewAchievements(next, opts.questsByWorld);

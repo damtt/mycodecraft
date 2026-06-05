@@ -52,6 +52,11 @@ describe('streak', () => {
     expect(streakDisplay({ count: 5, lastDay: '2026-06-04' }, '2026-06-05')).toBe(5);
     expect(streakDisplay({ count: 5, lastDay: '2026-06-01' }, '2026-06-05')).toBe(0);
   });
+  test('streakDisplay does not mutate its input', () => {
+    const s = { count: 5, lastDay: '2026-06-01' };
+    streakDisplay(s, '2026-06-05');
+    expect(s).toEqual({ count: 5, lastDay: '2026-06-01' });
+  });
 });
 
 describe('completeQuest', () => {
@@ -91,6 +96,35 @@ describe('completeQuest', () => {
     const { rewards } = completeQuest(p, q2, { usedHint: false, today, questsByWorld: QBW });
     expect(rewards.newAchievements).toContain('world-html');
   });
+
+  test('does not mutate the input profile and shares no references', () => {
+    const p = makeProfile();
+    const snapshot = structuredClone(p);
+    const { profile } = completeQuest(p, q1, { usedHint: false, today, questsByWorld: QBW });
+    expect(p).toEqual(snapshot);
+    expect(profile.quests).not.toBe(p.quests);
+    expect(profile.badges).not.toBe(p.badges);
+    // replay path too
+    const replay = completeQuest(profile, q1, { usedHint: true, today, questsByWorld: QBW });
+    expect(replay.profile.quests).not.toBe(profile.quests);
+    expect(replay.profile.badges).not.toBe(profile.badges);
+  });
+
+  // Multi-rank jumps are unreachable: max gain is 120 XP (100 + 20 bonus) but
+  // rank gaps are 200/300/400/500/600, so crossing two thresholds at once is impossible.
+  test('leveledUp compares rank levels, not adjacency', () => {
+    // crossing exactly one threshold still detects when current rank logic uses > comparison
+    const p = makeProfile({ xp: 199 });
+    const { rewards } = completeQuest(p, q1, { usedHint: false, today, questsByWorld: QBW });
+    expect(rewards.leveledUp).toBe(true); // 199 + 70 = 269 → Stone
+  });
+
+  test('bestStreak survives a gap reset', () => {
+    const p = makeProfile({ streak: { count: 6, lastDay: '2026-05-20' }, bestStreak: 6 });
+    const { profile, rewards } = completeQuest(p, q1, { usedHint: false, today, questsByWorld: QBW });
+    expect(rewards.streak).toBe(1);
+    expect(profile.bestStreak).toBe(6);
+  });
 });
 
 describe('unlocks', () => {
@@ -110,5 +144,11 @@ describe('unlocks', () => {
     expect(questStatus(q1, p, QUESTS_BW)).toBe('done');
     expect(questStatus(q2, p, QUESTS_BW)).toBe('current');
     expect(questStatus(QUESTS_BW.css[0], p, QUESTS_BW)).toBe('locked');
+  });
+
+  test('empty content arrays never report a later world unlocked', () => {
+    const empty = { html: [] as Quest[], css: [] as Quest[], js: [] as Quest[] };
+    expect(worldUnlocked('css', makeProfile(), empty)).toBe(false);
+    expect(worldUnlocked('js', makeProfile(), empty)).toBe(false);
   });
 });
