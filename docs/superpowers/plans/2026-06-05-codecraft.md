@@ -1975,7 +1975,7 @@ export default function Panel({ className = '', ...rest }: HTMLAttributes<HTMLDi
 - [ ] **Step 3: Write `src/components/HoldToConfirm.tsx`**
 
 ```tsx
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface HoldToConfirmProps {
   label: string;
@@ -1991,6 +1991,10 @@ interface HoldToConfirmProps {
 export default function HoldToConfirm({ label, holdMs = 1500, onConfirm, className = '' }: HoldToConfirmProps) {
   const [holding, setHolding] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // A pending hold must die with the component — otherwise onConfirm (e.g. a
+  // profile delete) could fire after unmount.
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
   const start = () => {
     setHolding(true);
@@ -2121,9 +2125,9 @@ export default function VictoryOverlay({ rewards, hasNext, onNext, onBackToMap }
   const badge = rewards.newBadge ? BADGES.find((b) => b.id === rewards.newBadge) : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-night/80" role="dialog">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-night/80" role="dialog" aria-modal="true" aria-labelledby="victory-title">
       <Panel className="w-96 text-center">
-        <h2 className="font-pixel text-lg text-grass-dark">🎉 {t('victory')}</h2>
+        <h2 id="victory-title" className="font-pixel text-lg text-grass-dark">🎉 {t('victory')}</h2>
         <p className="mt-3 font-body text-xl font-black">
           +{rewards.xpGained} {t('xpGained')}
           {rewards.dailyBonus && <span className="ml-2 text-gold">☀️ {t('dailyBonus')}</span>}
@@ -2175,7 +2179,7 @@ export default function TitleScreen() {
 - [ ] **Step 8: Write `src/app/router.tsx`**
 
 ```tsx
-import { createBrowserRouter, Navigate, Outlet, useLocation } from 'react-router';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router';
 import { useProfiles } from '../stores/profileStore';
 import HudBar from '../components/HudBar';
 import TitleScreen from '../screens/TitleScreen';
@@ -2188,8 +2192,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 /** Game routes need an active profile; otherwise bounce to player select. */
 function RequireProfile() {
   const activeId = useProfiles((s) => s.activeId);
-  const location = useLocation();
-  if (!activeId) return <Navigate to="/players" replace state={{ from: location }} />;
+  if (!activeId) return <Navigate to="/players" replace />;
   return (
     <div className="flex min-h-screen flex-col">
       <HudBar />
