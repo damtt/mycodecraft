@@ -1697,8 +1697,8 @@ export function usePreview(code: string) {
 
 - [ ] **Step 6: Verify the injected evaluator survives the production bundle** (carried from Task 7 review)
 
-Run: `npm run typecheck && npm run build && grep -l 'elementExists' dist/assets/*.js`
-Expected: typecheck clean; build succeeds; grep finds at least one bundle file — proving `evaluateDomCheck`'s source ships in the minified bundle with no hoisted esbuild helpers (the iframe reconstructs it from `.toString()`, so a helper reference outside the function body would break checks at runtime, invisible to jsdom tests).
+Run: `npm run typecheck && npm run build`
+Expected: typecheck clean; build succeeds. NOTE: the dist grep for the injected evaluator (`grep -l 'elementExists' dist/assets/*.js`) is EMPTY at this point — nothing imports the preview module until Task 15 wires QuestScreen into the router. The dist-survival check is therefore performed in Task 15 Step 5 and re-confirmed in Task 22.
 
 - [ ] **Step 7: Commit**
 
@@ -3073,7 +3073,12 @@ Implementation notes:
 Run: `npx vitest run src/screens/QuestScreen.test.tsx`
 Expected: 5 passed.
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 5: Verify the injected evaluator now ships in the production bundle** (carried from Task 7/8 reviews)
+
+Run: `npm run build && grep -l 'elementExists' dist/assets/*.js`
+Expected: build succeeds and grep finds at least one bundle file — QuestScreen now imports usePreview → runtime → evaluateDomCheck, so the evaluator's minified source must survive in dist (the iframe reconstructs it from `.toString()`; a hoisted esbuild helper would break checks at runtime). If grep finds nothing, STOP and investigate before committing.
+
+- [ ] **Step 6: Commit**
 
 ```bash
 git add src/screens/QuestScreen.* && git commit -m "feat: add quest screen with editor, live preview, and check flow"
