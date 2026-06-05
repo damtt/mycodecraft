@@ -72,4 +72,34 @@ describe('profileStore', () => {
     localStorage.setItem(profileKey(a.id), '{broken');
     expect(loadProfiles()).toHaveLength(1);
   });
+
+  test('syntactically valid but semantically corrupt profile (streak:null) is skipped', () => {
+    useProfiles.getState().create('Mai', '🦊');
+    const [a] = useProfiles.getState().profiles;
+    const stored = JSON.parse(localStorage.getItem(profileKey(a.id))!);
+    stored.data.streak = null; // passes JSON parse, must fail isProfile
+    localStorage.setItem(profileKey(a.id), JSON.stringify(stored));
+    expect(loadProfiles()).toHaveLength(0);
+  });
+
+  test('removing a non-active profile keeps the active selection', () => {
+    useProfiles.getState().create('Mai', '🦊');
+    useProfiles.getState().create('Tom', '🐺');
+    const [mai, tom] = useProfiles.getState().profiles;
+    useProfiles.getState().select(mai.id);
+    useProfiles.getState().remove(tom.id);
+    expect(useProfiles.getState().activeId).toBe(mai.id);
+    expect(useProfiles.getState().profiles).toHaveLength(1);
+  });
+
+  test('deselect clears the active profile', () => {
+    useProfiles.getState().create('Mai', '🦊');
+    useProfiles.getState().select(useProfiles.getState().profiles[0].id);
+    useProfiles.getState().deselect();
+    expect(useProfiles.getState().activeId).toBeNull();
+  });
+
+  test('completeQuest returns null with no active profile', () => {
+    expect(useProfiles.getState().completeQuest(quest, false, '2026-06-05')).toBeNull();
+  });
 });

@@ -18,8 +18,12 @@ const isProfile = (v: unknown): v is Profile => {
   return (
     typeof p === 'object' && p !== null &&
     typeof p.id === 'string' && typeof p.name === 'string' &&
-    typeof p.xp === 'number' && typeof p.quests === 'object' &&
-    typeof p.streak === 'object' && Array.isArray(p.badges)
+    typeof p.xp === 'number' &&
+    typeof p.quests === 'object' && p.quests !== null &&
+    typeof p.streak === 'object' && p.streak !== null &&
+    typeof p.streak.count === 'number' && typeof p.streak.lastDay === 'string' &&
+    typeof p.bestStreak === 'number' &&
+    Array.isArray(p.badges) && Array.isArray(p.achievements)
   );
 };
 
