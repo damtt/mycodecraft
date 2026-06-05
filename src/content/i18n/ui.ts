@@ -20,7 +20,7 @@ export const UI = {
   checkMyCode: { en: 'Check my code', vi: 'Kiểm tra code' },
   hint: { en: 'Hint', vi: 'Gợi ý' },
   preview: { en: 'Preview', vi: 'Xem trước' },
-  console: { en: 'Console', vi: 'Bảng điều khiển' },
+  console: { en: 'Console', vi: 'Console' },
   victory: { en: 'Quest complete!', vi: 'Hoàn thành nhiệm vụ!' },
   xpGained: { en: 'XP earned', vi: 'XP nhận được' },
   dailyBonus: { en: 'Daily bonus!', vi: 'Thưởng hằng ngày!' },
@@ -31,6 +31,7 @@ export const UI = {
   backToMap: { en: 'Back to map', vi: 'Về bản đồ' },
   replayDone: { en: 'Nice mining! You already beat this quest.', vi: 'Đào giỏi lắm! Bạn đã thắng nhiệm vụ này rồi.' },
   stuckLoop: { en: 'Sssomething is stuck in a loop! Check your code and try again.', vi: 'Có gì đó bị kẹt trong vòng lặp! Kiểm tra code và thử lại nhé.' },
+  // Prefix string — call sites must append the line number (e.g., t('codeBoom') + ' ' + line)
   codeBoom: { en: 'Sssomething went boom on line', vi: 'Có gì đó nổ tung ở dòng' },
   badges: { en: 'Badges', vi: 'Huy hiệu' },
   achievements: { en: 'Achievements', vi: 'Thành tích' },

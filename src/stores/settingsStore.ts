@@ -17,6 +17,6 @@ export const useSettings = create<SettingsState>()(
       setLang: (lang) => set({ lang }),
       toggleSound: () => set((s) => ({ soundOn: !s.soundOn })),
     }),
-    { name: 'codecraft:settings' },
+    { name: 'codecraft:settings', version: 1 },
   ),
 );

@@ -9,6 +9,7 @@ describe('i18n', () => {
     expect(lt({ en: 'Hello', vi: 'Xin chào' }, 'vi')).toBe('Xin chào');
     expect(lt({ en: 'Hello', vi: 'Xin chào' }, 'en')).toBe('Hello');
     expect(lt({ en: 'Hello', vi: '' }, 'vi')).toBe('Hello');
+    expect(lt({ en: 'Hello', vi: '   ' }, 'vi')).toBe('Hello');
   });
 
   test('useT reacts to language switch', () => {
