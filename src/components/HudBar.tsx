@@ -3,6 +3,7 @@ import { useActiveProfile } from '../stores/profileStore';
 import { useSettings } from '../stores/settingsStore';
 import { useT } from '../lib/i18n';
 import { streakDisplay, todayString } from '../features/progress/streak';
+import { playSound } from '../features/audio/sounds';
 import XpBar from './XpBar';
 
 export default function HudBar() {
@@ -22,14 +23,14 @@ export default function HudBar() {
       {/* Decorative hearts — no lives mechanic (spec §Gamification) */}
       <span aria-hidden className="text-sm tracking-tighter">❤️❤️❤️</span>
       <nav className="ml-auto flex items-center gap-3 font-body font-bold">
-        <Link to="/map">🗺️ {t('worldMap')}</Link>
-        <Link to="/inventory">🧰 {t('inventory')}</Link>
-        <Link to="/settings">⚙️ {t('settings')}</Link>
-        <button onClick={toggleSound} title={t('sound')} className="cursor-pointer">
+        <Link to="/map" onClick={() => playSound('click')}>🗺️ {t('worldMap')}</Link>
+        <Link to="/inventory" onClick={() => playSound('click')}>🧰 {t('inventory')}</Link>
+        <Link to="/settings" onClick={() => playSound('click')}>⚙️ {t('settings')}</Link>
+        <button onClick={() => { playSound('click'); toggleSound(); }} title={t('sound')} className="cursor-pointer">
           {soundOn ? '🔊' : '🔇'}
         </button>
         <button
-          onClick={() => setLang(lang === 'en' ? 'vi' : 'en')}
+          onClick={() => { playSound('click'); setLang(lang === 'en' ? 'vi' : 'en'); }}
           className="cursor-pointer font-pixel text-[10px] uppercase"
           data-testid="lang-toggle"
         >

@@ -51,7 +51,7 @@ describe('playSound', () => {
   });
 
   test('every SoundName has a tune', () => {
-    const names: SoundName[] = ['pop', 'success', 'levelup', 'badge'];
+    const names: SoundName[] = ['pop', 'success', 'levelup', 'badge', 'click', 'select'];
     for (const n of names) {
       const { ctx } = mockAudioContext();
       playSound(n);

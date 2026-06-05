@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useSettings } from '../stores/settingsStore';
+import { playSound } from '../features/audio/sounds';
 import { useT } from '../lib/i18n';
 import PixelButton from '../components/PixelButton';
 
@@ -13,7 +14,7 @@ export default function TitleScreen() {
       <button
         data-testid="lang-toggle-title"
         aria-label={lang === 'en' ? 'Switch to Vietnamese' : 'Switch to English'}
-        onClick={() => setLang(lang === 'en' ? 'vi' : 'en')}
+        onClick={() => { playSound('click'); setLang(lang === 'en' ? 'vi' : 'en'); }}
         className="absolute right-4 top-4 cursor-pointer font-pixel text-xs text-white drop-shadow"
       >
         🌐 {lang.toUpperCase()}

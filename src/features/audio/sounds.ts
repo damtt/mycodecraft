@@ -1,6 +1,6 @@
 import { useSettings } from '../../stores/settingsStore';
 
-export type SoundName = 'pop' | 'success' | 'levelup' | 'badge';
+export type SoundName = 'pop' | 'success' | 'levelup' | 'badge' | 'click' | 'select';
 
 // [frequency Hz, startOffset s, duration s]
 const TUNES: Record<SoundName, Array<[number, number, number]>> = {
@@ -8,6 +8,8 @@ const TUNES: Record<SoundName, Array<[number, number, number]>> = {
   success: [[659, 0, 0.1], [784, 0.1, 0.1], [1047, 0.2, 0.18]],
   levelup: [[523, 0, 0.12], [659, 0.12, 0.12], [784, 0.24, 0.12], [1047, 0.36, 0.3]],
   badge: [[784, 0, 0.1], [1175, 0.1, 0.22]],
+  click: [[330, 0, 0.05]],
+  select: [[523, 0, 0.07], [784, 0.07, 0.13]],
 };
 
 let ctx: AudioContext | null = null;

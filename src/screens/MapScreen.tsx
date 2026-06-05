@@ -3,6 +3,7 @@ import { WORLDS } from '../content/worlds';
 import { QUESTS_BY_WORLD } from '../content/quests';
 import { useActiveProfile } from '../stores/profileStore';
 import { questStatus, worldUnlocked } from '../features/progress/unlocks';
+import { playSound } from '../features/audio/sounds';
 import { useT } from '../lib/i18n';
 import Panel from '../components/Panel';
 
@@ -32,7 +33,7 @@ export default function MapScreen() {
                     <button
                       key={quest.id}
                       disabled={status === 'locked'}
-                      onClick={() => navigate(`/quest/${quest.id}`)}
+                      onClick={() => { playSound('click'); navigate(`/quest/${quest.id}`); }}
                       title={tl(quest.title)}
                       aria-label={`${t('questLabel')} ${quest.id}`}
                       className={`flex h-14 w-14 cursor-pointer flex-col items-center justify-center

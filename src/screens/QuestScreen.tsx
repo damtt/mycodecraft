@@ -51,6 +51,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
   const isJs = quest.world === 'js';
 
   const onHint = (i: number) => {
+    playSound('click');
     setUsedHint(true);
     setOpenHints((prev) => new Set(prev).add(i));
   };

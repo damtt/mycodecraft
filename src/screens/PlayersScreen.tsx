@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useProfiles } from '../stores/profileStore';
 import { rankForXp } from '../features/progress/ranks';
+import { playSound } from '../features/audio/sounds';
 import { useT } from '../lib/i18n';
 import Panel from '../components/Panel';
 import PixelButton from '../components/PixelButton';
@@ -37,7 +38,7 @@ export default function PlayersScreen() {
           return (
             <Panel key={p.id} className="flex w-44 flex-col items-center gap-2">
               <button
-                onClick={() => { select(p.id); navigate('/map'); }}
+                onClick={() => { playSound('select'); select(p.id); navigate('/map'); }}
                 className="flex cursor-pointer flex-col items-center gap-1"
                 aria-label={p.name}
               >
@@ -72,7 +73,7 @@ export default function PlayersScreen() {
                     role="radio"
                     aria-checked={avatar === a}
                     aria-label={a}
-                    onClick={() => setAvatar(a)}
+                    onClick={() => { playSound('click'); setAvatar(a); }}
                     className={`cursor-pointer rounded p-1 ${avatar === a ? 'bg-grass/40 ring-2 ring-grass-dark' : ''}`}
                   >
                     {a}
