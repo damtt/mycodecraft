@@ -2469,6 +2469,15 @@ describe('PlayersScreen', () => {
     expect(useProfiles.getState().profiles).toHaveLength(0);
     vi.useRealTimers();
   });
+
+  test('pressing Enter in the name field creates the profile', async () => {
+    renderAt();
+    fireEvent.click(await screen.findByRole('button', { name: /new player/i }));
+    const input = screen.getByPlaceholderText(/your name/i);
+    fireEvent.change(input, { target: { value: 'Lan' } });
+    fireEvent.submit(input.closest('form')!);
+    expect(useProfiles.getState().profiles[0]).toMatchObject({ name: 'Lan' });
+  });
 });
 ```
 
@@ -2501,9 +2510,11 @@ export default function PlayersScreen() {
   const [avatar, setAvatar] = useState(AVATARS[0]);
 
   const submit = () => {
+    if (name.trim() === '') return; // guards Enter-key implicit submission
     create(name.trim(), avatar);
     setCreating(false);
     setName('');
+    setAvatar(AVATARS[0]);
   };
 
   return (
@@ -2512,52 +2523,60 @@ export default function PlayersScreen() {
         {t('choosePlayer')}
       </h1>
       <div className="flex flex-wrap justify-center gap-6">
-        {profiles.map((p) => (
-          <Panel key={p.id} className="flex w-44 flex-col items-center gap-2">
-            <button
-              onClick={() => { select(p.id); navigate('/map'); }}
-              className="flex cursor-pointer flex-col items-center gap-1"
-              aria-label={p.name}
-            >
-              <span className="text-6xl">{p.avatar}</span>
-              <span className="font-body text-lg font-black">{p.name}</span>
-              <span className="font-pixel text-[10px]">
-                {rankForXp(p.xp).icon} {tl(rankForXp(p.xp).name)}
-              </span>
-            </button>
-            <HoldToConfirm label={t('holdToDelete')} onConfirm={() => remove(p.id)} className="text-xs" />
-          </Panel>
-        ))}
+        {profiles.map((p) => {
+          const rank = rankForXp(p.xp);
+          return (
+            <Panel key={p.id} className="flex w-44 flex-col items-center gap-2">
+              <button
+                onClick={() => { select(p.id); navigate('/map'); }}
+                className="flex cursor-pointer flex-col items-center gap-1"
+                aria-label={p.name}
+              >
+                <span className="text-6xl">{p.avatar}</span>
+                <span className="font-body text-lg font-black">{p.name}</span>
+                <span className="font-pixel text-[10px]">
+                  {rank.icon} {tl(rank.name)}
+                </span>
+              </button>
+              <HoldToConfirm label={t('holdToDelete')} onConfirm={() => remove(p.id)} className="text-xs" />
+            </Panel>
+          );
+        })}
 
         {creating ? (
           <Panel className="flex w-64 flex-col gap-3">
-            <input
-              autoFocus
-              value={name}
-              maxLength={MAX_NAME}
-              onChange={(e) => setName(e.target.value)}
-              placeholder={t('playerName')}
-              className="rounded border-2 border-stone p-2 font-body font-bold"
-            />
-            <p className="font-body text-sm font-bold">{t('pickAvatar')}</p>
-            <div role="radiogroup" className="grid grid-cols-4 gap-1 text-3xl">
-              {AVATARS.map((a) => (
-                <button
-                  key={a}
-                  role="radio"
-                  aria-checked={avatar === a}
-                  aria-label={a}
-                  onClick={() => setAvatar(a)}
-                  className={`cursor-pointer rounded p-1 ${avatar === a ? 'bg-grass/40 ring-2 ring-grass-dark' : ''}`}
-                >
-                  {a}
-                </button>
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <PixelButton disabled={name.trim() === ''} onClick={submit}>{t('create')}</PixelButton>
-              <PixelButton variant="stone" onClick={() => setCreating(false)}>{t('cancel')}</PixelButton>
-            </div>
+            {/* Real <form> so Enter submits — the natural move after typing a name.
+                ⚠️ Every non-submit button inside MUST be type="button". */}
+            <form onSubmit={(e) => { e.preventDefault(); submit(); }} className="flex flex-col gap-3">
+              <input
+                autoFocus
+                value={name}
+                maxLength={MAX_NAME}
+                onChange={(e) => setName(e.target.value)}
+                placeholder={t('playerName')}
+                className="rounded border-2 border-stone p-2 font-body font-bold"
+              />
+              <p className="font-body text-sm font-bold">{t('pickAvatar')}</p>
+              <div role="radiogroup" className="grid grid-cols-4 gap-1 text-3xl">
+                {AVATARS.map((a) => (
+                  <button
+                    key={a}
+                    type="button"
+                    role="radio"
+                    aria-checked={avatar === a}
+                    aria-label={a}
+                    onClick={() => setAvatar(a)}
+                    className={`cursor-pointer rounded p-1 ${avatar === a ? 'bg-grass/40 ring-2 ring-grass-dark' : ''}`}
+                  >
+                    {a}
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <PixelButton type="submit" disabled={name.trim() === ''}>{t('create')}</PixelButton>
+                <PixelButton type="button" variant="stone" onClick={() => setCreating(false)}>{t('cancel')}</PixelButton>
+              </div>
+            </form>
           </Panel>
         ) : (
           <Panel className="flex w-44 items-center justify-center">
