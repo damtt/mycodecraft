@@ -3,7 +3,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router';
 import { vi } from 'vitest';
 import type { Quest } from '../lib/types';
 
-const { QUEST, runDomChecks } = vi.hoisted(() => {
+const { QUEST, QUEST2, runDomChecks } = vi.hoisted(() => {
   const L = (en: string, vi?: string) => ({ en, vi: vi ?? en });
   const QUEST: Quest = {
     id: 'html-01', world: 'html', xp: 50, badge: 'b-wood',
@@ -17,16 +17,23 @@ const { QUEST, runDomChecks } = vi.hoisted(() => {
       { type: 'codeIncludes', value: '<p>', failMessage: L('No <p> yet!') },
     ],
   };
+  const QUEST2: Quest = {
+    id: 'html-02', world: 'html', xp: 50, badge: 'b-sign',
+    title: L('Big Signs'), story: L('Another villager appears.'),
+    steps: [{ text: L('Write an h2 tag') }],
+    starterCode: '<!-- second -->',
+    checks: [{ type: 'codeIncludes', value: '<h2>', failMessage: L('No <h2> yet!') }],
+  };
   const runDomChecks = vi.fn(async (checks: unknown[]) => checks.map(() => true));
-  return { QUEST, runDomChecks };
+  return { QUEST, QUEST2, runDomChecks };
 });
 
 vi.mock('../content/quests', () => ({
-  ALL_QUESTS: [QUEST],
-  QUESTS_BY_WORLD: { html: [QUEST], css: [], js: [] },
-  QUESTS_BY_WORLD_IDS: { html: ['html-01'], css: [], js: [] },
-  questById: (id: string) => (id === 'html-01' ? QUEST : undefined),
-  nextQuest: () => null,
+  ALL_QUESTS: [QUEST, QUEST2],
+  QUESTS_BY_WORLD: { html: [QUEST, QUEST2], css: [], js: [] },
+  QUESTS_BY_WORLD_IDS: { html: ['html-01', 'html-02'], css: [], js: [] },
+  questById: (id: string) => [QUEST, QUEST2].find((q) => q.id === id),
+  nextQuest: (id: string) => (id === 'html-01' ? QUEST2 : null),
 }));
 vi.mock('../features/audio/sounds', () => ({ playSound: vi.fn() }));
 
@@ -106,5 +113,18 @@ describe('QuestScreen', () => {
     fireEvent.change(await screen.findByTestId('code-editor'), { target: { value: '<p>x</p>' } });
     act(() => void vi.advanceTimersByTime(350));
     expect(screen.getByTitle(/preview/i)).toHaveAttribute('srcdoc', 'SRC:<p>x</p>');
+  });
+
+  test('next-quest navigation resets all quest state', async () => {
+    renderQuest();
+    fireEvent.click(await screen.findByRole('button', { name: /hint/i })); // create leak sources
+    fireEvent.change(screen.getByTestId('code-editor'), { target: { value: '<p>Hello</p>' } });
+    fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
+    fireEvent.click(await screen.findByRole('button', { name: /next quest/i }));
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument(); // overlay reset
+    expect(await screen.findByTestId('code-editor')).toHaveValue('<!-- second -->'); // fresh starter
+    expect(screen.queryByText(/like <p>hi<\/p>/i)).not.toBeInTheDocument(); // hints reset
+    expect(screen.getByText(/another villager appears/i)).toBeInTheDocument(); // new quest rendered
   });
 });

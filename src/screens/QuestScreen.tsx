@@ -16,7 +16,13 @@ const DEBOUNCE_MS = 300;
 
 export default function QuestScreen() {
   const { id = '' } = useParams();
-  const quest = questById(id);
+  // React Router does NOT remount route elements on param change — the key
+  // forces a full remount per quest so all useState initializers re-run.
+  return <QuestScreenInner key={id} questId={id} />;
+}
+
+function QuestScreenInner({ questId }: { questId: string }) {
+  const quest = questById(questId);
   const navigate = useNavigate();
   const profile = useActiveProfile();
   const completeQuest = useProfiles((s) => s.completeQuest);
