@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate, Outlet, useLocation } from 'react-router';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router';
 import { useProfiles } from '../stores/profileStore';
 import HudBar from '../components/HudBar';
 import TitleScreen from '../screens/TitleScreen';
@@ -11,8 +11,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 /** Game routes need an active profile; otherwise bounce to player select. */
 function RequireProfile() {
   const activeId = useProfiles((s) => s.activeId);
-  const location = useLocation();
-  if (!activeId) return <Navigate to="/players" replace state={{ from: location }} />;
+  if (!activeId) return <Navigate to="/players" replace />;
   return (
     <div className="flex min-h-screen flex-col">
       <HudBar />

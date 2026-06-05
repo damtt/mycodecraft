@@ -17,9 +17,9 @@ export default function VictoryOverlay({ rewards, hasNext, onNext, onBackToMap }
   const badge = rewards.newBadge ? BADGES.find((b) => b.id === rewards.newBadge) : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-night/80" role="dialog">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-night/80" role="dialog" aria-modal="true" aria-labelledby="victory-title">
       <Panel className="w-96 text-center">
-        <h2 className="font-pixel text-lg text-grass-dark">🎉 {t('victory')}</h2>
+        <h2 id="victory-title" className="font-pixel text-lg text-grass-dark">🎉 {t('victory')}</h2>
         <p className="mt-3 font-body text-xl font-black">
           +{rewards.xpGained} {t('xpGained')}
           {rewards.dailyBonus && <span className="ml-2 text-gold">☀️ {t('dailyBonus')}</span>}

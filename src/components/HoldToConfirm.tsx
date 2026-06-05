@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface HoldToConfirmProps {
   label: string;
@@ -26,6 +26,10 @@ export default function HoldToConfirm({ label, holdMs = 1500, onConfirm, classNa
     setHolding(false);
     if (timer.current) clearTimeout(timer.current);
   };
+
+  // A pending hold must die with the component — otherwise onConfirm (e.g. a
+  // profile delete) could fire after unmount.
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
   return (
     <button
