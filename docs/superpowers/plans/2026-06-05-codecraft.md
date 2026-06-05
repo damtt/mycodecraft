@@ -950,7 +950,7 @@ export const UI = {
   checkMyCode: { en: 'Check my code', vi: 'Kiểm tra code' },
   hint: { en: 'Hint', vi: 'Gợi ý' },
   preview: { en: 'Preview', vi: 'Xem trước' },
-  console: { en: 'Console', vi: 'Bảng điều khiển' },
+  console: { en: 'Console', vi: 'Console' }, // loanword — what VI kids see in tech contexts
   victory: { en: 'Quest complete!', vi: 'Hoàn thành nhiệm vụ!' },
   xpGained: { en: 'XP earned', vi: 'XP nhận được' },
   dailyBonus: { en: 'Daily bonus!', vi: 'Thưởng hằng ngày!' },
@@ -961,6 +961,7 @@ export const UI = {
   backToMap: { en: 'Back to map', vi: 'Về bản đồ' },
   replayDone: { en: 'Nice mining! You already beat this quest.', vi: 'Đào giỏi lắm! Bạn đã thắng nhiệm vụ này rồi.' },
   stuckLoop: { en: 'Sssomething is stuck in a loop! Check your code and try again.', vi: 'Có gì đó bị kẹt trong vòng lặp! Kiểm tra code và thử lại nhé.' },
+  // Prefix string — call sites must append the line number (e.g., t('codeBoom') + ' ' + line)
   codeBoom: { en: 'Sssomething went boom on line', vi: 'Có gì đó nổ tung ở dòng' },
   badges: { en: 'Badges', vi: 'Huy hiệu' },
   achievements: { en: 'Achievements', vi: 'Thành tích' },
@@ -1003,7 +1004,7 @@ export const useSettings = create<SettingsState>()(
       setLang: (lang) => set({ lang }),
       toggleSound: () => set((s) => ({ soundOn: !s.soundOn })),
     }),
-    { name: 'codecraft:settings' },
+    { name: 'codecraft:settings', version: 1 },
   ),
 );
 ```
@@ -1015,12 +1016,16 @@ import type { Lang, Localized } from './types';
 import { UI, type UIKey } from '../content/i18n/ui';
 import { useSettings } from '../stores/settingsStore';
 
-/** Pure lookup with EN fallback for blank translations. */
+/** Pure lookup with EN fallback for blank/whitespace-only translations. */
 export function lt(l: Localized, lang: Lang): string {
-  return (lang === 'vi' && l.vi) || l.en;
+  return (lang === 'vi' && l.vi.trim()) || l.en;
 }
 
-/** Hook: t('key') for UI strings, tl(localized) for content strings. */
+/**
+ * Hook: t('key') for UI strings, tl(localized) for content strings.
+ * Note: t and tl are NOT referentially stable across renders — call them
+ * inline in JSX; never put them in useEffect dependency arrays.
+ */
 export function useT() {
   const lang = useSettings((s) => s.lang);
   return {
