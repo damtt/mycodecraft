@@ -11,7 +11,7 @@ import { useSettings } from '../stores/settingsStore';
 beforeEach(() => {
   localStorage.clear();
   useProfiles.setState({ profiles: [], activeId: null });
-  useSettings.setState({ lang: 'en', soundOn: true });
+  useSettings.setState({ lang: 'en', soundOn: true, fontScale: 'md' });
 });
 
 function renderSettings() {
@@ -37,13 +37,31 @@ describe('SettingsScreen', () => {
     expect(useSettings.getState().soundOn).toBe(false);
   });
 
-  test('hold-to-reset zeroes active profile progress', async () => {
+  test('font size radios update the setting', async () => {
+    renderSettings();
+    fireEvent.click(await screen.findByRole('radio', { name: /large/i }));
+    expect(useSettings.getState().fontScale).toBe('lg');
+  });
+
+  test('reset asks for explicit confirmation before wiping', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     renderSettings();
-    const btn = await screen.findByRole('button', { name: /hold to reset/i });
-    fireEvent.mouseDown(btn);
-    act(() => void vi.advanceTimersByTime(2100));
+    // No hold-to-reset until the confirmation dialog is opened.
+    expect(screen.queryByRole('button', { name: /hold to reset/i })).not.toBeInTheDocument();
+    fireEvent.click(await screen.findByRole('button', { name: /^reset progress$/i }));
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    const hold = screen.getByRole('button', { name: /hold to reset/i });
+    fireEvent.mouseDown(hold);
+    act(() => void vi.advanceTimersByTime(1600));
     expect(useProfiles.getState().profiles[0].xp).toBe(0);
     vi.useRealTimers();
+  });
+
+  test('reset can be cancelled without wiping', async () => {
+    renderSettings();
+    fireEvent.click(await screen.findByRole('button', { name: /^reset progress$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /cancel/i }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(useProfiles.getState().profiles[0].xp).toBe(100);
   });
 });
