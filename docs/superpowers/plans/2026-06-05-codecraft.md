@@ -3813,7 +3813,7 @@ describe('quest content integrity', () => {
     expect(filled(q.title)).toBe(true);
     expect(filled(q.story)).toBe(true);
     expect(q.starterCode.trim()).not.toBe('');
-    expect(q.steps.length).toBeGreaterThanOrEqual(1);
+    expect(q.steps.length).toBeGreaterThanOrEqual(2); // writing rule: 2–4 (boss ≤6)
     expect(q.steps.length).toBeLessThanOrEqual(6);
     for (const step of q.steps) {
       expect(filled(step.text)).toBe(true);
@@ -3824,6 +3824,11 @@ describe('quest content integrity', () => {
       expect(filled(check.failMessage)).toBe(true);
       if ('selector' in check) expect(check.selector.trim()).not.toBe('');
       if (check.type === 'computedStyle') expect(check.equalsAny.length).toBeGreaterThan(0);
+      // Empty value/attr/prop would make a check vacuously always-pass at runtime
+      if ('value' in check) expect(check.value.trim()).not.toBe('');
+      if (check.type === 'attrEquals') expect(check.attr.trim()).not.toBe('');
+      if (check.type === 'computedStyle') expect(check.prop.trim()).not.toBe('');
+      if (check.type === 'elementCount') expect(check.min).toBeGreaterThanOrEqual(1);
     }
     expect([50, 75, 100]).toContain(q.xp);
   });
@@ -3840,12 +3845,21 @@ describe('quest content integrity', () => {
     for (const b of used) expect(badgeIds.has(b)).toBe(true);
     expect(new Set(used).size).toBe(30);
     expect(BADGES).toHaveLength(30);
+    expect(new Set(BADGES.map((b) => b.id)).size).toBe(BADGES.length); // no dup ids
   });
 
   test('badges have icons and bilingual names', () => {
     for (const b of BADGES) {
       expect(b.icon.trim()).not.toBe('');
       expect(filled(b.name)).toBe(true);
+    }
+  });
+
+  test('worlds have icons and bilingual names and taglines', () => {
+    for (const w of WORLDS) {
+      expect(w.icon.trim()).not.toBe('');
+      expect(filled(w.name)).toBe(true);
+      expect(filled(w.tagline)).toBe(true);
     }
   });
 });
