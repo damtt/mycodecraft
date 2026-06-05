@@ -1,7 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import { createMemoryRouter, RouterProvider } from 'react-router';
+import { routes } from './app/router';
 
-test('renders the app name', () => {
-  render(<App />);
-  expect(screen.getByText(/codecraft/i)).toBeInTheDocument();
+test('renders title screen at /', async () => {
+  const router = createMemoryRouter(routes, { initialEntries: ['/'] });
+  render(<RouterProvider router={router} />);
+  expect(await screen.findByTestId('title-screen')).toBeInTheDocument();
+});
+
+test('game routes redirect to /players when no profile is active', async () => {
+  const router = createMemoryRouter(routes, { initialEntries: ['/map'] });
+  render(<RouterProvider router={router} />);
+  expect(await screen.findByTestId('players-screen')).toBeInTheDocument();
 });

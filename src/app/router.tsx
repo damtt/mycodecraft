@@ -1,0 +1,38 @@
+import { createBrowserRouter, Navigate, Outlet, useLocation } from 'react-router';
+import { useProfiles } from '../stores/profileStore';
+import HudBar from '../components/HudBar';
+import TitleScreen from '../screens/TitleScreen';
+import PlayersScreen from '../screens/PlayersScreen';
+import MapScreen from '../screens/MapScreen';
+import QuestScreen from '../screens/QuestScreen';
+import InventoryScreen from '../screens/InventoryScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+
+/** Game routes need an active profile; otherwise bounce to player select. */
+function RequireProfile() {
+  const activeId = useProfiles((s) => s.activeId);
+  const location = useLocation();
+  if (!activeId) return <Navigate to="/players" replace state={{ from: location }} />;
+  return (
+    <div className="flex min-h-screen flex-col">
+      <HudBar />
+      <main className="flex-1"><Outlet /></main>
+    </div>
+  );
+}
+
+export const routes = [
+  { path: '/', element: <TitleScreen /> },
+  { path: '/players', element: <PlayersScreen /> },
+  {
+    element: <RequireProfile />,
+    children: [
+      { path: '/map', element: <MapScreen /> },
+      { path: '/quest/:id', element: <QuestScreen /> },
+      { path: '/inventory', element: <InventoryScreen /> },
+      { path: '/settings', element: <SettingsScreen /> },
+    ],
+  },
+];
+
+export const router = createBrowserRouter(routes);
