@@ -14,9 +14,9 @@ export default function HudBar() {
   const streak = streakDisplay(profile.streak, todayString());
 
   return (
-    <header className="flex items-center gap-4 bg-night/90 px-4 py-2 text-white">
+    <header className="flex items-center gap-4 border-b-4 border-grass-dark bg-night px-4 py-2 text-white">
       <Link to="/players" className="text-2xl" title={profile.name}>{profile.avatar}</Link>
-      <span className="font-pixel text-xs">{profile.name}</span>
+      <span className="font-pixel text-xs text-white drop-shadow-[1px_1px_0_#000]">{profile.name}</span>
       <XpBar xp={profile.xp} />
       <span className="font-body font-bold" data-testid="streak">🔥{streak}</span>
       {/* Decorative hearts — no lives mechanic (spec §Gamification) */}

@@ -9,14 +9,14 @@ export default function XpBar({ xp }: { xp: number }) {
   return (
     <div className="flex items-center gap-2" title={`${xp} XP`}>
       <span className="font-pixel text-xs">{rank.icon}</span>
-      <div className="h-3 w-28 rounded-full bg-night/30">
+      <div className="h-3 w-28 rounded-full bg-black/40 ring-1 ring-white/25">
         <div
           data-testid="xp-fill"
           className="h-3 rounded-full bg-gradient-to-r from-grass to-diamond"
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className="font-pixel text-[10px] text-night">Lv{rank.level}</span>
+      <span className="font-pixel text-[10px] text-white">Lv{rank.level}</span>
     </div>
   );
 }
