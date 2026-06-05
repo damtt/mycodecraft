@@ -1732,6 +1732,7 @@ CodeMirror doesn't run meaningfully under jsdom — **no unit test** (documented
 ```tsx
 import { useEffect, useRef } from 'react';
 import { EditorView, basicSetup } from 'codemirror';
+import { autocompletion } from '@codemirror/autocomplete';
 import { html } from '@codemirror/lang-html';
 
 interface CodeEditorProps {
@@ -1757,6 +1758,7 @@ export default function CodeEditor({ initialValue, onChange }: CodeEditorProps) 
       parent: hostRef.current,
       extensions: [
         basicSetup,
+        autocompletion({ override: [] }), // no popups while kids type — re-enable deliberately later
         html(),
         EditorView.lineWrapping,
         EditorView.theme({
@@ -1772,7 +1774,7 @@ export default function CodeEditor({ initialValue, onChange }: CodeEditorProps) 
     // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only; remount via key
   }, []);
 
-  return <div ref={hostRef} data-testid="code-editor" className="h-full overflow-hidden rounded-lg" />;
+  return <div ref={hostRef} aria-label="Code editor" data-testid="code-editor" className="h-full overflow-hidden rounded-lg" />;
 }
 ```
 
