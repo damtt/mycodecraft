@@ -50,15 +50,28 @@ describe('PlayersScreen', () => {
     expect(useProfiles.getState().profiles[0]).toMatchObject({ name: 'Lan' });
   });
 
-  test('hold-to-delete removes a profile', async () => {
+  test('deleting a profile requires confirmation, then hold-to-delete removes it', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     useProfiles.getState().create('Tom', '🐺');
     renderAt();
-    const del = await screen.findByRole('button', { name: /hold to delete/i });
+    // Hold-to-delete is not shown until the user confirms intent.
+    expect(screen.queryByRole('button', { name: /hold to delete/i })).toBeNull();
+    fireEvent.click(await screen.findByRole('button', { name: /^delete$/i }));
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    const del = screen.getByRole('button', { name: /hold to delete/i });
     fireEvent.mouseDown(del);
     act(() => void vi.advanceTimersByTime(1600));
     expect(useProfiles.getState().profiles).toHaveLength(0);
     vi.useRealTimers();
+  });
+
+  test('cancelling the delete confirmation keeps the profile', async () => {
+    useProfiles.getState().create('Tom', '🐺');
+    renderAt();
+    fireEvent.click(await screen.findByRole('button', { name: /^delete$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /cancel/i }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(useProfiles.getState().profiles).toHaveLength(1);
   });
 
   test('back link returns to the title screen', async () => {
