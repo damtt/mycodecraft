@@ -24,7 +24,7 @@ export default function HudBar() {
         aria-label={t(HOME_ITEM.key)}
         title={t(HOME_ITEM.key)}
         onClick={() => playSound('click')}
-        className="font-pixel text-base leading-none"
+        className="text-2xl leading-none"
       >
         <Icon name={HOME_ITEM.icon} />
       </Link>

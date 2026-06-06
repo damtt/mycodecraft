@@ -1,4 +1,6 @@
-# ⛏️ CodeCraft
+<p align="center">
+  <img src="public/logo.png" alt="CodeCraft" width="480" />
+</p>
 
 > A blocky, voxel-builder-inspired web game that teaches kids (ages 9–12) to write **HTML, CSS, and JavaScript** — with a live code editor, instant visual feedback, XP, ranks, and collectible badges. Fully bilingual **English / Tiếng Việt**.
 
