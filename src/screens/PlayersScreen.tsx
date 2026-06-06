@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import { useProfiles } from '../stores/profileStore';
 import { rankForXp } from '../features/progress/ranks';
 import { playSound } from '../features/audio/sounds';
@@ -28,7 +28,15 @@ export default function PlayersScreen() {
   };
 
   return (
-    <div data-testid="players-screen" className="bg-world flex min-h-screen flex-col items-center gap-8 pt-16">
+    <div data-testid="players-screen" className="bg-world relative flex min-h-screen flex-col items-center gap-8 pt-16">
+      <Link
+        to="/"
+        aria-label={t('backToTitle')}
+        title={t('backToTitle')}
+        className="absolute left-4 top-4 cursor-pointer font-pixel text-sm text-white drop-shadow"
+      >
+        ← {t('home')}
+      </Link>
       <h1 className="font-pixel text-2xl text-white [text-shadow:3px_3px_0_#3d8527]">
         {t('choosePlayer')}
       </h1>
