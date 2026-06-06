@@ -32,7 +32,7 @@ describe('ranks', () => {
     expect(rankForXp(0).id).toBe('dirt');
     expect(rankForXp(199).id).toBe('dirt');
     expect(rankForXp(200).id).toBe('stone');
-    expect(rankForXp(2000).id).toBe('netherite');
+    expect(rankForXp(2000).id).toBe('obsidian');
     expect(nextRank(0)!.id).toBe('stone');
     expect(nextRank(2500)).toBeNull();
   });

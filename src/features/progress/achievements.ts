@@ -33,7 +33,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   },
   {
     id: 'world-js', icon: '🟨',
-    name: { en: 'Redstone Engineer', vi: 'Kỹ sư Redstone' },
+    name: { en: 'Sparkstone Engineer', vi: 'Kỹ sư Sparkstone' },
     desc: { en: 'Finish every JS quest', vi: 'Hoàn thành mọi nhiệm vụ JS' },
     earned: (p, q) => worldDone(p, q.js),
   },

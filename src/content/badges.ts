@@ -23,15 +23,15 @@ export const BADGES: BadgeDef[] = [
   { id: 'b-beacon', icon: '🔆', name: { en: 'Beacon', vi: 'Hải đăng' } },
   { id: 'b-potion', icon: '🧪', name: { en: 'Potion', vi: 'Thuốc tiên' } },
   { id: 'b-diamond', icon: '💎', name: { en: 'Diamond', vi: 'Kim cương' } },
-  // JS Redstone Mines
-  { id: 'b-torch', icon: '🔦', name: { en: 'Redstone Torch', vi: 'Đuốc Redstone' } },
+  // JS Sparkstone Mines
+  { id: 'b-torch', icon: '🔦', name: { en: 'Sparkstone Torch', vi: 'Đuốc Sparkstone' } },
   { id: 'b-chest', icon: '📦', name: { en: 'Chest', vi: 'Rương' } },
   { id: 'b-emerald', icon: '💚', name: { en: 'Emerald', vi: 'Ngọc lục bảo' } },
   { id: 'b-zombie', icon: '🧟', name: { en: 'Zombie Helmet', vi: 'Mũ Zombie' } },
-  { id: 'b-command', icon: '🟧', name: { en: 'Command Block', vi: 'Khối lệnh' } },
+  { id: 'b-command', icon: '🟧', name: { en: 'Logic Block', vi: 'Khối logic' } },
   { id: 'b-lever', icon: '🎚️', name: { en: 'Lever', vi: 'Cần gạt' } },
   { id: 'b-piston', icon: '⚙️', name: { en: 'Piston', vi: 'Pít-tông' } },
-  { id: 'b-minecart', icon: '🛒', name: { en: 'Minecart', vi: 'Xe mỏ' } },
+  { id: 'b-minecart', icon: '🛒', name: { en: 'Rail Cart', vi: 'Xe goòng' } },
   { id: 'b-dice', icon: '🎲', name: { en: 'Lucky Dice', vi: 'Xúc xắc may mắn' } },
   { id: 'b-trophy', icon: '🏆', name: { en: 'Builder Trophy', vi: 'Cúp xây dựng' } },
 ];

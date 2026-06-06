@@ -7,8 +7,8 @@ export const q01: Quest = {
   badge: 'b-torch',
   title: { en: 'First Spark', vi: 'Tia lửa đầu tiên' },
   story: {
-    en: 'Redstone makes things DO stuff — and so does JavaScript! Light your first redstone torch by printing a message.',
-    vi: 'Redstone làm mọi thứ HOẠT ĐỘNG — JavaScript cũng vậy! Hãy thắp ngọn đuốc redstone đầu tiên bằng cách in ra một thông điệp.',
+    en: 'Sparkstone makes things DO stuff — and so does JavaScript! Light your first Sparkstone torch by printing a message.',
+    vi: 'Sparkstone làm mọi thứ HOẠT ĐỘNG — JavaScript cũng vậy! Hãy thắp ngọn đuốc Sparkstone đầu tiên bằng cách in ra một thông điệp.',
   },
   steps: [
     {
@@ -29,7 +29,7 @@ export const q01: Quest = {
     },
   ],
   starterCode:
-    '<h1>Redstone Lab</h1>\n\n<script>\n  // ⚡ Your JavaScript goes here\n\n</script>\n',
+    '<h1>Sparkstone Lab</h1>\n\n<script>\n  // ⚡ Your JavaScript goes here\n\n</script>\n',
   checks: [
     {
       type: 'consoleIncludes',

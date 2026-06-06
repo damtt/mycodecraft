@@ -5,10 +5,10 @@ export const q08: Quest = {
   world: 'js',
   xp: 75,
   badge: 'b-minecart',
-  title: { en: 'Minecart Loop', vi: 'Vòng lặp xe mỏ' },
+  title: { en: 'Rail Cart Loop', vi: 'Vòng lặp xe goòng' },
   story: {
-    en: 'A minecart rolls down the track, mining block after block. A `for` loop repeats your code many times — no copy-paste needed!',
-    vi: 'Một chiếc xe mỏ lăn dọc đường ray, đào hết khối này đến khối khác. Vòng lặp `for` lặp lại code của bạn nhiều lần — không cần copy-paste!',
+    en: 'A rail cart rolls down the track, mining block after block. A `for` loop repeats your code many times — no copy-paste needed!',
+    vi: 'Một chiếc xe goòng lăn dọc đường ray, đào hết khối này đến khối khác. Vòng lặp `for` lặp lại code của bạn nhiều lần — không cần copy-paste!',
   },
   steps: [
     {

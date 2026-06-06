@@ -33,7 +33,7 @@ export const q06: Quest = {
     },
   ],
   starterCode:
-    '<h1>Redstone Switch</h1>\n<button>Pull</button>\n\n<script>\n  // 🎚️ Listen for a click on the button\n\n</script>\n',
+    '<h1>Sparkstone Switch</h1>\n<button>Pull</button>\n\n<script>\n  // 🎚️ Listen for a click on the button\n\n</script>\n',
   checks: [
     {
       type: 'elementExists',

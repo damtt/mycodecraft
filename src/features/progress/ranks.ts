@@ -14,7 +14,7 @@ export const RANKS: Rank[] = [
   { level: 3, id: 'iron', icon: '⛏️', name: { en: 'Iron', vi: 'Sắt' }, minXp: 500 },
   { level: 4, id: 'gold', icon: '🥇', name: { en: 'Gold', vi: 'Vàng' }, minXp: 900 },
   { level: 5, id: 'diamond', icon: '💎', name: { en: 'Diamond', vi: 'Kim cương' }, minXp: 1400 },
-  { level: 6, id: 'netherite', icon: '🟪', name: { en: 'Netherite', vi: 'Netherite' }, minXp: 2000 },
+  { level: 6, id: 'obsidian', icon: '⬛', name: { en: 'Obsidian', vi: 'Obsidian' }, minXp: 2000 },
 ];
 
 export function rankForXp(xp: number): Rank {

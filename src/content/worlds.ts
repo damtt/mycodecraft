@@ -13,7 +13,7 @@ export const WORLDS: World[] = [
   },
   {
     id: 'js', icon: '🟨',
-    name: { en: 'JS Redstone Mines', vi: 'Mỏ Redstone JS' },
+    name: { en: 'JS Sparkstone Mines', vi: 'Mỏ Sparkstone JS' },
     tagline: { en: 'Make things move and think', vi: 'Làm mọi thứ chuyển động và suy nghĩ' },
   },
 ];

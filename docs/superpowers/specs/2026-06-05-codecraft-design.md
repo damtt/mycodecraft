@@ -28,7 +28,7 @@ It is a personal, local-first app for the developer's own children: no backend, 
 
 1. **`/` Title screen** — game logo, "press start"-style entry, EN/VI toggle.
 2. **`/players` Profile select** — pick-your-player cards (name + pixel-art avatar head), create/delete profile (delete uses the same hold-to-confirm guard as settings reset).
-3. **`/map` World map (hub)** — three islands/biomes: 🟫 HTML Grasslands → 🟦 CSS Caves → 🟨 JS Redstone Mines. Quest nodes on a path: done ✅ / current ⛏ / locked 🔒. HUD bar: avatar, level + rank, XP bar, streak flame, sound toggle, language toggle.
+3. **`/map` World map (hub)** — three islands/biomes: 🟫 HTML Grasslands → 🟦 CSS Caves → 🟨 JS Sparkstone Mines. Quest nodes on a path: done ✅ / current ⛏ / locked 🔒. HUD bar: avatar, level + rank, XP bar, streak flame, sound toggle, language toggle.
 4. **`/quest/:id` Quest screen** — lesson panel left (story intro + numbered steps + hint button), CodeMirror editor top-right, sandboxed preview iframe bottom-right. "Check my code" → all checks pass → victory overlay (XP rain, sound, badge drop) → next quest.
 5. **`/inventory` Inventory** — badges/blocks in a blocky-style chest grid, achievements, stats (quests done, streak record).
 6. **`/settings` Settings** — language, sound on/off, reset progress (hold-to-confirm, parent-guarded).
@@ -106,13 +106,13 @@ Zustand `persist` middleware behind a small versioned-schema wrapper (`{ version
 | ⛏ Iron | 3 | 500 |
 | 🥇 Gold | 4 | 900 |
 | 💎 Diamond | 5 | 1,400 |
-| 🟪 Netherite | 6 | 2,000 |
+| 🟪 Obsidian | 6 | 2,000 |
 
-**Badges** — each quest drops a world-themed collectible (HTML: wood/sign/crafting table…; CSS: dyes/paintings/glass…; JS: redstone/lever/piston…). Meta-achievements: First Quest, World Complete ×3, 7-Day Streak, No-Hint Hero.
+**Badges** — each quest drops a world-themed collectible (HTML: wood/sign/crafting table…; CSS: dyes/paintings/glass…; JS: Sparkstone/lever/piston…). Meta-achievements: First Quest, World Complete ×3, 7-Day Streak, No-Hint Hero.
 
 **Streaks & daily goal** — ≥1 quest completion (incl. replays) per calendar day extends the streak (flame + count in HUD). Missed day quietly resets to 0 — no punishment messaging. Daily goal "1 quest a day" grants +20 bonus XP.
 
-**Replays award no quest XP** (prevents grinding a single easy quest to Netherite) — but they do count toward the streak and daily goal, so practicing old quests still keeps the flame alive.
+**Replays award no quest XP** (prevents grinding a single easy quest to Obsidian) — but they do count toward the streak and daily goal, so practicing old quests still keeps the flame alive.
 
 **Sounds** — pop (click), success chime, level-up fanfare, badge drop. Preloaded `<audio>` from CC0 packs; global mute in settings. No background music in v1.
 
@@ -149,6 +149,6 @@ E2E browser automation: out of scope for v1.
 
 **CSS Caves (10):** colors → fonts & text styling → backgrounds → borders & spacing (box model) → sizes → classes & ids → flexbox row → flexbox layout → hover effects & transitions → boss: style the fan page into a real site.
 
-**JS Redstone Mines (10):** console.log & strings → variables → numbers & math → if/else → functions → click events → changing the page (DOM) → loops → random & logic combo → boss: build a clicker mini-game.
+**JS Sparkstone Mines (10):** console.log & strings → variables → numbers & math → if/else → functions → click events → changing the page (DOM) → loops → random & logic combo → boss: build a clicker mini-game.
 
 Exact per-quest steps, hints, starter code, and checks are written during implementation; the content validation test enforces structural completeness in both languages.

@@ -574,7 +574,7 @@ export const RANKS: Rank[] = [
   { level: 3, id: 'iron', icon: '⛏️', name: { en: 'Iron', vi: 'Sắt' }, minXp: 500 },
   { level: 4, id: 'gold', icon: '🥇', name: { en: 'Gold', vi: 'Vàng' }, minXp: 900 },
   { level: 5, id: 'diamond', icon: '💎', name: { en: 'Diamond', vi: 'Kim cương' }, minXp: 1400 },
-  { level: 6, id: 'netherite', icon: '🟪', name: { en: 'Netherite', vi: 'Netherite' }, minXp: 2000 },
+  { level: 6, id: 'obsidian', icon: '🟪', name: { en: 'Obsidian', vi: 'Obsidian' }, minXp: 2000 },
 ];
 
 export function rankForXp(xp: number): Rank {
@@ -663,7 +663,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   },
   {
     id: 'world-js', icon: '🟨',
-    name: { en: 'Redstone Engineer', vi: 'Kỹ sư Redstone' },
+    name: { en: 'Sparkstone Engineer', vi: 'Kỹ sư Sparkstone' },
     desc: { en: 'Finish every JS quest', vi: 'Hoàn thành mọi nhiệm vụ JS' },
     earned: (p, q) => worldDone(p, q.js),
   },
@@ -822,7 +822,7 @@ describe('ranks', () => {
     expect(rankForXp(0).id).toBe('dirt');
     expect(rankForXp(199).id).toBe('dirt');
     expect(rankForXp(200).id).toBe('stone');
-    expect(rankForXp(2000).id).toBe('netherite');
+    expect(rankForXp(2000).id).toBe('obsidian');
     expect(nextRank(0)!.id).toBe('stone');
     expect(nextRank(2500)).toBeNull();
   });
@@ -2657,7 +2657,7 @@ export const WORLDS: World[] = [
   },
   {
     id: 'js', icon: '🟨',
-    name: { en: 'JS Redstone Mines', vi: 'Mỏ Redstone JS' },
+    name: { en: 'JS Sparkstone Mines', vi: 'Mỏ Sparkstone JS' },
     tagline: { en: 'Make things move and think', vi: 'Làm mọi thứ chuyển động và suy nghĩ' },
   },
 ];
@@ -3477,15 +3477,15 @@ export const BADGES: BadgeDef[] = [
   { id: 'b-beacon', icon: '🔆', name: { en: 'Beacon', vi: 'Hải đăng' } },
   { id: 'b-potion', icon: '🧪', name: { en: 'Potion', vi: 'Thuốc tiên' } },
   { id: 'b-diamond', icon: '💎', name: { en: 'Diamond', vi: 'Kim cương' } },
-  // JS Redstone Mines
-  { id: 'b-torch', icon: '🔦', name: { en: 'Redstone Torch', vi: 'Đuốc Redstone' } },
+  // JS Sparkstone Mines
+  { id: 'b-torch', icon: '🔦', name: { en: 'Sparkstone Torch', vi: 'Đuốc Sparkstone' } },
   { id: 'b-chest', icon: '📦', name: { en: 'Chest', vi: 'Rương' } },
   { id: 'b-emerald', icon: '💚', name: { en: 'Emerald', vi: 'Ngọc lục bảo' } },
   { id: 'b-zombie', icon: '🧟', name: { en: 'Zombie Helmet', vi: 'Mũ Zombie' } },
-  { id: 'b-command', icon: '🟧', name: { en: 'Command Block', vi: 'Khối lệnh' } },
+  { id: 'b-command', icon: '🟧', name: { en: 'Logic Block', vi: 'Khối logic' } },
   { id: 'b-lever', icon: '🎚️', name: { en: 'Lever', vi: 'Cần gạt' } },
   { id: 'b-piston', icon: '⚙️', name: { en: 'Piston', vi: 'Pít-tông' } },
-  { id: 'b-minecart', icon: '🛒', name: { en: 'Minecart', vi: 'Xe mỏ' } },
+  { id: 'b-rail cart', icon: '🛒', name: { en: 'Rail Cart', vi: 'Xe goòng' } },
   { id: 'b-dice', icon: '🎲', name: { en: 'Lucky Dice', vi: 'Xúc xắc may mắn' } },
   { id: 'b-trophy', icon: '🏆', name: { en: 'Builder Trophy', vi: 'Cúp xây dựng' } },
 ];
@@ -3700,7 +3700,7 @@ git add src/content/quests/css && git commit -m "feat: add CSS Caves quest conte
 
 ---
 
-### Task 20: JS Redstone Mines quests
+### Task 20: JS Sparkstone Mines quests
 
 **Files:**
 - Create: `src/content/quests/js/q01.ts` … `q10.ts`
@@ -3718,8 +3718,8 @@ export const q01: Quest = {
   badge: 'b-torch',
   title: { en: 'First Spark', vi: 'Tia lửa đầu tiên' },
   story: {
-    en: 'Redstone makes things DO stuff — and so does JavaScript! Light your first redstone torch by printing a message.',
-    vi: 'Redstone làm mọi thứ HOẠT ĐỘNG — JavaScript cũng vậy! Hãy thắp ngọn đuốc redstone đầu tiên bằng cách in ra một thông điệp.',
+    en: 'Sparkstone makes things DO stuff — and so does JavaScript! Light your first Sparkstone torch by printing a message.',
+    vi: 'Sparkstone làm mọi thứ HOẠT ĐỘNG — JavaScript cũng vậy! Hãy thắp ngọn đuốc Sparkstone đầu tiên bằng cách in ra một thông điệp.',
   },
   steps: [
     {
@@ -3740,7 +3740,7 @@ export const q01: Quest = {
     },
   ],
   starterCode:
-    '<h1>Redstone Lab</h1>\n\n<script>\n  // ⚡ Your JavaScript goes here\n\n</script>\n',
+    '<h1>Sparkstone Lab</h1>\n\n<script>\n  // ⚡ Your JavaScript goes here\n\n</script>\n',
   checks: [
     {
       type: 'consoleIncludes',
@@ -3764,7 +3764,7 @@ export const q01: Quest = {
 | js-05 | Crafting Recipes | functions | `codeIncludes 'function'`; `consoleIncludes 'Hello, Steve!'` (write greet(name), call with 'Steve') | 75 | b-command |
 | js-06 | Pull the Lever | click events | `elementExists button`; `codeIncludes 'addEventListener'` | 75 | b-lever |
 | js-07 | Piston Power | DOM textContent | `codeIncludes 'getElementById'`; `textIncludes #status 'Mining...'` (starter has `<p id="status">Idle</p>`; script must set it on load) | 75 | b-piston |
-| js-08 | Minecart Loop | for loops | `codeIncludes 'for'`; `consoleIncludes 'Mined block 5'` (loop 1..5 logging `Mined block ${i}`) | 75 | b-minecart |
+| js-08 | Rail Cart Loop | for loops | `codeIncludes 'for'`; `consoleIncludes 'Mined block 5'` (loop 1..5 logging `Mined block ${i}`) | 75 | b-rail cart |
 | js-09 | Lucky Drops | Math.random | `codeIncludes 'Math.random'`; `codeIncludes 'Math.floor'` (random 1–6 dice roll logged; output value can't be asserted) | 75 | b-dice |
 | js-10 | BOSS: Clicker Game | combine all | `elementExists button`; `elementExists #score`; `codeIncludes 'addEventListener'`; `codeIncludes 'score'` (click button → score span counts up) | 100 | b-trophy |
 
@@ -3774,7 +3774,7 @@ Run: `npm run test:run && npm run typecheck`
 Expected: green.
 
 ```bash
-git add src/content/quests/js && git commit -m "feat: add JS Redstone Mines quest content (10 quests)"
+git add src/content/quests/js && git commit -m "feat: add JS Sparkstone Mines quest content (10 quests)"
 ```
 
 ---
@@ -3907,7 +3907,7 @@ Record any failures, fix, re-run affected unit tests.
 # ⛏️ CodeCraft
 
 A voxel-builder-inspired web game that teaches kids (9–12) HTML, CSS, and JavaScript.
-Three worlds, ~30 quests, XP and ranks from Dirt to Netherite, collectible badges,
+Three worlds, ~30 quests, XP and ranks from Dirt to Obsidian, collectible badges,
 daily streaks — bilingual English / Tiếng Việt.
 
 ## Run it
