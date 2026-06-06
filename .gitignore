@@ -4,3 +4,9 @@ dist
 .DS_Store
 
 .superpowers/
+
+.idea
+
+.playwright-mcp
+
+.tmp
