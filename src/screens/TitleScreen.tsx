@@ -15,11 +15,11 @@ export default function TitleScreen() {
         data-testid="lang-toggle-title"
         aria-label={lang === 'en' ? 'Switch to Vietnamese' : 'Switch to English'}
         onClick={() => { playSound('click'); setLang(lang === 'en' ? 'vi' : 'en'); }}
-        className="absolute right-4 top-4 cursor-pointer font-pixel text-xs text-white drop-shadow"
+        className="absolute right-4 top-4 cursor-pointer font-pixel p-2 text-xs text-white drop-shadow"
       >
         🌐 {lang.toUpperCase()}
       </button>
-      <h1 className="font-pixel text-5xl text-white [text-shadow:4px_4px_0_#3d8527]">
+      <h1 className="font-pixel text-4xl text-white [text-shadow:4px_4px_0_#3d8527] sm:text-5xl">
         ⛏️ CodeCraft
       </h1>
       <p className="font-body text-xl font-bold text-night">{t('tagline')}</p>

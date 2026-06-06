@@ -19,7 +19,7 @@ export default function VictoryOverlay({ rewards, worldComplete, hasNext, onNext
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-night/80" role="dialog" aria-modal="true" aria-labelledby="victory-title">
-      <Panel className="w-96 text-center">
+      <Panel className="w-full max-w-96 mx-4 text-center">
         <h2 id="victory-title" className="font-pixel text-lg text-grass-dark">🎉 {t('victory')}</h2>
         <p className="mt-3 font-body text-xl font-black">
           +{rewards.xpGained} {t('xpGained')}

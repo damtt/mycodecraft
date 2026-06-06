@@ -33,6 +33,19 @@ describe('HoldToConfirm', () => {
     expect(onConfirm).toHaveBeenCalledOnce();
     vi.useRealTimers();
   });
+
+  test('touchCancel aborts a pending hold', () => {
+    vi.useFakeTimers();
+    const onConfirm = vi.fn();
+    render(<HoldToConfirm label="Reset" holdMs={1500} onConfirm={onConfirm} />);
+    const btn = screen.getByRole('button', { name: 'Reset' });
+    fireEvent.touchStart(btn);
+    act(() => vi.advanceTimersByTime(800));
+    fireEvent.touchCancel(btn);
+    act(() => vi.advanceTimersByTime(2000));
+    expect(onConfirm).not.toHaveBeenCalled();
+    vi.useRealTimers();
+  });
 });
 
 describe('XpBar', () => {
