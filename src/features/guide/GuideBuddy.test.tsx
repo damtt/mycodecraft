@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { vi } from 'vitest';
 
@@ -44,5 +44,14 @@ describe('GuideBuddy', () => {
       <RouterProvider router={createMemoryRouter([{ path: '*', element: <GuideBuddy /> }], { initialEntries: ['/map'] })} />,
     );
     expect(container.textContent).toBe('');
+  });
+
+  test('clears a stale bubble when arriving at an already-greeted screen', async () => {
+    // Simulate landing on a screen that was greeted earlier this session with a
+    // leftover bubble from the previous screen.
+    useGuide.setState({ greeted: new Set(['inventory']), bubble: { en: 'stale from map', vi: 'cũ' } });
+    renderBuddyAt('/inventory');
+    await waitFor(() => expect(useGuide.getState().bubble).toBeNull());
+    expect(screen.queryByText(/stale from map/i)).not.toBeInTheDocument();
   });
 });

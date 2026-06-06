@@ -1,24 +1,29 @@
 import { useEffect } from 'react';
-import type { Localized, Step } from '../../lib/types';
+import type { Quest } from '../../lib/types';
 import { useGuide } from './guideStore';
 import { GUIDE } from './guideContent';
 
-interface QuestGuideArgs {
-  story: Localized;
-  steps: Step[];
-  openHints: Set<number>;
-  revealHint: (stepIndex: number) => void;
-}
-
-/** Publishes quest context to the Guide store and returns event helpers. */
-export function useQuestGuide({ story, steps, openHints, revealHint }: QuestGuideArgs) {
+/**
+ * Publishes quest context to the Guide store so the globally-mounted Buddy can
+ * reveal hints / recap the story. Only publishes when the quest actually exists,
+ * so an invalid quest id never registers a bogus (empty) context.
+ */
+export function useQuestGuide(
+  quest: Quest | undefined,
+  openHints: Set<number>,
+  revealHint: (stepIndex: number) => void,
+) {
   const setQuestCtx = useGuide((s) => s.setQuestCtx);
   const say = useGuide((s) => s.say);
 
   useEffect(() => {
-    setQuestCtx({ story, steps, openHints, revealHint });
+    if (!quest) {
+      setQuestCtx(null);
+      return;
+    }
+    setQuestCtx({ story: quest.story, steps: quest.steps, openHints, revealHint });
     return () => setQuestCtx(null);
-  }, [setQuestCtx, story, steps, openHints, revealHint]);
+  }, [setQuestCtx, quest, openHints, revealHint]);
 
   return {
     onFailedCheck: () => say(GUIDE.failedCheck),

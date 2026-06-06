@@ -15,7 +15,7 @@ import LessonPanel from './quest/LessonPanel';
 import EditorPane from './quest/EditorPane';
 import PreviewPane from './quest/PreviewPane';
 import QuestColumns from './quest/QuestColumns';
-import QuestTabs from './quest/QuestTabs';
+import QuestTabs, { type Tab } from './quest/QuestTabs';
 import { useT } from '../lib/i18n';
 
 const DEBOUNCE_MS = 300;
@@ -43,6 +43,9 @@ function QuestScreenInner({ questId }: { questId: string }) {
   const [failMessage, setFailMessage] = useState<Localized | null>(null);
   const [rewards, setRewards] = useState<Rewards | null>(null);
   const [checking, setChecking] = useState(false);
+  // Tab state lives here (not in QuestTabs) so it survives a breakpoint-driven
+  // remount of the tabs subtree.
+  const [tab, setTab] = useState<Tab>('lesson');
 
   const preview = usePreview(debounced);
 
@@ -60,12 +63,8 @@ function QuestScreenInner({ questId }: { questId: string }) {
   }, []);
 
   // Publish quest context to the Guide Buddy (story recap + hint reveal share onHint).
-  const questGuide = useQuestGuide({
-    story: quest?.story ?? { en: '', vi: '' },
-    steps: quest?.steps ?? [],
-    openHints,
-    revealHint: onHint,
-  });
+  // Pass the quest directly so an invalid id publishes no context (not a bogus empty one).
+  const questGuide = useQuestGuide(quest, openHints, onHint);
 
   // Buddy reacts to the stuck-loop state.
   useEffect(() => {
@@ -117,7 +116,10 @@ function QuestScreenInner({ questId }: { questId: string }) {
   );
   const editor = (
     <EditorPane
-      initialValue={quest.starterCode}
+      // Seed from the LIVE code, not starterCode: if the layout swaps across the
+      // breakpoint mid-quest (e.g. phone rotate), the remounted editor restores
+      // the player's typed text instead of resetting to the starter.
+      initialValue={code}
       onChange={setCode}
       onFocusChange={setEditorFocused}
       className="min-h-0 flex-1"
@@ -129,7 +131,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
     <div data-testid="quest-screen" className="flex min-h-0 flex-1 flex-col bg-dirt-light/30 p-3">
       {isWide
         ? <QuestColumns lesson={lesson} editor={editor} preview={previewPane} />
-        : <QuestTabs lesson={lesson} editor={editor} preview={previewPane} />}
+        : <QuestTabs tab={tab} onTabChange={setTab} lesson={lesson} editor={editor} preview={previewPane} />}
 
       {rewards && (
         <VictoryOverlay

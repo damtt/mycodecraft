@@ -32,19 +32,26 @@ export default function GuideBuddy() {
   const markGreeted = useGuide((s) => s.markGreeted);
   const [open, setOpen] = useState(false);
 
-  // Greet once per screen.
+  // Greet once per screen; on revisits, clear any bubble left over from the
+  // previous screen so a stale, out-of-context message never lingers.
   useEffect(() => {
     if (!guideOn || !screen) return;
     if (!hasGreeted(screen)) {
       markGreeted(screen);
       say(GUIDE.greeting[screen]);
+    } else {
+      dismiss();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- greet on screen change only
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- greet/clear on screen change only
   }, [screen, guideOn]);
 
-  // Gentle idle nudge.
+  // Gentle idle nudge: skip while the editor/keyboard is up, and allow the nudge
+  // to replace a passive greeting (but not a hint/help/fail bubble the kid is reading).
   useIdle(IDLE_MS, () => {
-    if (guideOn && screen && !useGuide.getState().bubble) say(GUIDE.idle[screen]);
+    if (!guideOn || !screen) return;
+    const { bubble: current, editorFocused: focused } = useGuide.getState();
+    if (focused) return;
+    if (current === null || current === GUIDE.greeting[screen]) say(GUIDE.idle[screen]);
   });
 
   if (!guideOn || !screen) return null;

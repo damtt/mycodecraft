@@ -63,7 +63,13 @@ function CodeEditorImpl(
       ],
     });
     viewRef.current = view;
-    return () => { view.destroy(); viewRef.current = null; };
+    return () => {
+      view.destroy();
+      viewRef.current = null;
+      // destroy() removes the focused contentDOM without firing blur — clear the
+      // focus flag ourselves so consumers (Guide Buddy) don't stay stuck "focused".
+      onFocusRef.current?.(false);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only; remount via key
   }, []);
 

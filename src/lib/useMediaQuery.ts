@@ -14,8 +14,13 @@ export function useMediaQuery(query: string): boolean {
     const mql = window.matchMedia(query);
     const onChange = () => setMatches(mql.matches);
     onChange();
-    mql.addEventListener?.('change', onChange);
-    return () => mql.removeEventListener?.('change', onChange);
+    if (mql.addEventListener) {
+      mql.addEventListener('change', onChange);
+      return () => mql.removeEventListener('change', onChange);
+    }
+    // Legacy Safari < 14 / older iPad WebViews expose only addListener.
+    mql.addListener(onChange);
+    return () => mql.removeListener(onChange);
   }, [query]);
 
   return matches;

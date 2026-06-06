@@ -68,6 +68,7 @@ vi.mock('../features/preview/usePreview', () => ({
 
 import { routes } from '../app/router';
 import { useProfiles } from '../stores/profileStore';
+import { useGuide } from '../features/guide/guideStore';
 
 function renderQuest() {
   useProfiles.getState().create('Mai', '🦊');
@@ -154,5 +155,14 @@ describe('QuestScreen', () => {
     expect(screen.getByRole('tab', { name: /run/i })).toBeInTheDocument();
     // Story is in the Lesson pane (default tab).
     expect(screen.getByText(/a villager needs a sign/i)).toBeInTheDocument();
+  });
+
+  test('an invalid quest id publishes no guide context (no bogus hint/recap)', async () => {
+    useProfiles.getState().create('Mai', '🦊');
+    useProfiles.getState().select(useProfiles.getState().profiles[0].id);
+    useGuide.setState({ questCtx: null });
+    render(<RouterProvider router={createMemoryRouter(routes, { initialEntries: ['/quest/nope'] })} />);
+    expect(await screen.findByText(/quest not found/i)).toBeInTheDocument();
+    expect(useGuide.getState().questCtx).toBeNull();
   });
 });
