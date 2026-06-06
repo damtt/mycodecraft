@@ -6,7 +6,7 @@ import { useProfiles, useActiveProfile } from '../stores/profileStore';
 import { usePreview } from '../features/preview/usePreview';
 import { runChecks } from '../features/validation/run';
 import { playSound } from '../features/audio/sounds';
-import { useMediaQuery } from '../lib/useMediaQuery';
+import { useIsWide } from '../lib/useMediaQuery';
 import { useGuide } from '../features/guide/guideStore';
 import { useQuestGuide } from '../features/guide/useQuestGuide';
 import Panel from '../components/Panel';
@@ -34,7 +34,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
   const completeQuest = useProfiles((s) => s.completeQuest);
   const setEditorFocused = useGuide((s) => s.setEditorFocused);
   const { t } = useT();
-  const isWide = useMediaQuery('(min-width: 768px)');
+  const isWide = useIsWide();
 
   const [code, setCode] = useState(quest?.starterCode ?? '');
   const [debounced, setDebounced] = useState(code);
@@ -117,7 +117,6 @@ function QuestScreenInner({ questId }: { questId: string }) {
   );
   const editor = (
     <EditorPane
-      questId={quest.id}
       initialValue={quest.starterCode}
       onChange={setCode}
       onFocusChange={setEditorFocused}

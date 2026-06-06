@@ -1,18 +1,14 @@
 import { Link, useLocation } from 'react-router';
 import { useT } from '../lib/i18n';
-import { useMediaQuery } from '../lib/useMediaQuery';
+import { useIsWide } from '../lib/useMediaQuery';
+import { HOME_ITEM, SCREEN_NAV } from '../lib/nav';
 import { playSound } from '../features/audio/sounds';
 
-const ITEMS = [
-  { to: '/', icon: '🏠', key: 'home' as const },
-  { to: '/map', icon: '🗺️', key: 'worldMap' as const },
-  { to: '/inventory', icon: '🧰', key: 'inventory' as const },
-  { to: '/settings', icon: '⚙️', key: 'settings' as const },
-];
+const ITEMS = [HOME_ITEM, ...SCREEN_NAV];
 
 /** Phone-only bottom navigation. Hidden (unmounted) at >=768px where HudBar carries nav. */
 export default function BottomNav() {
-  const isWide = useMediaQuery('(min-width: 768px)');
+  const isWide = useIsWide();
   const { pathname } = useLocation();
   const { t } = useT();
   if (isWide) return null;

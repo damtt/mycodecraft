@@ -23,7 +23,13 @@ export default function GuideBuddy() {
   const screen = screenKeyFor(pathname);
   const guideOn = useSettings((s) => s.guideOn);
   const { t, tl } = useT();
-  const { bubble, questCtx, editorFocused, say, dismiss, hasGreeted, markGreeted } = useGuide();
+  const bubble = useGuide((s) => s.bubble);
+  const questCtx = useGuide((s) => s.questCtx);
+  const editorFocused = useGuide((s) => s.editorFocused);
+  const say = useGuide((s) => s.say);
+  const dismiss = useGuide((s) => s.dismiss);
+  const hasGreeted = useGuide((s) => s.hasGreeted);
+  const markGreeted = useGuide((s) => s.markGreeted);
   const [open, setOpen] = useState(false);
 
   // Greet once per screen.

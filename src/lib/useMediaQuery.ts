@@ -25,3 +25,15 @@ export function useMediaQuery(query: string): boolean {
 export function useIsTouch(): boolean {
   return useMediaQuery('(pointer: coarse)');
 }
+
+/**
+ * The phone↔tablet divider. Mirrors Tailwind's default `md` breakpoint (768px)
+ * so JS layout branches (QuestScreen columns/tabs, BottomNav) stay in lockstep
+ * with the `md:` utility classes used for CSS-only responsive bits.
+ */
+export const WIDE_QUERY = '(min-width: 768px)';
+
+/** True at tablet/desktop widths (>= md). Drives the QuestScreen layout + BottomNav. */
+export function useIsWide(): boolean {
+  return useMediaQuery(WIDE_QUERY);
+}
