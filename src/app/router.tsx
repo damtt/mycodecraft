@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router';
 import { useProfiles } from '../stores/profileStore';
 import HudBar from '../components/HudBar';
+import BottomNav from '../components/BottomNav';
 import TitleScreen from '../screens/TitleScreen';
 import PlayersScreen from '../screens/PlayersScreen';
 import MapScreen from '../screens/MapScreen';
@@ -15,7 +16,8 @@ function RequireProfile() {
   return (
     <div className="flex min-h-screen flex-col">
       <HudBar />
-      <main className="flex-1"><Outlet /></main>
+      <main className="flex-1 pb-16 md:pb-0"><Outlet /></main>
+      <BottomNav />
     </div>
   );
 }
