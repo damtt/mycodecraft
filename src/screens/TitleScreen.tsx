@@ -4,6 +4,7 @@ import { playSound } from '../features/audio/sounds';
 import { useT } from '../lib/i18n';
 import PixelButton from '../components/PixelButton';
 import Icon from '../components/Icon';
+import SocialLinks from '../components/SocialLinks';
 
 export default function TitleScreen() {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export default function TitleScreen() {
           <Icon name="next" /> {t('pressStart')}
         </PixelButton>
       </div>
+      <SocialLinks className="absolute inset-x-0 bottom-4 justify-center px-4 font-body text-xs font-bold text-night/70" />
     </div>
   );
 }

@@ -26,4 +26,17 @@ describe('TitleScreen', () => {
     fireEvent.click(await screen.findByTestId('lang-toggle-title'));
     expect(await screen.findByRole('button', { name: /bắt đầu/i })).toBeInTheDocument();
   });
+
+  test('shows external profile links', async () => {
+    renderAt('/');
+
+    const github = await screen.findByRole('link', { name: /github/i });
+    expect(github).toHaveAttribute('href', 'https://github.com/damtt/mycodecraft');
+    expect(github).toHaveAttribute('target', '_blank');
+    expect(github).toHaveAttribute('rel', 'noopener noreferrer');
+
+    const x = screen.getByRole('link', { name: /^x$/i });
+    expect(x).toHaveAttribute('href', 'https://x.com/henrytran_sg');
+    expect(x).toHaveAttribute('target', '_blank');
+  });
 });
