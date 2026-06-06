@@ -1,3 +1,5 @@
+import type { IconName } from '../components/Icon';
+
 export type Lang = 'en' | 'vi';
 export type Localized = { en: string; vi: string };
 export type WorldId = 'html' | 'css' | 'js';
@@ -37,13 +39,13 @@ export interface Quest {
 export interface World {
   id: WorldId;
   name: Localized;
-  icon: string; // emoji
+  icon: IconName;
   tagline: Localized;
 }
 
 export interface BadgeDef {
   id: string;
-  icon: string; // emoji
+  icon: IconName;
   name: Localized;
 }
 

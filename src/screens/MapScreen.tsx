@@ -6,8 +6,9 @@ import { questStatus, worldUnlocked } from '../features/progress/unlocks';
 import { playSound } from '../features/audio/sounds';
 import { useT } from '../lib/i18n';
 import Panel from '../components/Panel';
+import Icon from '../components/Icon';
 
-const STATUS_ICON = { done: '✅', current: '⛏️', locked: '🔒' } as const;
+const STATUS_ICON = { done: 'check', current: 'pickaxe', locked: 'lock' } as const;
 
 export default function MapScreen() {
   const profile = useActiveProfile();
@@ -23,7 +24,8 @@ export default function MapScreen() {
           return (
             <Panel key={world.id} className={unlocked ? '' : 'opacity-70'}>
               <h2 className="font-pixel text-sm text-grass-dark">
-                {world.icon} {tl(world.name)} {!unlocked && `🔒 ${t('locked')}`}
+                <Icon name={world.icon} /> {tl(world.name)}{' '}
+                {!unlocked && <><Icon name="lock" /> {t('locked')}</>}
               </h2>
               <p className="mt-1 font-body text-sm font-bold text-stone">{tl(world.tagline)}</p>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -41,7 +43,7 @@ export default function MapScreen() {
                         disabled:cursor-not-allowed
                         ${status === 'done' ? 'bg-grass' : status === 'current' ? 'bg-gold animate-pulse' : 'bg-stone'}`}
                     >
-                      <span>{STATUS_ICON[status]}</span>
+                      <span><Icon name={STATUS_ICON[status]} /></span>
                       <span className="text-xs">{i + 1}</span>
                     </button>
                   );

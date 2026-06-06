@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { useT } from '../../lib/i18n';
+import Icon, { type IconName } from '../../components/Icon';
 
 export type Tab = 'lesson' | 'code' | 'run';
 
@@ -15,10 +16,10 @@ interface QuestTabsProps {
  *  the parent so it survives a breakpoint-driven remount of this subtree. */
 export default function QuestTabs({ tab, onTabChange, lesson, editor, preview }: QuestTabsProps) {
   const { t } = useT();
-  const TABS: Array<{ id: Tab; icon: string; label: string }> = [
-    { id: 'lesson', icon: '📖', label: t('tabLesson') },
-    { id: 'code', icon: '⌨️', label: t('tabCode') },
-    { id: 'run', icon: '👁', label: t('tabRun') },
+  const TABS: Array<{ id: Tab; icon: IconName; label: string }> = [
+    { id: 'lesson', icon: 'book', label: t('tabLesson') },
+    { id: 'code', icon: 'keyboard', label: t('tabCode') },
+    { id: 'run', icon: 'eye', label: t('tabRun') },
   ];
 
   return (
@@ -32,7 +33,7 @@ export default function QuestTabs({ tab, onTabChange, lesson, editor, preview }:
             onClick={() => onTabChange(tb.id)}
             className={`flex-1 rounded-t-md py-2 font-body text-sm font-bold ${tab === tb.id ? 'bg-paper text-grass-dark' : 'bg-grass-dark/70 text-white'}`}
           >
-            {tb.icon} {tb.label}
+            <Icon name={tb.icon} /> {tb.label}
           </button>
         ))}
       </div>
