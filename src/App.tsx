@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { RouterProvider } from 'react-router';
+import { Analytics } from '@vercel/analytics/react';
 import { router } from './app/router';
 import { useSettings, type FontScale } from './stores/settingsStore';
 
@@ -12,5 +13,11 @@ export default function App() {
   useEffect(() => {
     document.documentElement.style.fontSize = ROOT_FONT_PCT[fontScale];
   }, [fontScale]);
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      {/* Cookieless visitor counts via Vercel Web Analytics (no personal data) */}
+      <Analytics />
+    </>
+  );
 }
