@@ -56,6 +56,22 @@ export const UI = {
   worldComplete: { en: 'World complete! A new world has opened!', vi: 'Hoàn thành thế giới! Một thế giới mới đã mở!' },
   steps: { en: 'Steps', vi: 'Các bước' },
   story: { en: 'Story', vi: 'Câu chuyện' },
+  // Navigation
+  home: { en: 'Home', vi: 'Trang chủ' },
+  backToTitle: { en: 'Back to title', vi: 'Về màn hình chính' },
+  // Quest tabs (phone)
+  tabLesson: { en: 'Lesson', vi: 'Bài học' },
+  tabCode: { en: 'Code', vi: 'Code' },
+  tabRun: { en: 'Run', vi: 'Chạy' },
+  // Guide Buddy
+  guideBuddy: { en: 'Guide buddy', vi: 'Bạn dẫn đường' },
+  guideBuddyOn: { en: 'Guide buddy', vi: 'Bạn dẫn đường' },
+  buddyHint: { en: 'Get a hint', vi: 'Xem gợi ý' },
+  buddyScreenHelp: { en: "What's this screen?", vi: 'Màn hình này là gì?' },
+  buddyRecap: { en: 'Remind me', vi: 'Nhắc lại' },
+  buddyDismiss: { en: 'Got it', vi: 'Hiểu rồi' },
+  // Insert toolbar
+  insertToolbar: { en: 'Insert symbol', vi: 'Chèn ký hiệu' },
 } satisfies Record<string, Localized>;
 
 export type UIKey = keyof typeof UI;
