@@ -20,7 +20,7 @@ const FONT_SIZES: Array<{ value: FontScale; key: 'fontSmall' | 'fontMedium' | 'f
 ];
 
 export default function SettingsScreen() {
-  const { lang, soundOn, fontScale, setLang, toggleSound, setFontScale } = useSettings();
+  const { lang, soundOn, fontScale, guideOn, setLang, toggleSound, setFontScale, toggleGuide } = useSettings();
   const resetActive = useProfiles((s) => s.resetActive);
   const { t } = useT();
   const [resetDone, setResetDone] = useState(false);
@@ -72,6 +72,15 @@ export default function SettingsScreen() {
             onChange={() => { playSound('click'); toggleSound(); }}
           />
           🔊 {t('sound')}: {soundOn ? t('on') : t('off')}
+        </label>
+
+        <label className="flex cursor-pointer items-center gap-2 font-body font-black">
+          <input
+            type="checkbox"
+            checked={guideOn}
+            onChange={() => { playSound('click'); toggleGuide(); }}
+          />
+          🦉 {t('guideBuddy')}: {guideOn ? t('on') : t('off')}
         </label>
 
         <div>
