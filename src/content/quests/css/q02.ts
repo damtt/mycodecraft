@@ -5,7 +5,7 @@ export const q02: Quest = {
   world: 'css',
   xp: 50,
   badge: 'b-feather',
-  title: { en: 'Fancy Lettering', vi: 'Chữ điệu đà' },
+  title: { en: 'Fancy Lettering', vi: 'Chữ kiểu cách' },
   story: {
     en: 'A feather lets you write fancy! Make your words bigger and line them up neatly with CSS.',
     vi: 'Một chiếc lông vũ giúp bạn viết thật điệu đà! Hãy làm chữ to hơn và xếp chúng cho gọn gàng bằng CSS.',
