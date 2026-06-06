@@ -39,6 +39,7 @@ export default function HoldToConfirm({ label, holdMs = 1500, onConfirm, classNa
       onMouseLeave={cancel}
       onTouchStart={start}
       onTouchEnd={cancel}
+      onTouchCancel={cancel}
       className={`relative overflow-hidden rounded-md border-b-[5px] border-b-red-800
         bg-red-500 px-5 py-2.5 font-body font-black text-white cursor-pointer ${className}`}
     >

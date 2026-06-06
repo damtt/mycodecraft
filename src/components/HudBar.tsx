@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { useActiveProfile } from '../stores/profileStore';
 import { useSettings } from '../stores/settingsStore';
 import { useT } from '../lib/i18n';
+import { HOME_ITEM, SCREEN_NAV } from '../lib/nav';
 import { streakDisplay, todayString } from '../features/progress/streak';
 import { playSound } from '../features/audio/sounds';
 import XpBar from './XpBar';
@@ -15,23 +16,35 @@ export default function HudBar() {
   const streak = streakDisplay(profile.streak, todayString());
 
   return (
-    <header className="flex items-center gap-4 border-b-4 border-grass-dark bg-night px-4 py-2 text-white">
+    <header className="flex items-center gap-3 border-b-4 border-grass-dark bg-night px-3 py-2 text-white sm:gap-4 sm:px-4">
+      <Link
+        to={HOME_ITEM.to}
+        aria-label={t(HOME_ITEM.key)}
+        title={t(HOME_ITEM.key)}
+        onClick={() => playSound('click')}
+        className="font-pixel text-base leading-none"
+      >
+        {HOME_ITEM.icon}
+      </Link>
       <Link to="/players" className="text-2xl" title={profile.name}>{profile.avatar}</Link>
-      <span className="font-pixel text-xs text-white drop-shadow-[1px_1px_0_#000]">{profile.name}</span>
+      <span className="hidden font-pixel text-xs text-white drop-shadow-[1px_1px_0_#000] sm:inline">{profile.name}</span>
       <XpBar xp={profile.xp} />
       <span className="font-body font-bold" data-testid="streak">🔥{streak}</span>
-      {/* Decorative hearts — no lives mechanic (spec §Gamification) */}
-      <span aria-hidden className="text-sm tracking-tighter">❤️❤️❤️</span>
+      {/* Decorative hearts — hidden on phone to save the row (spec §Gamification) */}
+      <span aria-hidden className="hidden text-sm tracking-tighter sm:inline">❤️❤️❤️</span>
       <nav className="ml-auto flex items-center gap-3 font-body font-bold">
-        <Link to="/map" onClick={() => playSound('click')}>🗺️ {t('worldMap')}</Link>
-        <Link to="/inventory" onClick={() => playSound('click')}>🧰 {t('inventory')}</Link>
-        <Link to="/settings" onClick={() => playSound('click')}>⚙️ {t('settings')}</Link>
-        <button onClick={() => { playSound('click'); toggleSound(); }} title={t('sound')} className="cursor-pointer">
+        {/* Screen-nav links live in BottomNav on phones; shown here from md up. */}
+        {SCREEN_NAV.map((item) => (
+          <Link key={item.to} to={item.to} onClick={() => playSound('click')} className="hidden md:inline">
+            {item.icon} {t(item.key)}
+          </Link>
+        ))}
+        <button onClick={() => { playSound('click'); toggleSound(); }} title={t('sound')} className="cursor-pointer p-1 text-lg">
           {soundOn ? '🔊' : '🔇'}
         </button>
         <button
           onClick={() => { playSound('click'); setLang(lang === 'en' ? 'vi' : 'en'); }}
-          className="cursor-pointer font-pixel text-[10px] uppercase"
+          className="cursor-pointer p-1 font-pixel text-xs uppercase"
           data-testid="lang-toggle"
         >
           {lang}

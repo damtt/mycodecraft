@@ -64,4 +64,10 @@ describe('SettingsScreen', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(useProfiles.getState().profiles[0].xp).toBe(100);
   });
+
+  test('guide buddy toggle flips the setting', async () => {
+    renderSettings();
+    fireEvent.click(await screen.findByRole('checkbox', { name: /guide buddy/i }));
+    expect(useSettings.getState().guideOn).toBe(false);
+  });
 });

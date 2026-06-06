@@ -60,4 +60,10 @@ describe('PlayersScreen', () => {
     expect(useProfiles.getState().profiles).toHaveLength(0);
     vi.useRealTimers();
   });
+
+  test('back link returns to the title screen', async () => {
+    const router = renderAt('/players');
+    fireEvent.click(await screen.findByRole('link', { name: /back to title/i }));
+    expect(router.state.location.pathname).toBe('/');
+  });
 });

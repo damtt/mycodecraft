@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import type { Localized, Rewards } from '../lib/types';
 import { questById, nextQuest } from '../content/quests';
@@ -6,12 +6,17 @@ import { useProfiles, useActiveProfile } from '../stores/profileStore';
 import { usePreview } from '../features/preview/usePreview';
 import { runChecks } from '../features/validation/run';
 import { playSound } from '../features/audio/sounds';
-import { useT } from '../lib/i18n';
-import CodeEditor from '../features/editor/CodeEditor';
+import { useIsWide } from '../lib/useMediaQuery';
+import { useGuide } from '../features/guide/guideStore';
+import { useQuestGuide } from '../features/guide/useQuestGuide';
 import Panel from '../components/Panel';
-import PixelButton from '../components/PixelButton';
 import VictoryOverlay from '../components/VictoryOverlay';
-import LessonText from '../components/LessonText';
+import LessonPanel from './quest/LessonPanel';
+import EditorPane from './quest/EditorPane';
+import PreviewPane from './quest/PreviewPane';
+import QuestColumns from './quest/QuestColumns';
+import QuestTabs, { type Tab } from './quest/QuestTabs';
+import { useT } from '../lib/i18n';
 
 const DEBOUNCE_MS = 300;
 
@@ -27,7 +32,9 @@ function QuestScreenInner({ questId }: { questId: string }) {
   const navigate = useNavigate();
   const profile = useActiveProfile();
   const completeQuest = useProfiles((s) => s.completeQuest);
-  const { t, tl } = useT();
+  const setEditorFocused = useGuide((s) => s.setEditorFocused);
+  const { t } = useT();
+  const isWide = useIsWide();
 
   const [code, setCode] = useState(quest?.starterCode ?? '');
   const [debounced, setDebounced] = useState(code);
@@ -36,6 +43,9 @@ function QuestScreenInner({ questId }: { questId: string }) {
   const [failMessage, setFailMessage] = useState<Localized | null>(null);
   const [rewards, setRewards] = useState<Rewards | null>(null);
   const [checking, setChecking] = useState(false);
+  // Tab state lives here (not in QuestTabs) so it survives a breakpoint-driven
+  // remount of the tabs subtree.
+  const [tab, setTab] = useState<Tab>('lesson');
 
   const preview = usePreview(debounced);
 
@@ -44,17 +54,29 @@ function QuestScreenInner({ questId }: { questId: string }) {
     return () => clearTimeout(timer);
   }, [code]);
 
+  // Stable identity so useQuestGuide's effect only re-registers when quest data
+  // actually changes (not on every QuestScreen render). Setters are stable.
+  const onHint = useCallback((i: number) => {
+    playSound('click');
+    setUsedHint(true);
+    setOpenHints((prev) => new Set(prev).add(i));
+  }, []);
+
+  // Publish quest context to the Guide Buddy (story recap + hint reveal share onHint).
+  // Pass the quest directly so an invalid id publishes no context (not a bogus empty one).
+  const questGuide = useQuestGuide(quest, openHints, onHint);
+
+  // Buddy reacts to the stuck-loop state.
+  useEffect(() => {
+    if (preview.stuck) questGuide.onStuck();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preview.stuck]);
+
   if (!quest || !profile) return <Panel className="m-8">{t('questNotFound')}</Panel>;
 
   const alreadyDone = quest.id in profile.quests;
   const next = nextQuest(quest.id);
   const isJs = quest.world === 'js';
-
-  const onHint = (i: number) => {
-    playSound('click');
-    setUsedHint(true);
-    setOpenHints((prev) => new Set(prev).add(i));
-  };
 
   const onCheck = async () => {
     setChecking(true);
@@ -67,6 +89,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
     setChecking(false);
     if (!result.pass) {
       setFailMessage(result.firstFail?.failMessage ?? null);
+      questGuide.onFailedCheck();
       return;
     }
     const r = completeQuest(quest, usedHint);
@@ -76,85 +99,39 @@ function QuestScreenInner({ questId }: { questId: string }) {
     }
   };
 
-  return (
-    <div data-testid="quest-screen" className="flex h-[calc(100vh-48px)] gap-3 bg-dirt-light/30 p-3">
-      {/* Lesson panel (left) */}
-      <Panel className="flex w-1/3 flex-col gap-3 overflow-y-auto">
-        <h1 className="font-pixel text-sm text-grass-dark">
-          ⛏️ {t('questLabel')}: {tl(quest.title)}
-        </h1>
-        {alreadyDone && <p className="font-body text-sm font-bold text-gold">★ {t('replayDone')}</p>}
-        <div className="font-body font-bold italic text-dirt">
-          <LessonText text={tl(quest.story)} />
-        </div>
-        <h2 className="font-pixel text-xs">{t('steps')}</h2>
-        <ol className="flex flex-col gap-2">
-          {quest.steps.map((step, i) => (
-            <li key={i} className="font-body font-bold">
-              <span className="mr-1 font-pixel text-[10px] text-grass-dark">{i + 1}.</span>
-              <LessonText text={tl(step.text)} />
-              {step.hint && !openHints.has(i) && (
-                <button
-                  onClick={() => onHint(i)}
-                  className="ml-2 cursor-pointer rounded bg-gold/40 px-2 font-body text-xs font-bold"
-                >
-                  💡 {t('hint')}
-                </button>
-              )}
-              {step.hint && openHints.has(i) && (
-                <div className="mt-1 rounded bg-gold/20 p-2 text-sm">
-                  💡 <LessonText text={tl(step.hint)} />
-                </div>
-              )}
-            </li>
-          ))}
-        </ol>
-        {failMessage && (
-          <p role="alert" className="rounded-md border-2 border-red-400 bg-red-50 p-2 font-body font-bold text-red-700">
-            🟥 <span><LessonText text={tl(failMessage)} /></span>
-          </p>
-        )}
-        {preview.runtimeError && (
-          <p role="alert" className="rounded-md border-2 border-green-700 bg-green-50 p-2 font-body font-bold text-green-900">
-            🟩 {t('codeBoom')} {preview.runtimeError.line}
-          </p>
-        )}
-        {preview.stuck && (
-          <p role="alert" className="rounded-md bg-yellow-100 p-2 font-body font-bold">
-            ♻️ {t('stuckLoop')}{' '}
-            <button onClick={preview.reload} className="cursor-pointer underline">↻</button>
-          </p>
-        )}
-        <PixelButton className="mt-auto" onClick={onCheck} disabled={checking}>
-          ✔ {t('checkMyCode')}
-        </PixelButton>
-      </Panel>
+  const lesson = (
+    <LessonPanel
+      quest={quest}
+      alreadyDone={alreadyDone}
+      openHints={openHints}
+      onHint={onHint}
+      failMessage={failMessage}
+      runtimeErrorLine={preview.runtimeError?.line ?? null}
+      stuck={preview.stuck}
+      onReload={preview.reload}
+      checking={checking}
+      onCheck={onCheck}
+      className="min-h-0 flex-1"
+    />
+  );
+  const editor = (
+    <EditorPane
+      // Seed from the LIVE code, not starterCode: if the layout swaps across the
+      // breakpoint mid-quest (e.g. phone rotate), the remounted editor restores
+      // the player's typed text instead of resetting to the starter.
+      initialValue={code}
+      onChange={setCode}
+      onFocusChange={setEditorFocused}
+      className="min-h-0 flex-1"
+    />
+  );
+  const previewPane = <PreviewPane preview={preview} isJs={isJs} className="h-full" />;
 
-      {/* Editor over preview (right) */}
-      <div className="flex w-2/3 flex-col gap-3">
-        <div className="h-1/2 overflow-hidden rounded-lg bg-[#1e1e2e] p-1">
-          <CodeEditor key={quest.id} initialValue={quest.starterCode} onChange={setCode} />
-        </div>
-        <Panel className="flex h-1/2 flex-col !p-2">
-          <span className="font-pixel text-[10px] text-stone">👁 {t('preview')}</span>
-          <iframe
-            key={preview.reloadKey}
-            ref={preview.iframeRef}
-            title={t('preview')}
-            sandbox="allow-scripts"
-            srcDoc={preview.srcdoc}
-            className="w-full flex-1 rounded bg-white"
-          />
-          {isJs && (
-            <div className="mt-1 max-h-24 overflow-y-auto rounded bg-night p-2 font-mono text-xs text-green-400">
-              <span className="text-stone">▸ {t('console')}</span>
-              {preview.consoleLines.map((line, i) => (
-                <div key={i}>{line}</div>
-              ))}
-            </div>
-          )}
-        </Panel>
-      </div>
+  return (
+    <div data-testid="quest-screen" className="flex min-h-0 flex-1 flex-col bg-dirt-light/30 p-3">
+      {isWide
+        ? <QuestColumns lesson={lesson} editor={editor} preview={previewPane} />
+        : <QuestTabs tab={tab} onTabChange={setTab} lesson={lesson} editor={editor} preview={previewPane} />}
 
       {rewards && (
         <VictoryOverlay

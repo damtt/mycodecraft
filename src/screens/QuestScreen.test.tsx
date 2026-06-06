@@ -37,16 +37,25 @@ vi.mock('../content/quests', () => ({
 }));
 vi.mock('../features/audio/sounds', () => ({ playSound: vi.fn() }));
 
-// Editor mock: a textarea honoring the same contract.
-vi.mock('../features/editor/CodeEditor', () => ({
-  default: ({ initialValue, onChange }: { initialValue: string; onChange: (v: string) => void }) => (
-    <textarea
-      data-testid="code-editor"
-      defaultValue={initialValue}
-      onChange={(e) => onChange(e.target.value)}
-    />
-  ),
-}));
+// Editor mock: a forwardRef textarea honoring the same contract + insertText.
+// vi.mock factories are hoisted above imports, so React is pulled in via
+// vi.importActual inside the async factory (referencing a top-level import would crash).
+vi.mock('../features/editor/CodeEditor', async () => {
+  const { forwardRef, useImperativeHandle, createElement } =
+    await vi.importActual<typeof import('react')>('react');
+  type Handle = { insertText: (text: string) => void };
+  const Mock = forwardRef<Handle, { initialValue: string; onChange: (v: string) => void }>(
+    ({ initialValue, onChange }, ref) => {
+      useImperativeHandle(ref, () => ({ insertText: () => {} }));
+      return createElement('textarea', {
+        'data-testid': 'code-editor',
+        defaultValue: initialValue,
+        onChange: (e: { target: { value: string } }) => onChange(e.target.value),
+      });
+    },
+  );
+  return { default: Mock };
+});
 
 // Preview mock: checks resolve true; surface srcdoc for assertions.
 vi.mock('../features/preview/usePreview', () => ({
@@ -59,6 +68,7 @@ vi.mock('../features/preview/usePreview', () => ({
 
 import { routes } from '../app/router';
 import { useProfiles } from '../stores/profileStore';
+import { useGuide } from '../features/guide/guideStore';
 
 function renderQuest() {
   useProfiles.getState().create('Mai', '🦊');
@@ -129,5 +139,30 @@ describe('QuestScreen', () => {
     expect(await screen.findByTestId('code-editor')).toHaveValue('<!-- second -->'); // fresh starter
     expect(screen.queryByText(/like <p>hi<\/p>/i)).not.toBeInTheDocument(); // hints reset
     expect(screen.getByText(/another villager appears/i)).toBeInTheDocument(); // new quest rendered
+  });
+
+  test('on phones, shows Lesson/Code/Run tabs and switches panes', async () => {
+    // Phone viewport: min-width queries are false.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).matchMedia = (query: string) => ({
+      matches: false, media: query, onchange: null,
+      addEventListener: () => {}, removeEventListener: () => {},
+      addListener: () => {}, removeListener: () => {}, dispatchEvent: () => false,
+    });
+    renderQuest();
+    expect(await screen.findByRole('tab', { name: /lesson/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /code/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /run/i })).toBeInTheDocument();
+    // Story is in the Lesson pane (default tab).
+    expect(screen.getByText(/a villager needs a sign/i)).toBeInTheDocument();
+  });
+
+  test('an invalid quest id publishes no guide context (no bogus hint/recap)', async () => {
+    useProfiles.getState().create('Mai', '🦊');
+    useProfiles.getState().select(useProfiles.getState().profiles[0].id);
+    useGuide.setState({ questCtx: null });
+    render(<RouterProvider router={createMemoryRouter(routes, { initialEntries: ['/quest/nope'] })} />);
+    expect(await screen.findByText(/quest not found/i)).toBeInTheDocument();
+    expect(useGuide.getState().questCtx).toBeNull();
   });
 });
