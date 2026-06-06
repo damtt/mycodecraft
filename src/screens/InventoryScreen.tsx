@@ -10,7 +10,7 @@ export default function InventoryScreen() {
   if (!profile) return null;
 
   return (
-    <div data-testid="inventory-screen" className="bg-world min-h-full p-6">
+    <div data-testid="inventory-screen" className="bg-world min-h-full flex-1 p-6">
       <div className="mx-auto flex max-w-3xl flex-col gap-6">
         <Panel>
           <h2 className="font-pixel text-sm text-grass-dark">🧰 {t('badges')}</h2>

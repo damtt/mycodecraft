@@ -17,7 +17,7 @@ function RequireProfile() {
   return (
     <div className="flex min-h-screen flex-col">
       <HudBar />
-      <main className="flex-1 pb-16 md:pb-0"><Outlet /></main>
+      <main className="flex flex-1 flex-col pb-16 md:pb-0"><Outlet /></main>
       <GuideBuddy />
       <BottomNav />
     </div>

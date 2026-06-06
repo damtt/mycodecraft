@@ -112,7 +112,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
       onReload={preview.reload}
       checking={checking}
       onCheck={onCheck}
-      className="h-full"
+      className="min-h-0 flex-1"
     />
   );
   const editor = (
@@ -121,13 +121,13 @@ function QuestScreenInner({ questId }: { questId: string }) {
       initialValue={quest.starterCode}
       onChange={setCode}
       onFocusChange={setEditorFocused}
-      className="h-full"
+      className="min-h-0 flex-1"
     />
   );
   const previewPane = <PreviewPane preview={preview} isJs={isJs} className="h-full" />;
 
   return (
-    <div data-testid="quest-screen" className="h-full min-h-0 bg-dirt-light/30 p-3">
+    <div data-testid="quest-screen" className="flex min-h-0 flex-1 flex-col bg-dirt-light/30 p-3">
       {isWide
         ? <QuestColumns lesson={lesson} editor={editor} preview={previewPane} />
         : <QuestTabs lesson={lesson} editor={editor} preview={previewPane} />}

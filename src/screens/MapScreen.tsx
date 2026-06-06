@@ -16,7 +16,7 @@ export default function MapScreen() {
   if (!profile) return null;
 
   return (
-    <div data-testid="map-screen" className="bg-world min-h-full p-6">
+    <div data-testid="map-screen" className="bg-world min-h-full flex-1 p-6">
       <div className="mx-auto flex max-w-3xl flex-col gap-6">
         {WORLDS.map((world) => {
           const unlocked = worldUnlocked(world.id, profile, QUESTS_BY_WORLD);

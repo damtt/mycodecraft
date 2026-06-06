@@ -27,7 +27,7 @@ export default function SettingsScreen() {
   const [confirmReset, setConfirmReset] = useState(false);
 
   return (
-    <div data-testid="settings-screen" className="bg-world min-h-full p-6">
+    <div data-testid="settings-screen" className="bg-world min-h-full flex-1 p-6">
       <Panel className="mx-auto flex max-w-md flex-col gap-5">
         <h1 className="font-pixel text-sm text-grass-dark">⚙️ {t('settings')}</h1>
 
