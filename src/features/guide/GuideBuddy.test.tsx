@@ -20,7 +20,7 @@ function renderBuddyAt(path: string) {
 }
 
 describe('GuideBuddy', () => {
-  test('greets once on a screen with a text-only bubble (no buttons in the bubble)', async () => {
+  test('greets once on a screen with a text-only message (action buttons only after tapping)', async () => {
     renderBuddyAt('/map');
     expect(await screen.findByText(/pick a quest to start crafting/i)).toBeInTheDocument();
   });

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import type { Localized, Rewards } from '../lib/types';
 import { questById, nextQuest } from '../content/quests';
@@ -51,11 +51,13 @@ function QuestScreenInner({ questId }: { questId: string }) {
     return () => clearTimeout(timer);
   }, [code]);
 
-  const onHint = (i: number) => {
+  // Stable identity so useQuestGuide's effect only re-registers when quest data
+  // actually changes (not on every QuestScreen render). Setters are stable.
+  const onHint = useCallback((i: number) => {
     playSound('click');
     setUsedHint(true);
     setOpenHints((prev) => new Set(prev).add(i));
-  };
+  }, []);
 
   // Publish quest context to the Guide Buddy (story recap + hint reveal share onHint).
   const questGuide = useQuestGuide({

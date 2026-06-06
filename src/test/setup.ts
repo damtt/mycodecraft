@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
-import { afterEach } from 'vitest';
+import { afterEach, beforeEach } from 'vitest';
 
 // Workaround for react-router v7 + jsdom + Node 24.
 // jsdom replaces globalThis.AbortController with its own implementation.
@@ -27,8 +27,9 @@ Object.defineProperties((globalThis as any).Request, Object.getOwnPropertyDescri
 // jsdom has no matchMedia. Default to "desktop, non-touch":
 //   (min-width: ...) -> true  => QuestScreen renders the columns layout
 //   (pointer: coarse) -> false => InsertToolbar hidden, BottomNav absent
-// Tests that need a phone/touch viewport override window.matchMedia themselves.
-if (!window.matchMedia) {
+// Reinstalled before EVERY test so per-test phone/touch overrides (which reassign
+// window.matchMedia inside a test body) can never leak across tests if order changes.
+function installDefaultMatchMedia() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (window as any).matchMedia = (query: string) => ({
     matches: /min-width/.test(query),
@@ -41,6 +42,8 @@ if (!window.matchMedia) {
     dispatchEvent: () => false,
   });
 }
+installDefaultMatchMedia();
+beforeEach(() => installDefaultMatchMedia());
 
 afterEach(() => {
   cleanup();

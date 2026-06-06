@@ -65,7 +65,6 @@ export const UI = {
   tabRun: { en: 'Run', vi: 'Chạy' },
   // Guide Buddy
   guideBuddy: { en: 'Guide buddy', vi: 'Bạn dẫn đường' },
-  guideBuddyOn: { en: 'Guide buddy', vi: 'Bạn dẫn đường' },
   buddyHint: { en: 'Get a hint', vi: 'Xem gợi ý' },
   buddyScreenHelp: { en: "What's this screen?", vi: 'Màn hình này là gì?' },
   buddyRecap: { en: 'Remind me', vi: 'Nhắc lại' },
