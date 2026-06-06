@@ -10,7 +10,12 @@ export const UI = {
   pickAvatar: { en: 'Pick your head', vi: 'Chọn nhân vật' },
   create: { en: 'Create', vi: 'Tạo' },
   cancel: { en: 'Cancel', vi: 'Hủy' },
+  delete: { en: 'Delete', vi: 'Xóa' },
   holdToDelete: { en: 'Hold to delete', vi: 'Giữ để xóa' },
+  deleteConfirm: {
+    en: 'This player and all their XP, badges, and streak will be gone for good.',
+    vi: 'Người chơi này cùng toàn bộ XP, huy hiệu và chuỗi ngày sẽ biến mất và không thể khôi phục.',
+  },
   holdToReset: { en: 'Hold to reset progress', vi: 'Giữ để đặt lại tiến trình' },
   worldMap: { en: 'World Map', vi: 'Bản đồ' },
   inventory: { en: 'Chest', vi: 'Rương đồ' },

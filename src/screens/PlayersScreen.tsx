@@ -20,6 +20,8 @@ export default function PlayersScreen() {
   const [creating, setCreating] = useState(false);
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState(AVATARS[0]);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const pendingDelete = profiles.find((p) => p.id === confirmDeleteId) ?? null;
 
   const submit = () => {
     if (name.trim() === '') return;
@@ -58,7 +60,9 @@ export default function PlayersScreen() {
                   <Icon name={rank.icon} /> <span className="text-[10px]">{tl(rank.name)}</span>
                 </span>
               </button>
-              <HoldToConfirm label={t('holdToDelete')} onConfirm={() => remove(p.id)} className="text-xs" />
+              <PixelButton variant="danger" className="text-xs" onClick={() => setConfirmDeleteId(p.id)}>
+                {t('delete')}
+              </PixelButton>
             </Panel>
           );
         })}
@@ -102,6 +106,33 @@ export default function PlayersScreen() {
           </Panel>
         )}
       </div>
+
+      {pendingDelete && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-night/80 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="delete-title"
+          onClick={() => setConfirmDeleteId(null)}
+        >
+          <Panel className="w-full max-w-80 text-center" onClick={(e) => e.stopPropagation()}>
+            <Avatar value={pendingDelete.avatar} className="text-5xl" />
+            <h2 id="delete-title" className="mt-2 font-pixel text-base text-red-700">
+              <Icon name="warning" /> {t('delete')} {pendingDelete.name}?
+            </h2>
+            <p className="mt-3 font-body font-bold text-stone-700">{t('deleteConfirm')}</p>
+            <div className="mt-5 flex flex-col items-center gap-3">
+              <HoldToConfirm
+                label={t('holdToDelete')}
+                onConfirm={() => { remove(pendingDelete.id); setConfirmDeleteId(null); }}
+              />
+              <PixelButton variant="stone" onClick={() => setConfirmDeleteId(null)}>
+                {t('cancel')}
+              </PixelButton>
+            </div>
+          </Panel>
+        </div>
+      )}
     </div>
   );
 }
