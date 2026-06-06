@@ -15,6 +15,7 @@ export const UI = {
   worldMap: { en: 'World Map', vi: 'Bản đồ' },
   inventory: { en: 'Chest', vi: 'Rương đồ' },
   settings: { en: 'Settings', vi: 'Cài đặt' },
+  about: { en: 'About', vi: 'Giới thiệu' },
   locked: { en: 'Locked', vi: 'Đã khóa' },
   questLabel: { en: 'Quest', vi: 'Nhiệm vụ' },
   questNotFound: { en: 'Quest not found.', vi: 'Không tìm thấy nhiệm vụ.' },

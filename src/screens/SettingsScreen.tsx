@@ -8,6 +8,7 @@ import Panel from '../components/Panel';
 import PixelButton from '../components/PixelButton';
 import HoldToConfirm from '../components/HoldToConfirm';
 import Icon from '../components/Icon';
+import SocialLinks from '../components/SocialLinks';
 
 const LANGS: Array<{ value: Lang; label: string }> = [
   { value: 'en', label: 'English' },
@@ -109,6 +110,11 @@ export default function SettingsScreen() {
             </div>
           )}
           {resetDone && <p className="mt-2 font-body font-bold">{t('resetDone')}</p>}
+        </div>
+
+        <div className="border-t-2 border-stone-200 pt-4">
+          <p className="mb-2 font-body font-black"><Icon name="sign" /> {t('about')}</p>
+          <SocialLinks className="font-body text-sm font-bold text-stone-600" />
         </div>
       </Panel>
     </div>
