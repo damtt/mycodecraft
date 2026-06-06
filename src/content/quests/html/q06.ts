@@ -8,7 +8,7 @@ export const q06: Quest = {
   title: { en: 'Hang a Painting', vi: 'Treo một bức tranh' },
   story: {
     en: 'Your stone walls look so empty! Hang a painting to make your base feel like home.',
-    vi: 'Mấy bức tường đá của bạn trống trải quá! Hãy treo một bức tranh để căn cứ ấm cúng như ở nhà.',
+    vi: 'Mấy bức tường đá của bạn trống trải quá! Hãy treo một bức tranh để căn cứ trở nên ấm cúng như ở nhà.',
   },
   steps: [
     {
