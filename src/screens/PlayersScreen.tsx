@@ -7,8 +7,10 @@ import { useT } from '../lib/i18n';
 import Panel from '../components/Panel';
 import PixelButton from '../components/PixelButton';
 import HoldToConfirm from '../components/HoldToConfirm';
+import Icon, { type IconName } from '../components/Icon';
+import Avatar from '../components/Avatar';
 
-export const AVATARS = ['🟩', '🐷', '🦊', '🐺', '💀', '🤖', '🐱', '🐸'];
+export const AVATARS: IconName[] = ['green-tile', 'pig', 'fox', 'wolf', 'skull', 'robot', 'cat', 'frog'];
 const MAX_NAME = 12;
 
 export default function PlayersScreen() {
@@ -35,7 +37,7 @@ export default function PlayersScreen() {
         title={t('backToTitle')}
         className="absolute left-4 top-4 cursor-pointer font-pixel text-sm text-white drop-shadow"
       >
-        ← {t('home')}
+        <Icon name="previous" /> {t('home')}
       </Link>
       <h1 className="font-pixel text-2xl text-white [text-shadow:3px_3px_0_#3d8527]">
         {t('choosePlayer')}
@@ -50,10 +52,10 @@ export default function PlayersScreen() {
                 className="flex cursor-pointer flex-col items-center gap-1"
                 aria-label={p.name}
               >
-                <span className="text-6xl">{p.avatar}</span>
+                <Avatar value={p.avatar} className="text-6xl" />
                 <span className="font-body text-lg font-black">{p.name}</span>
-                <span className="font-pixel text-[10px]">
-                  {rank.icon} {tl(rank.name)}
+                <span className="font-pixel text-sm leading-none">
+                  <Icon name={rank.icon} /> <span className="text-[10px]">{tl(rank.name)}</span>
                 </span>
               </button>
               <HoldToConfirm label={t('holdToDelete')} onConfirm={() => remove(p.id)} className="text-xs" />
@@ -84,7 +86,7 @@ export default function PlayersScreen() {
                     onClick={() => { playSound('click'); setAvatar(a); }}
                     className={`cursor-pointer rounded p-1 ${avatar === a ? 'bg-grass/40 ring-2 ring-grass-dark' : ''}`}
                   >
-                    {a}
+                    <Icon name={a} />
                   </button>
                 ))}
               </div>
@@ -96,7 +98,7 @@ export default function PlayersScreen() {
           </Panel>
         ) : (
           <Panel className="flex w-44 items-center justify-center">
-            <PixelButton onClick={() => setCreating(true)}>＋ {t('newPlayer')}</PixelButton>
+            <PixelButton onClick={() => setCreating(true)}><Icon name="plus" /> {t('newPlayer')}</PixelButton>
           </Panel>
         )}
       </div>

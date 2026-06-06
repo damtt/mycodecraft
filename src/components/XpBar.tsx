@@ -1,4 +1,5 @@
 import { rankForXp, nextRank } from '../features/progress/ranks';
+import Icon from './Icon';
 
 export default function XpBar({ xp }: { xp: number }) {
   const rank = rankForXp(xp);
@@ -8,7 +9,7 @@ export default function XpBar({ xp }: { xp: number }) {
     : 100;
   return (
     <div className="flex items-center gap-2" title={`${xp} XP`}>
-      <span className="font-pixel text-xs">{rank.icon}</span>
+      <Icon name={rank.icon} alt={`Lv${rank.level}`} className="text-base leading-none" />
       <div className="h-3 w-28 rounded-full bg-black/40 ring-1 ring-white/25">
         <div
           data-testid="xp-fill"

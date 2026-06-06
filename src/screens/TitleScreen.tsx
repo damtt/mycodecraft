@@ -3,6 +3,7 @@ import { useSettings } from '../stores/settingsStore';
 import { playSound } from '../features/audio/sounds';
 import { useT } from '../lib/i18n';
 import PixelButton from '../components/PixelButton';
+import Icon from '../components/Icon';
 
 export default function TitleScreen() {
   const navigate = useNavigate();
@@ -17,14 +18,14 @@ export default function TitleScreen() {
         onClick={() => { playSound('click'); setLang(lang === 'en' ? 'vi' : 'en'); }}
         className="absolute right-4 top-4 cursor-pointer font-pixel p-2 text-xs text-white drop-shadow"
       >
-        🌐 {lang.toUpperCase()}
+        <Icon name="globe" /> {lang.toUpperCase()}
       </button>
       <h1 className="font-pixel text-4xl text-white [text-shadow:4px_4px_0_#3d8527] sm:text-5xl">
-        ⛏️ CodeCraft
+        <Icon name="pickaxe" /> CodeCraft
       </h1>
       <p className="font-body text-xl font-bold text-night">{t('tagline')}</p>
       <PixelButton className="text-xl" onClick={() => navigate('/players')}>
-        ▶ {t('pressStart')}
+        <Icon name="next" /> {t('pressStart')}
       </PixelButton>
     </div>
   );
