@@ -22,7 +22,7 @@ export default function MapScreen() {
         {WORLDS.map((world) => {
           const unlocked = worldUnlocked(world.id, profile, QUESTS_BY_WORLD);
           return (
-            <Panel key={world.id} className={unlocked ? '' : 'opacity-70'}>
+            <Panel key={world.id} className={unlocked ? '' : 'grayscale brightness-95'}>
               <h2 className="font-pixel text-sm text-grass-dark">
                 <Icon name={world.icon} /> {tl(world.name)}{' '}
                 {!unlocked && <><Icon name="lock" /> {t('locked')}</>}
