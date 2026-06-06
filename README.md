@@ -1,6 +1,6 @@
 # ⛏️ CodeCraft
 
-A Minecraft-inspired web game that teaches kids (9–12) HTML, CSS, and JavaScript.
+A blocky, voxel-builder-inspired web game that teaches kids (9–12) HTML, CSS, and JavaScript.
 Three worlds, ~30 quests, XP and ranks from Dirt to Netherite, collectible badges,
 daily streaks — bilingual English / Tiếng Việt.
 

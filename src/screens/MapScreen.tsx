@@ -37,7 +37,7 @@ export default function MapScreen() {
                       title={tl(quest.title)}
                       aria-label={`${t('questLabel')} ${quest.id}`}
                       className={`flex h-14 w-14 cursor-pointer flex-col items-center justify-center
-                        rounded-md font-body font-black text-white mc-bevel
+                        rounded-md font-body font-black text-white cc-bevel
                         disabled:cursor-not-allowed
                         ${status === 'done' ? 'bg-grass' : status === 'current' ? 'bg-gold animate-pulse' : 'bg-stone'}`}
                     >

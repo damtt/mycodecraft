@@ -7,8 +7,8 @@ export const q07: Quest = {
   badge: 'b-button',
   title: { en: 'Buttons & Levers', vi: 'Nút bấm & Cần gạt' },
   story: {
-    en: 'In Minecraft, buttons and levers make things happen. Let us build a control panel a player can actually click and type into!',
-    vi: 'Trong Minecraft, nút bấm và cần gạt làm mọi thứ hoạt động. Hãy xây một bảng điều khiển mà người chơi có thể bấm và gõ chữ vào!',
+    en: 'In a blocky world, buttons and levers make things happen. Let us build a control panel a player can actually click and type into!',
+    vi: 'Trong một thế giới khối vuông, nút bấm và cần gạt làm mọi thứ hoạt động. Hãy xây một bảng điều khiển mà người chơi có thể bấm và gõ chữ vào!',
   },
   steps: [
     {

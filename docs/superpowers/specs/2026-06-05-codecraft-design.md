@@ -5,7 +5,7 @@
 
 ## Overview
 
-CodeCraft is a Minecraft-inspired web app that teaches children aged 9–12 the basics of HTML, CSS, and JavaScript. Kids progress through a quest map of three themed worlds, completing short coding challenges in a live editor with instant visual feedback, earning XP, ranks, and collectible badges.
+CodeCraft is a voxel-builder-inspired web app that teaches children aged 9–12 the basics of HTML, CSS, and JavaScript. Kids progress through a quest map of three themed worlds, completing short coding challenges in a live editor with instant visual feedback, earning XP, ranks, and collectible badges.
 
 It is a personal, local-first app for the developer's own children: no backend, no accounts, progress in `localStorage`, multiple kid profiles on one device, bilingual English/Vietnamese UI.
 
@@ -30,14 +30,14 @@ It is a personal, local-first app for the developer's own children: no backend, 
 2. **`/players` Profile select** — pick-your-player cards (name + pixel-art avatar head), create/delete profile (delete uses the same hold-to-confirm guard as settings reset).
 3. **`/map` World map (hub)** — three islands/biomes: 🟫 HTML Grasslands → 🟦 CSS Caves → 🟨 JS Redstone Mines. Quest nodes on a path: done ✅ / current ⛏ / locked 🔒. HUD bar: avatar, level + rank, XP bar, streak flame, sound toggle, language toggle.
 4. **`/quest/:id` Quest screen** — lesson panel left (story intro + numbered steps + hint button), CodeMirror editor top-right, sandboxed preview iframe bottom-right. "Check my code" → all checks pass → victory overlay (XP rain, sound, badge drop) → next quest.
-5. **`/inventory` Inventory** — badges/blocks in a Minecraft-style chest grid, achievements, stats (quests done, streak record).
+5. **`/inventory` Inventory** — badges/blocks in a blocky-style chest grid, achievements, stats (quests done, streak record).
 6. **`/settings` Settings** — language, sound on/off, reset progress (hold-to-confirm, parent-guarded).
 
 **Unlock rules:** worlds unlock sequentially (complete HTML Grasslands → CSS Caves opens). Quests within a world unlock linearly. Completed quests are replayable anytime in free-play mode (same editor, no gating).
 
 ## Architecture
 
-**Stack:** Vite + React 19 + TypeScript (strict) + React Router 7 + Zustand (persist → localStorage) + Tailwind CSS 4 (custom Minecraft theme) + CodeMirror 6 + Vitest + React Testing Library.
+**Stack:** Vite + React 19 + TypeScript (strict) + React Router 7 + Zustand (persist → localStorage) + Tailwind CSS 4 (custom blocky theme) + CodeMirror 6 + Vitest + React Testing Library.
 
 ```
 codecraft/
@@ -70,7 +70,7 @@ interface Quest {
   id: string;                    // "html-03"
   world: 'html' | 'css' | 'js';
   title: Localized;
-  story: Localized;              // 1–2 sentence Minecraft-flavored intro
+  story: Localized;              // 1–2 sentence blocky-world-flavored intro
   steps: Step[];                 // instructions; each step may carry a hint (Localized)
   starterCode: string;           // editor contents at quest start
   checks: Check[];               // pass conditions (see below)
@@ -145,7 +145,7 @@ E2E browser automation: out of scope for v1.
 
 ## Curriculum Outline (~30 quests)
 
-**HTML Grasslands (10):** hello world & tags → headings → paragraphs & line breaks → lists → links → images → buttons & inputs → tables → divs & structure → boss: build your Minecraft fan page.
+**HTML Grasslands (10):** hello world & tags → headings → paragraphs & line breaks → lists → links → images → buttons & inputs → tables → divs & structure → boss: build your fan page.
 
 **CSS Caves (10):** colors → fonts & text styling → backgrounds → borders & spacing (box model) → sizes → classes & ids → flexbox row → flexbox layout → hover effects & transitions → boss: style the fan page into a real site.
 

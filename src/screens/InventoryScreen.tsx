@@ -24,7 +24,7 @@ export default function InventoryScreen() {
                   role="img"
                   aria-label={tl(badge.name)}
                   title={tl(badge.name)}
-                  className={`mc-bevel flex h-12 w-12 items-center justify-center rounded
+                  className={`cc-bevel flex h-12 w-12 items-center justify-center rounded
                     bg-dirt-light text-2xl ${owned ? '' : 'opacity-30 grayscale'}`}
                 >
                   {badge.icon}

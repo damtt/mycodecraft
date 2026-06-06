@@ -39,8 +39,8 @@
   .pixel-border {
     box-shadow: 0 0 0 4px #2b2b2b, 0 0 0 8px #555;
   }
-  /* Raised Minecraft-button bevel */
-  .mc-bevel {
+  /* Raised blocky-button bevel */
+  .cc-bevel {
     border-width: 4px;
     border-style: solid;
     border-color: #ffffff66 #00000055 #00000055 #ffffff66;

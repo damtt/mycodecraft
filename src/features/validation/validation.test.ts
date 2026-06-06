@@ -26,8 +26,8 @@ describe('evaluateDomCheck', () => {
   });
 
   test('attrEquals', () => {
-    const d = doc('<a href="https://www.minecraft.net">x</a>');
-    expect(evaluateDomCheck({ type: 'attrEquals', selector: 'a', attr: 'href', value: 'https://www.minecraft.net', failMessage: L('f') }, d)).toBe(true);
+    const d = doc('<a href="https://example.com">x</a>');
+    expect(evaluateDomCheck({ type: 'attrEquals', selector: 'a', attr: 'href', value: 'https://example.com', failMessage: L('f') }, d)).toBe(true);
     expect(evaluateDomCheck({ type: 'attrEquals', selector: 'a', attr: 'href', value: 'https://other.com', failMessage: L('f') }, d)).toBe(false);
   });
 

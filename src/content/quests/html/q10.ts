@@ -17,8 +17,8 @@ export const q10: Quest = {
         vi: 'Bắt đầu bằng một tiêu đề to. Thêm một `<h1>` ở trên cùng với tên thứ bạn yêu thích.',
       },
       hint: {
-        en: 'A big title looks like this: `<h1>I love Minecraft</h1>`',
-        vi: 'Một tiêu đề to trông như thế này: `<h1>I love Minecraft</h1>`',
+        en: 'A big title looks like this: `<h1>I love building</h1>`',
+        vi: 'Một tiêu đề to trông như thế này: `<h1>I love building</h1>`',
       },
     },
     {
@@ -57,8 +57,8 @@ export const q10: Quest = {
         vi: 'Cuối cùng, thêm một cổng link bằng tag `<a>` để người hâm mộ tìm hiểu thêm ở nơi khác.',
       },
       hint: {
-        en: "A link looks like this:\n```\n<a href=\"https://www.minecraft.net\">Learn more</a>\n```",
-        vi: "Một đường link trông như thế này:\n```\n<a href=\"https://www.minecraft.net\">Tìm hiểu thêm</a>\n```",
+        en: "A link looks like this:\n```\n<a href=\"https://example.com\">Learn more</a>\n```",
+        vi: "Một đường link trông như thế này:\n```\n<a href=\"https://example.com\">Tìm hiểu thêm</a>\n```",
       },
     },
     {

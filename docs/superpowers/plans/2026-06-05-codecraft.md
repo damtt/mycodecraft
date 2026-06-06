@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build CodeCraft — a Minecraft-styled, bilingual (EN/VI) web app that teaches kids 9–12 HTML/CSS/JS through ~30 quests with a live editor, XP/ranks, badges, and streaks.
+**Goal:** Build CodeCraft — a blocky-styled, bilingual (EN/VI) web app that teaches kids 9–12 HTML/CSS/JS through ~30 quests with a live editor, XP/ranks, badges, and streaks.
 
 **Architecture:** Client-only Vite + React SPA. Quests are typed TS content files; a declarative check engine validates kid code inside a sandboxed iframe (`sandbox="allow-scripts"` — DOM checks run *inside* the iframe via postMessage since the parent cannot touch its DOM). Progress is pure functions feeding Zustand stores persisted to localStorage under versioned keys.
 
@@ -230,7 +230,7 @@ dist
   .pixel-border {
     box-shadow: 0 0 0 4px #2b2b2b, 0 0 0 8px #555;
   }
-  /* Raised Minecraft-button bevel */
+  /* Raised blocky-button bevel */
   .mc-bevel {
     border-width: 4px;
     border-style: solid;
@@ -360,7 +360,7 @@ export interface Quest {
   id: string; // e.g. "html-03"
   world: WorldId;
   title: Localized;
-  story: Localized; // 1–2 sentence Minecraft-flavored intro
+  story: Localized; // 1–2 sentence blocky-world-flavored intro
   steps: Step[];
   starterCode: string;
   checks: [Check, ...Check[]]; // non-empty — a quest with no checks would vacuously pass
@@ -1321,8 +1321,8 @@ describe('evaluateDomCheck', () => {
   });
 
   test('attrEquals', () => {
-    const d = doc('<a href="https://www.minecraft.net">x</a>');
-    expect(evaluateDomCheck({ type: 'attrEquals', selector: 'a', attr: 'href', value: 'https://www.minecraft.net', failMessage: L('f') }, d)).toBe(true);
+    const d = doc('<a href="https://example.com">x</a>');
+    expect(evaluateDomCheck({ type: 'attrEquals', selector: 'a', attr: 'href', value: 'https://example.com', failMessage: L('f') }, d)).toBe(true);
     expect(evaluateDomCheck({ type: 'attrEquals', selector: 'a', attr: 'href', value: 'https://other.com', failMessage: L('f') }, d)).toBe(false);
   });
 
@@ -1791,7 +1791,7 @@ git add src/features/editor && git commit -m "feat: add CodeMirror 6 editor wrap
 
 ### Task 10: Audio manager (WebAudio synth)
 
-Spec deviation (recorded in spec notes): synthesize Minecraft-y square-wave blips with WebAudio instead of sourcing CC0 files. Zero assets, instant load.
+Spec deviation (recorded in spec notes): synthesize blocky square-wave blips with WebAudio instead of sourcing CC0 files. Zero assets, instant load.
 
 **Files:**
 - Create: `src/features/audio/sounds.ts`
@@ -3433,7 +3433,7 @@ git add src/screens/SettingsScreen.* && git commit -m "feat: add settings screen
 The quest **structure** (ids, checks, XP, badges, starter code shape) is fully specified in the tables below. The **prose** (story, steps, hints, fail messages + Vietnamese translations) is authored during implementation under these rules — they are requirements, not suggestions:
 
 - **Reading level:** ages 9–12. Short sentences. Explain every new word once.
-- **Tone:** playful Minecraft flavor — villagers, creepers (cartoon "sss…", nothing scary), mining, crafting, biomes. Kid is "you", a builder/miner.
+- **Tone:** playful blocky-world flavor — villagers, creepers (cartoon "sss…", nothing scary), mining, crafting, biomes. Kid is "you", a builder/miner.
 - **story:** 1–2 sentences setting up why the code matters in-world.
 - **steps:** 2–4 per quest (boss quests up to 6). Each step = one concrete action naming the exact tag/property/function. Any step introducing new syntax gets a `hint` containing a tiny example snippet.
 - **failMessage:** teaches, never scolds — name what's missing and nudge ("Hmm, I don't see an `<h1>` yet — signs need a big title!").
@@ -3554,7 +3554,7 @@ export const q01: Quest = {
 | html-02 | Big Signs | headings h1/h2 | comment + `<p>` from q01 world | `elementExists h1`; `elementExists h2` | 50 | b-sign |
 | html-03 | Story Pages | paragraphs | comment only | `elementCount p min 2` | 50 | b-book |
 | html-04 | Crafting List | ul/li | comment + `<h2>My chest</h2>` | `elementExists ul`; `elementCount li min 3` | 50 | b-ladder |
-| html-05 | Portal Links | a href | comment + one `<p>` | `elementExists a`; `attrEquals a href https://www.minecraft.net` | 75 | b-compass |
+| html-05 | Portal Links | a href | comment + one `<p>` | `elementExists a`; `attrEquals a href https://example.com` | 75 | b-compass |
 | html-06 | Hang a Painting | img src/alt | comment; lesson supplies `https://picsum.photos/200` as src | `elementExists img`; `elementExists img[alt]` | 75 | b-painting |
 | html-07 | Buttons & Levers | button, input | comment | `elementExists button`; `elementExists input` | 75 | b-button |
 | html-08 | Inventory Table | table/tr/td | comment + `<h2>` | `elementExists table`; `elementCount td min 4` | 75 | b-crafting |
@@ -3906,7 +3906,7 @@ Record any failures, fix, re-run affected unit tests.
 ```markdown
 # ⛏️ CodeCraft
 
-A Minecraft-inspired web game that teaches kids (9–12) HTML, CSS, and JavaScript.
+A voxel-builder-inspired web game that teaches kids (9–12) HTML, CSS, and JavaScript.
 Three worlds, ~30 quests, XP and ranks from Dirt to Netherite, collectible badges,
 daily streaks — bilingual English / Tiếng Việt.
 

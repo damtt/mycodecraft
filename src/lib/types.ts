@@ -26,7 +26,7 @@ export interface Quest {
   id: string; // e.g. "html-03"
   world: WorldId;
   title: Localized;
-  story: Localized; // 1–2 sentence Minecraft-flavored intro
+  story: Localized; // 1–2 sentence blocky-world-flavored intro
   steps: Step[];
   starterCode: string;
   checks: [Check, ...Check[]]; // non-empty — a quest with no checks would vacuously pass
