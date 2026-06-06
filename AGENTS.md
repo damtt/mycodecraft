@@ -16,7 +16,7 @@ CodeCraft is a Vite 6, React 19, TypeScript game for teaching HTML, CSS, and Jav
 
 ## Coding Style & Naming Conventions
 
-Use strict TypeScript and React function components. Keep indentation at two spaces, prefer single quotes, and use semicolons, matching the existing files. Name components in PascalCase (`PixelButton.tsx`), hooks with `use` prefixes, stores as `profileStore.ts`, and quest files as `qNN.ts` with ids like `html-01`. Keep player-facing text bilingual with `{ en, vi }` objects. Do not add backend calls, analytics, or account flows; the app is local-first and stores progress in `localStorage`.
+Use strict TypeScript and React function components. Keep indentation at two spaces, prefer single quotes, and use semicolons, matching the existing files. Name components in PascalCase (`PixelButton.tsx`), hooks with `use` prefixes, stores as `profileStore.ts`, and quest files as `qNN.ts` with ids like `html-01`. Keep player-facing text bilingual with `{ en, vi }` objects. The app is local-first and stores progress in `localStorage`; do not add backend calls or account flows. The one allowed exception is anonymous, cookieless visitor analytics via Vercel Web Analytics (`@vercel/analytics`, mounted as `<Analytics />` in `App.tsx`) — it collects no personal data and must not gate any feature.
 
 ## Testing Guidelines
 
