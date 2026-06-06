@@ -24,6 +24,24 @@ const _NativeRequest = globalThis.Request;
 Object.setPrototypeOf((globalThis as any).Request, _NativeRequest);
 Object.defineProperties((globalThis as any).Request, Object.getOwnPropertyDescriptors(_NativeRequest));
 
+// jsdom has no matchMedia. Default to "desktop, non-touch":
+//   (min-width: ...) -> true  => QuestScreen renders the columns layout
+//   (pointer: coarse) -> false => InsertToolbar hidden, BottomNav absent
+// Tests that need a phone/touch viewport override window.matchMedia themselves.
+if (!window.matchMedia) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).matchMedia = (query: string) => ({
+    matches: /min-width/.test(query),
+    media: query,
+    onchange: null,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    addListener: () => {},
+    removeListener: () => {},
+    dispatchEvent: () => false,
+  });
+}
+
 afterEach(() => {
   cleanup();
   localStorage.clear();
