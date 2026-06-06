@@ -7,6 +7,7 @@ import { playSound } from '../features/audio/sounds';
 import Panel from '../components/Panel';
 import PixelButton from '../components/PixelButton';
 import HoldToConfirm from '../components/HoldToConfirm';
+import Icon from '../components/Icon';
 
 const LANGS: Array<{ value: Lang; label: string }> = [
   { value: 'en', label: 'English' },
@@ -29,10 +30,10 @@ export default function SettingsScreen() {
   return (
     <div data-testid="settings-screen" className="bg-world min-h-full flex-1 p-6">
       <Panel className="mx-auto flex max-w-md flex-col gap-5">
-        <h1 className="font-pixel text-sm text-grass-dark">⚙️ {t('settings')}</h1>
+        <h1 className="font-pixel text-sm text-grass-dark"><Icon name="gear" /> {t('settings')}</h1>
 
         <fieldset>
-          <legend className="font-body font-black">🌐 {t('language')}</legend>
+          <legend className="font-body font-black"><Icon name="globe" /> {t('language')}</legend>
           <div className="mt-2 flex gap-4">
             {LANGS.map(({ value, label }) => (
               <label key={value} className="flex cursor-pointer items-center gap-1 font-body font-bold">
@@ -49,7 +50,7 @@ export default function SettingsScreen() {
         </fieldset>
 
         <fieldset>
-          <legend className="font-body font-black">🔠 {t('fontSize')}</legend>
+          <legend className="font-body font-black"><Icon name="letters" /> {t('fontSize')}</legend>
           <div className="mt-2 flex gap-4">
             {FONT_SIZES.map(({ value, key }) => (
               <label key={value} className="flex cursor-pointer items-center gap-1 font-body font-bold">
@@ -71,7 +72,7 @@ export default function SettingsScreen() {
             checked={soundOn}
             onChange={() => { playSound('click'); toggleSound(); }}
           />
-          🔊 {t('sound')}: {soundOn ? t('on') : t('off')}
+          <Icon name="volume" /> {t('sound')}: {soundOn ? t('on') : t('off')}
         </label>
 
         <label className="flex cursor-pointer items-center gap-2 font-body font-black">
@@ -80,11 +81,11 @@ export default function SettingsScreen() {
             checked={guideOn}
             onChange={() => { playSound('click'); toggleGuide(); }}
           />
-          🦉 {t('guideBuddy')}: {guideOn ? t('on') : t('off')}
+          <Icon name="owl" /> {t('guideBuddy')}: {guideOn ? t('on') : t('off')}
         </label>
 
         <div>
-          <p className="mb-2 font-body font-black text-red-700">⚠️ {t('resetProgress')}</p>
+          <p className="mb-2 font-body font-black text-red-700"><Icon name="warning" /> {t('resetProgress')}</p>
           {!confirmReset ? (
             <PixelButton variant="danger" onClick={() => { setConfirmReset(true); setResetDone(false); }}>
               {t('resetProgress')}

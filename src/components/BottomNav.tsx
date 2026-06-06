@@ -3,6 +3,7 @@ import { useT } from '../lib/i18n';
 import { useIsWide } from '../lib/useMediaQuery';
 import { HOME_ITEM, SCREEN_NAV } from '../lib/nav';
 import { playSound } from '../features/audio/sounds';
+import Icon from './Icon';
 
 const ITEMS = [HOME_ITEM, ...SCREEN_NAV];
 
@@ -28,7 +29,7 @@ export default function BottomNav() {
             onClick={() => playSound('click')}
             className={`flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 py-2 font-body text-[10px] font-bold ${active ? 'text-gold' : 'text-white'}`}
           >
-            <span className="text-xl leading-none">{item.icon}</span>
+            <span className="text-xl leading-none"><Icon name={item.icon} /></span>
             {t(item.key)}
           </Link>
         );

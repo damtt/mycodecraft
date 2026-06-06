@@ -54,8 +54,8 @@ describe('MapScreen', () => {
 
   test('locked world shows lock and disabled quests', async () => {
     renderMap();
-    expect((await screen.findAllByText(/🔒/)).length).toBeGreaterThan(0);
-    expect(screen.getByRole('button', { name: /quest css-01/i })).toBeDisabled();
+    expect(await screen.findByRole('button', { name: /quest css-01/i })).toBeDisabled();
+    expect(document.querySelectorAll('img[src$="/lock.png"]').length).toBeGreaterThan(0);
   });
 
   test('done quests are replayable', async () => {

@@ -22,9 +22,9 @@ describe('PlayersScreen', () => {
     renderAt();
     fireEvent.click(await screen.findByRole('button', { name: /new player/i }));
     fireEvent.change(screen.getByPlaceholderText(/your name/i), { target: { value: 'Mai' } });
-    fireEvent.click(screen.getByRole('radio', { name: '🦊' }));
+    fireEvent.click(screen.getByRole('radio', { name: 'fox' }));
     fireEvent.click(screen.getByRole('button', { name: /^create$/i }));
-    expect(useProfiles.getState().profiles[0]).toMatchObject({ name: 'Mai', avatar: '🦊' });
+    expect(useProfiles.getState().profiles[0]).toMatchObject({ name: 'Mai', avatar: 'fox' });
   });
 
   test('create is disabled with empty name', async () => {

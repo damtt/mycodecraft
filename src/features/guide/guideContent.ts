@@ -12,8 +12,8 @@ export const GUIDE: {
   allHintsSeen: Localized;
 } = {
   greeting: {
-    map: { en: 'Pick a quest to start crafting! ⛏️', vi: 'Chọn một nhiệm vụ để bắt đầu chế tạo nhé! ⛏️' },
-    quest: { en: 'Read the steps, write your code, then tap Check ✔', vi: 'Đọc các bước, viết code, rồi bấm Kiểm tra ✔' },
+    map: { en: 'Pick a quest to start crafting! [icon:pickaxe]', vi: 'Chọn một nhiệm vụ để bắt đầu chế tạo nhé! [icon:pickaxe]' },
+    quest: { en: 'Read the steps, write your code, then tap Check [icon:check]', vi: 'Đọc các bước, viết code, rồi bấm Kiểm tra [icon:check]' },
     inventory: { en: "Here are the badges you've earned. Awesome haul!", vi: 'Đây là các huy hiệu bạn đã kiếm được. Tuyệt quá!' },
     settings: { en: 'Change sound, language, and text size here.', vi: 'Đổi âm thanh, ngôn ngữ và cỡ chữ ở đây.' },
   },
@@ -24,12 +24,12 @@ export const GUIDE: {
     settings: { en: 'Make the game feel just right for you here.', vi: 'Chỉnh cho trò chơi hợp với bạn nhất ở đây.' },
   },
   idle: {
-    map: { en: 'Need a quest? The glowing one is next! ⛏️', vi: 'Cần một nhiệm vụ? Cái đang sáng là tiếp theo đó! ⛏️' },
-    quest: { en: 'Stuck? Tap me for a hint anytime. 💡', vi: 'Bí à? Bấm vào mình để xem gợi ý bất cứ lúc nào nhé. 💡' },
+    map: { en: 'Need a quest? The glowing one is next! [icon:pickaxe]', vi: 'Cần một nhiệm vụ? Cái đang sáng là tiếp theo đó! [icon:pickaxe]' },
+    quest: { en: 'Stuck? Tap me for a hint anytime. [icon:bulb]', vi: 'Bí à? Bấm vào mình để xem gợi ý bất cứ lúc nào nhé. [icon:bulb]' },
     inventory: { en: 'Play more quests to fill your chest!', vi: 'Chơi thêm nhiệm vụ để lấp đầy rương nào!' },
     settings: { en: 'All set? Tap World Map to keep crafting.', vi: 'Xong chưa? Bấm Bản đồ để chế tạo tiếp nhé.' },
   },
-  failedCheck: { en: 'So close! Check the steps again — tap me if you want a hint. 💡', vi: 'Sắp đúng rồi! Xem lại các bước nhé — bấm vào mình nếu cần gợi ý. 💡' },
-  stuck: { en: 'Whoa, your code got stuck in a loop! Tap ↻ to reset and try again.', vi: 'Ối, code của bạn bị kẹt trong vòng lặp! Bấm ↻ để đặt lại và thử lại nhé.' },
-  allHintsSeen: { en: "You've seen all the hints for this quest — you've got this! 💪", vi: 'Bạn đã xem hết gợi ý của nhiệm vụ này rồi — cố lên nhé! 💪' },
+  failedCheck: { en: 'So close! Check the steps again — tap me if you want a hint. [icon:bulb]', vi: 'Sắp đúng rồi! Xem lại các bước nhé — bấm vào mình nếu cần gợi ý. [icon:bulb]' },
+  stuck: { en: 'Whoa, your code got stuck in a loop! Tap [icon:loop] to reset and try again.', vi: 'Ối, code của bạn bị kẹt trong vòng lặp! Bấm [icon:loop] để đặt lại và thử lại nhé.' },
+  allHintsSeen: { en: "You've seen all the hints for this quest — you've got this! [icon:muscle]", vi: 'Bạn đã xem hết gợi ý của nhiệm vụ này rồi — cố lên nhé! [icon:muscle]' },
 };

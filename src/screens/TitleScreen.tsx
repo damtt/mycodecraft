@@ -3,6 +3,7 @@ import { useSettings } from '../stores/settingsStore';
 import { playSound } from '../features/audio/sounds';
 import { useT } from '../lib/i18n';
 import PixelButton from '../components/PixelButton';
+import Icon from '../components/Icon';
 
 export default function TitleScreen() {
   const navigate = useNavigate();
@@ -10,22 +11,28 @@ export default function TitleScreen() {
   const setLang = useSettings((s) => s.setLang);
 
   return (
-    <div data-testid="title-screen" className="bg-world relative flex min-h-screen flex-col items-center justify-center gap-8">
+    <div data-testid="title-screen" className="bg-world relative flex min-h-screen flex-col items-center justify-center gap-10 pb-[40vh]">
       <button
         data-testid="lang-toggle-title"
         aria-label={lang === 'en' ? 'Switch to Vietnamese' : 'Switch to English'}
         onClick={() => { playSound('click'); setLang(lang === 'en' ? 'vi' : 'en'); }}
         className="absolute right-4 top-4 cursor-pointer font-pixel p-2 text-xs text-white drop-shadow"
       >
-        🌐 {lang.toUpperCase()}
+        <Icon name="globe" /> {lang.toUpperCase()}
       </button>
-      <h1 className="font-pixel text-4xl text-white [text-shadow:4px_4px_0_#3d8527] sm:text-5xl">
-        ⛏️ CodeCraft
+      <h1>
+        <img
+          src={`${import.meta.env.BASE_URL}logo.png`}
+          alt="CodeCraft"
+          className="w-[20rem] max-w-[85vw] sm:w-[30rem] [image-rendering:pixelated] drop-shadow-[3px_3px_0_#0006]"
+        />
       </h1>
-      <p className="font-body text-xl font-bold text-night">{t('tagline')}</p>
-      <PixelButton className="text-xl" onClick={() => navigate('/players')}>
-        ▶ {t('pressStart')}
-      </PixelButton>
+      <div className="flex flex-col items-center gap-6">
+        <p className="font-body text-xl font-bold text-night">{t('tagline')}</p>
+        <PixelButton className="text-xl" onClick={() => navigate('/players')}>
+          <Icon name="next" /> {t('pressStart')}
+        </PixelButton>
+      </div>
     </div>
   );
 }
