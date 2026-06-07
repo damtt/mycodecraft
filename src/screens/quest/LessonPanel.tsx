@@ -4,6 +4,7 @@ import Panel from '../../components/Panel';
 import PixelButton from '../../components/PixelButton';
 import LessonText from '../../components/LessonText';
 import Icon from '../../components/Icon';
+import PredictBlock from './PredictBlock';
 
 interface LessonPanelProps {
   quest: Quest;
@@ -16,11 +17,14 @@ interface LessonPanelProps {
   onReload: () => void;
   checking: boolean;
   onCheck: () => void;
+  reflectOpen: boolean;
+  onReflect: () => void;
+  showNudge: boolean;
   className?: string;
 }
 
 export default function LessonPanel(props: LessonPanelProps) {
-  const { quest, alreadyDone, openHints, onHint, failMessage, runtimeErrorLine, stuck, onReload, checking, onCheck, className = '' } = props;
+  const { quest, alreadyDone, openHints, onHint, failMessage, runtimeErrorLine, stuck, onReload, checking, onCheck, reflectOpen, onReflect, showNudge, className = '' } = props;
   const { t, tl } = useT();
 
   return (
@@ -43,8 +47,29 @@ export default function LessonPanel(props: LessonPanelProps) {
           </li>
         ))}
       </ol>
+      {quest.reflect && (
+        <div className="rounded-md border-2 border-grass/30 bg-grass/10 p-2">
+          <h3 className="font-pixel text-xs"><Icon name="brain" /> {t('think')}</h3>
+          <div className="mt-1 font-body font-bold"><LessonText text={tl(quest.reflect.question)} /></div>
+          {reflectOpen ? (
+            <div className="mt-1 rounded bg-gold/20 p-2 text-sm"><LessonText text={tl(quest.reflect.answer)} /></div>
+          ) : (
+            <button type="button" onClick={onReflect} className="mt-1 cursor-pointer rounded bg-gold/40 px-2 font-body text-xs font-bold"><Icon name="bulb" /> {t('showAnswer')}</button>
+          )}
+        </div>
+      )}
+      {quest.predict && <PredictBlock predict={quest.predict} />}
+      {quest.experiment && (
+        <div className="rounded-md border-2 border-stone/40 bg-stone/10 p-2">
+          <h3 className="font-pixel text-xs"><Icon name="potion" /> {t('tryThis')}</h3>
+          <div className="mt-1 font-body font-bold"><LessonText text={tl(quest.experiment)} /></div>
+        </div>
+      )}
       {failMessage && (
         <p role="alert" className="rounded-md border-2 border-red-400 bg-red-50 p-2 font-body font-bold text-red-700"><Icon name="red-tile" /> <span><LessonText text={tl(failMessage)} /></span></p>
+      )}
+      {showNudge && (
+        <p role="alert" className="rounded-md bg-yellow-100 p-2 font-body font-bold"><Icon name="brain" /> {t('reflectNudge')}</p>
       )}
       {runtimeErrorLine !== null && (
         <p role="alert" className="rounded-md border-2 border-green-700 bg-green-50 p-2 font-body font-bold text-green-900"><Icon name="green-tile" /> {t('codeBoom')} {runtimeErrorLine}</p>

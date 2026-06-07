@@ -111,6 +111,9 @@ function QuestScreenInner({ questId }: { questId: string }) {
       onReload={preview.reload}
       checking={checking}
       onCheck={onCheck}
+      reflectOpen={false}
+      onReflect={() => {}}
+      showNudge={false}
       className="min-h-0 flex-1"
     />
   );
