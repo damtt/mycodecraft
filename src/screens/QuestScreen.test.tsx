@@ -219,7 +219,10 @@ describe('QuestScreen', () => {
     fireEvent.click(await screen.findByRole('tab', { name: /code/i }));
     fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
     // The error floats over the editor so the player can fix it in place...
-    expect(await screen.findByRole('alert')).toHaveTextContent('No <p> yet!');
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent('No <p> yet!');
+    expect(alert).toHaveClass('fixed');
+    expect(alert).toHaveClass('bottom-[calc(9.75rem+env(safe-area-inset-bottom))]');
     // ...and we stay on the Code tab (no jump to Preview on failure).
     expect(screen.getByRole('tab', { name: /code/i })).toHaveAttribute('aria-selected', 'true');
   });
