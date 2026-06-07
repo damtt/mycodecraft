@@ -46,6 +46,8 @@ function QuestScreenInner({ questId }: { questId: string }) {
   // Tab state lives here (not in QuestTabs) so it survives a breakpoint-driven
   // remount of the tabs subtree.
   const [tab, setTab] = useState<Tab>('lesson');
+  const [reflectOpen, setReflectOpen] = useState(false);
+  const [nudged, setNudged] = useState(false);
 
   const preview = usePreview(debounced);
 
@@ -60,6 +62,11 @@ function QuestScreenInner({ questId }: { questId: string }) {
     playSound('click');
     setUsedHint(true);
     setOpenHints((prev) => new Set(prev).add(i));
+  }, []);
+
+  const onReflect = useCallback(() => {
+    playSound('click');
+    setReflectOpen(true);
   }, []);
 
   // Publish quest context to the Guide Buddy (story recap + hint reveal share onHint).
@@ -90,6 +97,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
     if (!result.pass) {
       setFailMessage(result.firstFail?.failMessage ?? null);
       questGuide.onFailedCheck();
+      if (quest.reflect && !reflectOpen && !nudged) setNudged(true);
       return;
     }
     const r = completeQuest(quest, usedHint);
@@ -111,9 +119,9 @@ function QuestScreenInner({ questId }: { questId: string }) {
       onReload={preview.reload}
       checking={checking}
       onCheck={onCheck}
-      reflectOpen={false}
-      onReflect={() => {}}
-      showNudge={false}
+      reflectOpen={reflectOpen}
+      onReflect={onReflect}
+      showNudge={nudged && !reflectOpen}
       className="min-h-0 flex-1"
     />
   );
