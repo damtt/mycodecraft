@@ -32,7 +32,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
   const navigate = useNavigate();
   const profile = useActiveProfile();
   const completeQuest = useProfiles((s) => s.completeQuest);
-  const setEditorFocused = useGuide((s) => s.setEditorFocused);
+  const setEditorEngaged = useGuide((s) => s.setEditorEngaged);
   const { t } = useT();
   const isWide = useIsWide();
 
@@ -48,6 +48,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
   const [tab, setTab] = useState<Tab>('lesson');
   const [reflectOpen, setReflectOpen] = useState(false);
   const [nudged, setNudged] = useState(false);
+  const [editorFocused, setEditorFocused] = useState(false);
 
   const preview = usePreview(debounced);
 
@@ -55,6 +56,13 @@ function QuestScreenInner({ questId }: { questId: string }) {
     const timer = setTimeout(() => setDebounced(code), DEBOUNCE_MS);
     return () => clearTimeout(timer);
   }, [code]);
+
+  // Keep the Guide Buddy out of the way while the editor/keyboard is up, and off
+  // the phone Code tab entirely — there its owl + bubble would cover the Check
+  // button and the floating error. It stays available on the Lesson and Run tabs.
+  useEffect(() => {
+    setEditorEngaged(editorFocused || (!isWide && tab === 'code'));
+  }, [editorFocused, isWide, tab, setEditorEngaged]);
 
   // Stable identity so useQuestGuide's effect only re-registers when quest data
   // actually changes (not on every QuestScreen render). Setters are stable.
@@ -100,6 +108,9 @@ function QuestScreenInner({ questId }: { questId: string }) {
       if (quest.reflect && !reflectOpen && !nudged) setNudged(true);
       return;
     }
+    // On phones, jump to the Run tab to show the working result (a failure stays
+    // on the Code tab with the floating error). The wide columns layout has no tabs.
+    if (!isWide) setTab('run');
     const r = completeQuest(quest, usedHint);
     if (r) {
       playSound(r.leveledUp ? 'levelup' : r.newBadge ? 'badge' : 'success');
@@ -122,6 +133,9 @@ function QuestScreenInner({ questId }: { questId: string }) {
       reflectOpen={reflectOpen}
       onReflect={onReflect}
       showNudge={nudged && !reflectOpen}
+      // Wide layout hosts the check button + failure banner here; phones move
+      // both to the Code tab (showCheck gates both inside LessonPanel).
+      showCheck={isWide}
       className="min-h-0 flex-1"
     />
   );
@@ -142,7 +156,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
     <div data-testid="quest-screen" className="flex min-h-0 flex-1 flex-col bg-dirt-light/30 p-3">
       {isWide
         ? <QuestColumns lesson={lesson} editor={editor} preview={previewPane} />
-        : <QuestTabs tab={tab} onTabChange={setTab} lesson={lesson} editor={editor} preview={previewPane} />}
+        : <QuestTabs tab={tab} onTabChange={setTab} lesson={lesson} editor={editor} preview={previewPane} checking={checking} onCheck={onCheck} failMessage={failMessage} />}
 
       {rewards && (
         <VictoryOverlay

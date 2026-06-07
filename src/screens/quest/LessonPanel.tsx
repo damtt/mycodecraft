@@ -4,6 +4,7 @@ import Panel from '../../components/Panel';
 import PixelButton from '../../components/PixelButton';
 import LessonText from '../../components/LessonText';
 import Icon from '../../components/Icon';
+import FailMessage from './FailMessage';
 import PredictBlock from './PredictBlock';
 
 interface LessonPanelProps {
@@ -20,13 +21,17 @@ interface LessonPanelProps {
   reflectOpen: boolean;
   onReflect: () => void;
   showNudge: boolean;
+  /** Wide layout hosts the check button + its failure banner here; phones move
+   *  both to the Code tab, so the lesson pane hides them. */
+  showCheck?: boolean;
   className?: string;
 }
 
 export default function LessonPanel(props: LessonPanelProps) {
   const {
     quest, alreadyDone, openHints, onHint, failMessage, runtimeErrorLine,
-    stuck, onReload, checking, onCheck, reflectOpen, onReflect, showNudge, className = '',
+    stuck, onReload, checking, onCheck, reflectOpen, onReflect, showNudge,
+    showCheck = true, className = '',
   } = props;
   const { t, tl } = useT();
 
@@ -68,9 +73,7 @@ export default function LessonPanel(props: LessonPanelProps) {
           <div className="mt-1 font-body font-bold"><LessonText text={tl(quest.experiment)} /></div>
         </div>
       )}
-      {failMessage && (
-        <p role="alert" className="rounded-md border-2 border-red-400 bg-red-50 p-2 font-body font-bold text-red-700"><Icon name="red-tile" /> <span><LessonText text={tl(failMessage)} /></span></p>
-      )}
+      {showCheck && failMessage && <FailMessage text={tl(failMessage)} />}
       {showNudge && (
         <p role="alert" className="rounded-md bg-yellow-100 p-2 font-body font-bold"><Icon name="brain" /> {t('reflectNudge')}</p>
       )}
@@ -80,7 +83,9 @@ export default function LessonPanel(props: LessonPanelProps) {
       {stuck && (
         <p role="alert" className="rounded-md bg-yellow-100 p-2 font-body font-bold"><Icon name="recycle" /> {t('stuckLoop')} <button onClick={onReload} aria-label={t('stuckLoop')} className="cursor-pointer underline"><Icon name="loop" /></button></p>
       )}
-      <PixelButton className="mt-auto" onClick={onCheck} disabled={checking}><Icon name="check" /> {t('checkMyCode')}</PixelButton>
+      {showCheck && (
+        <PixelButton className="mt-auto" onClick={onCheck} disabled={checking}><Icon name="check" /> {t('checkMyCode')}</PixelButton>
+      )}
     </Panel>
   );
 }

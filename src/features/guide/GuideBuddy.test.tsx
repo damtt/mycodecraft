@@ -9,7 +9,7 @@ import { useGuide } from './guideStore';
 import { useSettings } from '../../stores/settingsStore';
 
 beforeEach(() => {
-  useGuide.setState({ bubble: null, greeted: new Set(), questCtx: null, editorFocused: false });
+  useGuide.setState({ bubble: null, greeted: new Set(), questCtx: null, editorEngaged: false });
   useSettings.setState({ guideOn: true, lang: 'en' });
 });
 
