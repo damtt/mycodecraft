@@ -35,6 +35,11 @@ describe('quest content integrity', () => {
       if (check.type === 'computedStyle') expect(check.equalsAny.length).toBeGreaterThan(0);
       if ('value' in check) expect(check.value.trim()).not.toBe('');
       if (check.type === 'attrEquals') expect(check.attr.trim()).not.toBe('');
+      if (check.type === 'attrMatches') {
+        expect(check.attr.trim()).not.toBe('');
+        expect(check.pattern.trim()).not.toBe('');
+        expect(() => new RegExp(check.pattern)).not.toThrow();
+      }
       if (check.type === 'computedStyle') expect(check.prop.trim()).not.toBe('');
       if (check.type === 'elementCount') expect(check.min).toBeGreaterThanOrEqual(1);
     }

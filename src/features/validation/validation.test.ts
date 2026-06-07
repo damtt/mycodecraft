@@ -25,6 +25,21 @@ describe('evaluateDomCheck', () => {
     expect(evaluateDomCheck({ type: 'textIncludes', selector: 'h1', value: 'bye', failMessage: L('f') }, d)).toBe(false);
   });
 
+  test('textNonEmpty requires non-blank content', () => {
+    expect(evaluateDomCheck({ type: 'textNonEmpty', selector: 'a', failMessage: L('f') }, doc('<a href="x">Play Now</a>'))).toBe(true);
+    expect(evaluateDomCheck({ type: 'textNonEmpty', selector: 'a', failMessage: L('f') }, doc('<a href="x"></a>'))).toBe(false);
+    expect(evaluateDomCheck({ type: 'textNonEmpty', selector: 'a', failMessage: L('f') }, doc('<a href="x">   </a>'))).toBe(false);
+  });
+
+  test('attrMatches tests the attribute against a regex', () => {
+    const c = { type: 'attrMatches', selector: 'a', attr: 'href', pattern: '^https?://.+', failMessage: L('f') };
+    expect(evaluateDomCheck(c, doc('<a href="https://example.com">x</a>'))).toBe(true);
+    expect(evaluateDomCheck(c, doc('<a href="http://other.net/page">x</a>'))).toBe(true);
+    expect(evaluateDomCheck(c, doc('<a href="example.com">x</a>'))).toBe(false);
+    expect(evaluateDomCheck(c, doc('<a href="">x</a>'))).toBe(false);
+    expect(evaluateDomCheck(c, doc('<a>x</a>'))).toBe(false);
+  });
+
   test('attrEquals', () => {
     const d = doc('<a href="https://example.com">x</a>');
     expect(evaluateDomCheck({ type: 'attrEquals', selector: 'a', attr: 'href', value: 'https://example.com', failMessage: L('f') }, d)).toBe(true);
@@ -46,6 +61,8 @@ describe('evaluateDomCheck', () => {
   test('missing element fails every dom check type', () => {
     const d = doc('<p>x</p>');
     expect(evaluateDomCheck({ type: 'textIncludes', selector: 'h1', value: 'x', failMessage: L('f') }, d)).toBe(false);
+    expect(evaluateDomCheck({ type: 'textNonEmpty', selector: 'h1', failMessage: L('f') }, d)).toBe(false);
+    expect(evaluateDomCheck({ type: 'attrMatches', selector: 'h1', attr: 'href', pattern: '.+', failMessage: L('f') }, d)).toBe(false);
     expect(evaluateDomCheck({ type: 'computedStyle', selector: 'h1', prop: 'color', equalsAny: ['red'], failMessage: L('f') }, d)).toBe(false);
   });
 
