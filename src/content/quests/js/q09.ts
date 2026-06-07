@@ -52,4 +52,8 @@ export const q09: Quest = {
       },
     },
   ],
+  reflect: {
+    question: { en: 'Why do we add `+ 1` at the end of `Math.floor(Math.random() * 6) + 1`?', vi: 'Tại sao ta cộng `+ 1` ở cuối của `Math.floor(Math.random() * 6) + 1`?' },
+    answer: { en: '`Math.floor(Math.random() * 6)` lands on 0, 1, 2, 3, 4, or 5 — it never reaches 6 and can be 0. Adding 1 shifts every result up by one, so the dice rolls a fair 1 to 6.', vi: '`Math.floor(Math.random() * 6)` rơi vào 0, 1, 2, 3, 4, hoặc 5 — nó không bao giờ tới 6 và có thể là 0. Cộng thêm 1 dịch mỗi kết quả lên một bậc, nên xúc xắc ra số từ 1 đến 6 công bằng.' },
+  },
 };

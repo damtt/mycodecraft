@@ -48,4 +48,8 @@ export const q04: Quest = {
       },
     },
   ],
+  reflect: {
+    question: { en: 'Imagine `creeperNearby` was `false` instead of `true`. Would Run away! still print?', vi: 'Hãy tưởng tượng `creeperNearby` là `false` thay vì `true`. Run away! có còn được in ra không?' },
+    answer: { en: 'No. An `if` only runs the code in its `{ }` when the check is `true`. If `creeperNearby` is `false`, JavaScript skips the whole block and prints nothing.', vi: 'Không. Câu `if` chỉ chạy code trong `{ }` khi điều kiện là `true`. Nếu `creeperNearby` là `false`, JavaScript bỏ qua cả khối đó và không in gì cả.' },
+  },
 };

@@ -40,4 +40,8 @@ export const q01: Quest = {
       },
     },
   ],
+  reflect: {
+    question: { en: 'Your message printed in the Console. Did `console.log` change anything you can SEE on the page itself?', vi: 'Thông điệp của bạn in ra ở Console. `console.log` có thay đổi điều gì bạn NHÌN THẤY trên trang không?' },
+    answer: { en: 'No — `console.log` only writes to the Console, a place for messages to the programmer. It does not change the page the player sees.', vi: 'Không — `console.log` chỉ ghi ra Console, nơi nhắn tin cho lập trình viên. Nó không thay đổi trang mà người chơi nhìn thấy.' },
+  },
 };

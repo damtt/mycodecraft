@@ -52,4 +52,13 @@ export const q08: Quest = {
       },
     },
   ],
+  predict: {
+    question: { en: 'The loop counts `i` from 1 to 5. How many lines will the Console print in total?', vi: 'Vòng lặp đếm `i` từ 1 đến 5. Console sẽ in tổng cộng bao nhiêu dòng?' },
+    options: [
+      { text: { en: '5', vi: '5' }, correct: true },
+      { text: { en: '1', vi: '1' }, correct: false },
+      { text: { en: '6', vi: '6' }, correct: false },
+    ],
+    explain: { en: 'The body runs once for each value of `i` — 1, 2, 3, 4, 5 — so it prints 5 lines, ending with Mined block 5. That is the power of a loop: one `console.log` runs many times.', vi: 'Phần thân chạy một lần cho mỗi giá trị của `i` — 1, 2, 3, 4, 5 — nên nó in ra 5 dòng, kết thúc bằng Mined block 5. Đó là sức mạnh của vòng lặp: một `console.log` chạy nhiều lần.' },
+  },
 };

@@ -52,4 +52,8 @@ export const q05: Quest = {
       },
     },
   ],
+  experiment: {
+    en: 'Try calling your recipe more than once: `greet(\'Alex\');` then `greet(\'Steve\');`. Run it and watch the Console — one function, written once, can greet anybody you hand it!',
+    vi: 'Hãy thử gọi công thức của bạn nhiều hơn một lần: `greet(\'Alex\');` rồi `greet(\'Steve\');`. Chạy thử và xem Console — một function, viết một lần, có thể chào bất cứ ai bạn đưa cho nó!',
+  },
 };

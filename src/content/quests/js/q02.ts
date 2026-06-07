@@ -52,4 +52,8 @@ export const q02: Quest = {
       },
     },
   ],
+  reflect: {
+    question: { en: 'You wrote `console.log(loot)` with no quotes. Why not `console.log(\'loot\')` with quotes?', vi: 'Bạn viết `console.log(loot)` không có dấu nháy. Tại sao không phải `console.log(\'loot\')` có dấu nháy?' },
+    answer: { en: 'Without quotes, `loot` is the chest\'s name, so JavaScript opens it and prints what is inside — diamond. With quotes, `\'loot\'` is just the plain word, so it would print the letters l-o-o-t.', vi: 'Không có dấu nháy, `loot` là tên chiếc rương, nên JavaScript mở nó ra và in thứ bên trong — diamond. Có dấu nháy, `\'loot\'` chỉ là chữ trơn, nên nó sẽ in ra các chữ cái l-o-o-t.' },
+  },
 };
