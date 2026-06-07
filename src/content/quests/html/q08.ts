@@ -63,4 +63,14 @@ export const q08: Quest = {
       },
     },
   ],
+  reflect: {
+    question: {
+      en: 'Why does each `<td>` need to sit inside a `<tr>` instead of straight inside the `<table>`?',
+      vi: 'Vì sao mỗi `<td>` phải nằm bên trong một `<tr>` chứ không nằm thẳng trong `<table>`?',
+    },
+    answer: {
+      en: 'The `<tr>` marks one whole row across the table, and the `<td>` boxes inside it line up as that row\'s cells — so the `<tr>` tells the browser which boxes belong in the same row.',
+      vi: '`<tr>` đánh dấu trọn một hàng ngang trong bảng, còn các ô `<td>` bên trong xếp thành các ô của hàng đó — nhờ vậy `<tr>` cho trình duyệt biết những ô nào nằm chung một hàng.',
+    },
+  },
 };

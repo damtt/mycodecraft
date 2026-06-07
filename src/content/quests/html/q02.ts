@@ -52,4 +52,19 @@ export const q02: Quest = {
       },
     },
   ],
+  predict: {
+    question: {
+      en: 'If you swap your `<h1>` for an `<h6>`, what will the title look like?',
+      vi: 'Nếu bạn đổi `<h1>` thành `<h6>`, tiêu đề sẽ trông như thế nào?',
+    },
+    options: [
+      { text: { en: 'Much smaller', vi: 'Nhỏ hơn nhiều' }, correct: true },
+      { text: { en: 'Even bigger', vi: 'To hơn nữa' }, correct: false },
+      { text: { en: 'Exactly the same', vi: 'Y hệt như cũ' }, correct: false },
+    ],
+    explain: {
+      en: 'Headings run from `<h1>` (biggest) down to `<h6>` (smallest). The bigger the number, the smaller the sign — so `<h6>` is the tiniest title.',
+      vi: 'Heading chạy từ `<h1>` (to nhất) xuống `<h6>` (nhỏ nhất). Con số càng lớn thì biển càng nhỏ — nên `<h6>` là tiêu đề bé tí xíu.',
+    },
+  },
 };
