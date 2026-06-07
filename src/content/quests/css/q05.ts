@@ -62,4 +62,8 @@ export const q05: Quest = {
       },
     },
   ],
+  experiment: {
+    en: 'Build something! Set `width` to `300px` and `height` to `40px` for a long bar, or make both `80px` for a little cube. Run after each change and watch the block reshape.',
+    vi: 'Xây thử gì đó nào! Đặt `width` thành `300px` và `height` thành `40px` để có một thanh dài, hoặc cho cả hai bằng `80px` để được một khối vuông nhỏ. Chạy lại sau mỗi lần đổi và xem khối biến hình nhé.',
+  },
 };

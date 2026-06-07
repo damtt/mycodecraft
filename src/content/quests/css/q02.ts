@@ -62,4 +62,8 @@ export const q02: Quest = {
       },
     },
   ],
+  experiment: {
+    en: 'Try it! Change `font-size: 32px` to `12px`, then to `80px`, and run each time. How tiny and how huge can you make the words?',
+    vi: 'Thử nhé! Đổi `font-size: 32px` thành `12px`, rồi thành `80px`, và chạy lại mỗi lần. Bạn làm chữ bé tí cỡ nào và to khổng lồ cỡ nào được nào?',
+  },
 };

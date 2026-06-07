@@ -42,4 +42,8 @@ export const q03: Quest = {
       },
     },
   ],
+  reflect: {
+    question: { en: 'You painted the `body`, yet the heading and paragraph words are still their old color. Why did the text not turn blue too?', vi: 'Bạn đã tô `body`, vậy mà chữ của tiêu đề và đoạn văn vẫn giữ màu cũ. Vì sao chữ không chuyển sang xanh luôn?' },
+    answer: { en: '`background-color` only paints the surface behind everything. The words are drawn with `color`, which you never changed, so they keep their own color on top of the new sky.', vi: '`background-color` chỉ tô phần nền phía sau mọi thứ. Chữ được vẽ bằng `color`, mà bạn chưa hề đổi, nên chúng vẫn giữ màu riêng nằm trên nền trời mới.' },
+  },
 };

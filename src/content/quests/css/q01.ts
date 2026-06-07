@@ -42,4 +42,13 @@ export const q01: Quest = {
       },
     },
   ],
+  predict: {
+    question: { en: 'Before you run it — if you change `red` to `blue`, what changes?', vi: 'Trước khi chạy thử — nếu bạn đổi `red` thành `blue`, điều gì sẽ thay đổi?' },
+    options: [
+      { text: { en: 'The letters of the heading turn blue', vi: 'Các chữ của tiêu đề chuyển sang xanh' }, correct: true },
+      { text: { en: 'The background behind the heading turns blue', vi: 'Nền phía sau tiêu đề chuyển sang xanh' }, correct: false },
+      { text: { en: 'Nothing changes', vi: 'Không có gì thay đổi' }, correct: false },
+    ],
+    explain: { en: '`color` paints the text itself, not the background. To paint behind the text you would use `background-color`.', vi: '`color` tô màu cho chính chữ, không phải nền. Muốn tô phía sau chữ thì dùng `background-color`.' },
+  },
 };

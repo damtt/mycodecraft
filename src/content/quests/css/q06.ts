@@ -62,4 +62,8 @@ export const q06: Quest = {
       },
     },
   ],
+  reflect: {
+    question: { en: 'You wrote `.mob` with a dot and `#boss` with a hash. What do the dot and the hash tell the browser to look for?', vi: 'Bạn viết `.mob` với dấu chấm và `#boss` với dấu thăng. Dấu chấm và dấu thăng bảo trình duyệt đi tìm cái gì?' },
+    answer: { en: 'A dot means "a class" — a name lots of mobs can share, so the rule can tag a whole group. A hash means "an id" — a name only one element may wear, so it tags just that single boss.', vi: 'Dấu chấm nghĩa là "một class" — một cái tên mà nhiều con quái cùng dùng được, nên quy tắc gắn cho cả một nhóm. Dấu thăng nghĩa là "một id" — cái tên chỉ một phần tử được mang, nên nó chỉ gắn riêng cho con trùm đó.' },
+  },
 };
