@@ -39,6 +39,26 @@ describe('quest content integrity', () => {
       if (check.type === 'elementCount') expect(check.min).toBeGreaterThanOrEqual(1);
     }
     expect([50, 75, 100]).toContain(q.xp);
+    if (q.reflect) {
+      expect(filled(q.reflect.question)).toBe(true);
+      expect(filled(q.reflect.answer)).toBe(true);
+      expect(q.reflect.answer.en.trim()).not.toBe(q.reflect.question.en.trim());
+      expect(q.reflect.question.en.trim()).not.toBe(q.reflect.question.vi.trim());
+      expect(q.reflect.answer.en.trim()).not.toBe(q.reflect.answer.vi.trim());
+    }
+    if (q.predict) {
+      expect(filled(q.predict.question)).toBe(true);
+      expect(q.predict.options.length).toBeGreaterThanOrEqual(2);
+      expect(q.predict.options.filter((o) => o.correct)).toHaveLength(1);
+      for (const o of q.predict.options) expect(filled(o.text)).toBe(true);
+      expect(filled(q.predict.explain)).toBe(true);
+      expect(q.predict.question.en.trim()).not.toBe(q.predict.question.vi.trim());
+      expect(q.predict.explain.en.trim()).not.toBe(q.predict.explain.vi.trim());
+    }
+    if (q.experiment) {
+      expect(filled(q.experiment)).toBe(true);
+      expect(q.experiment.en.trim()).not.toBe(q.experiment.vi.trim());
+    }
   });
 
   test('boss quests award 100 XP', () => {
@@ -83,6 +103,12 @@ describe('quest content integrity', () => {
         q.story.en, q.story.vi,
         ...q.steps.flatMap((s) => [s.text.en, s.text.vi, s.hint?.en ?? '', s.hint?.vi ?? '']),
         ...q.checks.flatMap((c) => [c.failMessage.en, c.failMessage.vi]),
+        q.reflect?.question.en ?? '', q.reflect?.question.vi ?? '',
+        q.reflect?.answer.en ?? '', q.reflect?.answer.vi ?? '',
+        q.predict?.question.en ?? '', q.predict?.question.vi ?? '',
+        ...(q.predict?.options ?? []).flatMap((o) => [o.text.en, o.text.vi]),
+        q.predict?.explain.en ?? '', q.predict?.explain.vi ?? '',
+        q.experiment?.en ?? '', q.experiment?.vi ?? '',
       ];
       for (const field of fields) {
         expect(stripCode(field)).not.toMatch(/<\/?[a-zA-Z][^>]*>/);
