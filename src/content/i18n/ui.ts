@@ -68,7 +68,7 @@ export const UI = {
   // Quest tabs (phone)
   tabLesson: { en: 'Lesson', vi: 'Bài học' },
   tabCode: { en: 'Code', vi: 'Code' },
-  tabRun: { en: 'Run', vi: 'Chạy' },
+  tabRun: { en: 'Preview', vi: 'Xem trước' },
   // Guide Buddy
   guideBuddy: { en: 'Guide buddy', vi: 'Bạn dẫn đường' },
   buddyHint: { en: 'Get a hint', vi: 'Xem gợi ý' },

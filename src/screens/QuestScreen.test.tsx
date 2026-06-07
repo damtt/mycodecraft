@@ -171,12 +171,12 @@ describe('QuestScreen', () => {
     });
   }
 
-  test('on phones, shows Lesson/Code/Run tabs and switches panes', async () => {
+  test('on phones, shows Lesson/Code/Preview tabs and switches panes', async () => {
     usePhoneViewport();
     renderQuest();
     expect(await screen.findByRole('tab', { name: /lesson/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /code/i })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: /run/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /preview/i })).toBeInTheDocument();
     // Story is in the Lesson pane (default tab).
     expect(screen.getByText(/a villager needs a sign/i)).toBeInTheDocument();
   });
@@ -192,6 +192,14 @@ describe('QuestScreen', () => {
     expect(codePane).not.toContainElement(screen.getByText(/a villager needs a sign/i));
   });
 
+  test('on phones, the check button is fixed to the bottom of the Code tab', async () => {
+    usePhoneViewport();
+    renderQuest();
+    fireEvent.click(await screen.findByRole('tab', { name: /code/i }));
+    expect(screen.getByRole('button', { name: /check my code/i })).toHaveClass('fixed');
+    expect(screen.getByRole('button', { name: /check my code/i })).toHaveClass('bottom-[calc(4.75rem+env(safe-area-inset-bottom))]');
+  });
+
   test('on phones, the Guide buddy steps aside on the Code tab and returns elsewhere', async () => {
     usePhoneViewport();
     renderQuest();
@@ -200,8 +208,8 @@ describe('QuestScreen', () => {
     // ...hidden on the Code tab so its owl + bubble can't cover the button or error...
     fireEvent.click(screen.getByRole('tab', { name: /code/i }));
     expect(screen.queryByRole('button', { name: /guide buddy/i })).not.toBeInTheDocument();
-    // ...and back again on the Run tab.
-    fireEvent.click(screen.getByRole('tab', { name: /run/i }));
+    // ...and back again on the Preview tab.
+    fireEvent.click(screen.getByRole('tab', { name: /preview/i }));
     expect(screen.getByRole('button', { name: /guide buddy/i })).toBeInTheDocument();
   });
 
@@ -211,12 +219,15 @@ describe('QuestScreen', () => {
     fireEvent.click(await screen.findByRole('tab', { name: /code/i }));
     fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
     // The error floats over the editor so the player can fix it in place...
-    expect(await screen.findByRole('alert')).toHaveTextContent('No <p> yet!');
-    // ...and we stay on the Code tab (no jump to Run on failure).
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent('No <p> yet!');
+    expect(alert).toHaveClass('fixed');
+    expect(alert).toHaveClass('bottom-[calc(9.75rem+env(safe-area-inset-bottom))]');
+    // ...and we stay on the Code tab (no jump to Preview on failure).
     expect(screen.getByRole('tab', { name: /code/i })).toHaveAttribute('aria-selected', 'true');
   });
 
-  test('on phones, a passing check jumps to the Run tab and shows the victory overlay', async () => {
+  test('on phones, a passing check jumps to the Preview tab and shows the victory overlay', async () => {
     usePhoneViewport();
     renderQuest();
     fireEvent.click(await screen.findByRole('tab', { name: /code/i }));
@@ -224,8 +235,8 @@ describe('QuestScreen', () => {
     fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
     expect(await screen.findByRole('dialog')).toBeInTheDocument();
     expect(useProfiles.getState().profiles[0].quests['html-01']).toBeDefined();
-    // The pass switches the underlying tab to Run.
-    expect(screen.getByRole('tab', { name: /run/i })).toHaveAttribute('aria-selected', 'true');
+    // The pass switches the underlying tab to Preview.
+    expect(screen.getByRole('tab', { name: /preview/i })).toHaveAttribute('aria-selected', 'true');
   });
 
   test('an invalid quest id publishes no guide context (no bogus hint/recap)', async () => {

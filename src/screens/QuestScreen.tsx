@@ -59,7 +59,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
 
   // Keep the Guide Buddy out of the way while the editor/keyboard is up, and off
   // the phone Code tab entirely — there its owl + bubble would cover the Check
-  // button and the floating error. It stays available on the Lesson and Run tabs.
+  // button and the floating error. It stays available on Lesson and Preview.
   useEffect(() => {
     setEditorEngaged(editorFocused || (!isWide && tab === 'code'));
   }, [editorFocused, isWide, tab, setEditorEngaged]);
@@ -108,7 +108,7 @@ function QuestScreenInner({ questId }: { questId: string }) {
       if (quest.reflect && !reflectOpen && !nudged) setNudged(true);
       return;
     }
-    // On phones, jump to the Run tab to show the working result (a failure stays
+    // On phones, jump to Preview to show the working result (a failure stays
     // on the Code tab with the floating error). The wide columns layout has no tabs.
     if (!isWide) setTab('run');
     const r = completeQuest(quest, usedHint);

@@ -21,8 +21,8 @@ interface QuestTabsProps {
 /** Phone layout (<768px): one full-height pane at a time. Tab state is owned by
  *  the parent so it survives a breakpoint-driven remount of this subtree.
  *
- *  The check button lives in the Code tab (right under the editor, where the
- *  player is typing) instead of the Lesson tab. A passing check jumps to the Run
+ *  The check button lives in the Code tab as a fixed bottom action where the
+ *  player is typing instead of the Lesson tab. A passing check jumps to Preview
  *  tab (QuestScreen drives that); a failing check keeps the player on the Code
  *  tab with the error floating over the editor so they can fix it in place. */
 export default function QuestTabs({ tab, onTabChange, lesson, editor, preview, checking, onCheck, failMessage }: QuestTabsProps) {
@@ -49,12 +49,18 @@ export default function QuestTabs({ tab, onTabChange, lesson, editor, preview, c
         ))}
       </div>
       <div className={`min-h-0 flex-1 ${tab === 'lesson' ? 'flex flex-col' : 'hidden'}`}>{lesson}</div>
-      <div className={`relative min-h-0 flex-1 ${tab === 'code' ? 'flex flex-col' : 'hidden'}`}>
+      <div className={`relative min-h-0 flex-1 pb-[calc(4.75rem+env(safe-area-inset-bottom))] ${tab === 'code' ? 'flex flex-col' : 'hidden'}`}>
         {editor}
         {failMessage && (
-          <FailMessage text={tl(failMessage)} className="pointer-events-none absolute inset-x-2 bottom-16 z-10 shadow-lg" />
+          <FailMessage text={tl(failMessage)} className="pointer-events-none fixed inset-x-5 bottom-[calc(9.75rem+env(safe-area-inset-bottom))] z-40 shadow-lg" />
         )}
-        <PixelButton className="mt-2 flex-shrink-0" onClick={onCheck} disabled={checking}><Icon name="check" /> {t('checkMyCode')}</PixelButton>
+        <PixelButton
+          className="fixed inset-x-3 bottom-[calc(4.75rem+env(safe-area-inset-bottom))] z-40 mt-0 flex flex-shrink-0 items-center justify-center gap-2 shadow-xl"
+          onClick={onCheck}
+          disabled={checking}
+        >
+          <Icon name="check" /> {t('checkMyCode')}
+        </PixelButton>
       </div>
       <div className={`min-h-0 flex-1 ${tab === 'run' ? 'flex flex-col' : 'hidden'}`}>{preview}</div>
     </div>
