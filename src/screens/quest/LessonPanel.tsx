@@ -24,7 +24,10 @@ interface LessonPanelProps {
 }
 
 export default function LessonPanel(props: LessonPanelProps) {
-  const { quest, alreadyDone, openHints, onHint, failMessage, runtimeErrorLine, stuck, onReload, checking, onCheck, reflectOpen, onReflect, showNudge, className = '' } = props;
+  const {
+    quest, alreadyDone, openHints, onHint, failMessage, runtimeErrorLine,
+    stuck, onReload, checking, onCheck, reflectOpen, onReflect, showNudge, className = '',
+  } = props;
   const { t, tl } = useT();
 
   return (

@@ -87,11 +87,7 @@ import { useProfiles } from '../stores/profileStore';
 import { useGuide } from '../features/guide/guideStore';
 
 function renderQuest() {
-  useProfiles.getState().create('Mai', '🦊');
-  useProfiles.getState().select(useProfiles.getState().profiles[0].id);
-  const router = createMemoryRouter(routes, { initialEntries: ['/quest/html-01'] });
-  render(<RouterProvider router={router} />);
-  return router;
+  return renderQuestAt('html-01');
 }
 
 function renderQuestAt(id: string) {
@@ -203,7 +199,7 @@ describe('QuestScreen', () => {
     // a second failing check must not re-show the nudge (guard: !nudged)
     fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
     await act(async () => {}); // let the second async onCheck settle inside act
-    expect(screen.queryByText(/peek at the think question/i)).toBeInTheDocument();
+    expect(screen.getByText(/peek at the think question/i)).toBeInTheDocument();
   });
 
   test('a passing check never shows the nudge', async () => {
