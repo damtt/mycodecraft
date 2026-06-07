@@ -69,7 +69,7 @@ export const q06: Quest = {
     options: [
       { text: { en: 'It shows up in place of the picture', vi: 'Nó hiện ra thay cho bức ảnh' }, correct: true },
       { text: { en: 'It stays completely hidden', vi: 'Nó vẫn ẩn hoàn toàn' }, correct: false },
-      { text: { en: 'It makes the page crash', vi: 'Nó làm trang bị hỏng' }, correct: false },
+      { text: { en: 'The picture loads anyway after a moment', vi: 'Bức ảnh vẫn tự tải lên sau một lúc' }, correct: false },
     ],
     explain: {
       en: 'The `alt` is a backup description. If the picture cannot show, the browser displays the `alt` words instead — and a screen reader can read them aloud for friends who cannot see the image.',

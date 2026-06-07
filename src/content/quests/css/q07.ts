@@ -63,7 +63,7 @@ export const q07: Quest = {
     },
   ],
   predict: {
-    question: { en: 'If you change `gap: 10px` to `0px`, what will the row look like?', vi: 'Nếu bạn đổi `gap: 10px` thành `0px`, hàng sẽ trông như thế nào?' },
+    question: { en: 'You set `gap` to `0px`. Will the two items still sit side by side, or will they stack on top of each other?', vi: 'Bạn đặt `gap` thành `0px`. Hai món vẫn nằm cạnh nhau, hay sẽ chồng lên nhau?' },
     options: [
       { text: { en: 'The two items sit right next to each other, touching', vi: 'Hai món nằm sát ngay cạnh nhau, chạm vào nhau' }, correct: true },
       { text: { en: 'The items stack on top of each other', vi: 'Các món chồng lên nhau' }, correct: false },
