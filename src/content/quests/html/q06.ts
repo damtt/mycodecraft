@@ -61,4 +61,19 @@ export const q06: Quest = {
       },
     },
   ],
+  predict: {
+    question: {
+      en: 'If the picture ever fails to load, what does the `alt` text do?',
+      vi: 'Nếu bức ảnh không tải lên được, dòng chữ `alt` sẽ làm gì?',
+    },
+    options: [
+      { text: { en: 'It shows up in place of the picture', vi: 'Nó hiện ra thay cho bức ảnh' }, correct: true },
+      { text: { en: 'It stays completely hidden', vi: 'Nó vẫn ẩn hoàn toàn' }, correct: false },
+      { text: { en: 'The picture loads anyway after a moment', vi: 'Bức ảnh vẫn tự tải lên sau một lúc' }, correct: false },
+    ],
+    explain: {
+      en: 'The `alt` is a backup description. If the picture cannot show, the browser displays the `alt` words instead — and a screen reader can read them aloud for friends who cannot see the image.',
+      vi: '`alt` là lời mô tả dự phòng. Nếu ảnh không hiện được, trình duyệt sẽ hiển thị dòng chữ `alt` thay vào — và phần mềm đọc màn hình có thể đọc to lên cho bạn nào không nhìn thấy ảnh.',
+    },
+  },
 };

@@ -53,4 +53,14 @@ export const q04: Quest = {
       },
     },
   ],
+  reflect: {
+    question: {
+      en: 'What job does the `<ul>` do, and what job does each `<li>` do?',
+      vi: '`<ul>` làm việc gì, và mỗi `<li>` làm việc gì?',
+    },
+    answer: {
+      en: 'The `<ul>` is the basket that holds the whole list together; each `<li>` wraps one single item so the browser knows where to put its own bullet point.',
+      vi: '`<ul>` là cái giỏ gom cả danh sách lại với nhau; mỗi `<li>` bọc đúng một món để trình duyệt biết chấm tròn của món đó đặt ở đâu.',
+    },
+  },
 };

@@ -75,6 +75,17 @@ export const UI = {
   buddyScreenHelp: { en: "What's this screen?", vi: 'Màn hình này là gì?' },
   buddyRecap: { en: 'Remind me', vi: 'Nhắc lại' },
   buddyDismiss: { en: 'Got it', vi: 'Hiểu rồi' },
+  // Understanding prompts
+  think: { en: 'Think', vi: 'Suy nghĩ' },
+  predict: { en: 'Predict', vi: 'Đoán thử' },
+  tryThis: { en: 'Try this', vi: 'Thử xem' },
+  showAnswer: { en: 'Show answer', vi: 'Xem đáp án' },
+  predictRight: { en: "Yes — that's right!", vi: 'Đúng rồi!' },
+  predictWrong: { en: 'Not quite — look:', vi: 'Chưa đúng — xem nhé:' },
+  reflectNudge: {
+    en: 'Stuck? Peek at the Think question — it might help.',
+    vi: 'Bí à? Thử xem câu hỏi Suy nghĩ — có thể giúp được đó.',
+  },
   // Insert toolbar
   insertToolbar: { en: 'Insert symbol', vi: 'Chèn ký hiệu' },
 } satisfies Record<string, Localized>;

@@ -44,4 +44,8 @@ export const q03: Quest = {
       },
     },
   ],
+  experiment: {
+    en: 'Try putting both sentences inside ONE `<p>` instead of two, then run. Did the gap between them disappear? Put them back in two `<p>` tags to see the space return — this part is not graded.',
+    vi: 'Thử bỏ cả hai câu vào CHUNG một `<p>` thay vì hai, rồi chạy thử. Khoảng cách giữa chúng có biến mất không? Tách lại thành hai tag `<p>` để thấy khoảng trống quay về nhé — phần này không bị chấm điểm đâu.',
+  },
 };

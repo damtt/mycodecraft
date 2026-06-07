@@ -62,4 +62,13 @@ export const q04: Quest = {
       },
     },
   ],
+  predict: {
+    question: { en: 'If you change `padding: 16px` to `40px`, what happens to the box?', vi: 'Nếu bạn đổi `padding: 16px` thành `40px`, cái hộp sẽ ra sao?' },
+    options: [
+      { text: { en: 'It grows bigger, with more empty space around the word', vi: 'Nó to ra, với nhiều khoảng trống hơn quanh chữ' }, correct: true },
+      { text: { en: 'The word "Armor" gets bigger', vi: 'Chữ "Armor" to lên' }, correct: false },
+      { text: { en: 'The border line gets thicker', vi: 'Đường viền dày lên' }, correct: false },
+    ],
+    explain: { en: '`padding` is the breathing room inside the border. More padding pushes the border outward, so the whole box grows — but the letters stay the same size.', vi: '`padding` là khoảng thở bên trong viền. Padding nhiều hơn đẩy viền ra xa, nên cả cái hộp to ra — còn chữ vẫn giữ nguyên cỡ.' },
+  },
 };

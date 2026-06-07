@@ -3,7 +3,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router';
 import { vi } from 'vitest';
 import type { Quest } from '../lib/types';
 
-const { QUEST, QUEST2, runDomChecks } = vi.hoisted(() => {
+const { QUEST, QUEST2, QUEST3, runDomChecks } = vi.hoisted(() => {
   const L = (en: string, vi?: string) => ({ en, vi: vi ?? en });
   const QUEST: Quest = {
     id: 'html-01', world: 'html', xp: 50, badge: 'b-wood',
@@ -24,16 +24,32 @@ const { QUEST, QUEST2, runDomChecks } = vi.hoisted(() => {
     starterCode: '<!-- second -->',
     checks: [{ type: 'codeIncludes', value: '<h2>', failMessage: L('No `<h2>` yet!') }],
   };
+  const QUEST3: Quest = {
+    id: 'html-03', world: 'html', xp: 50, badge: 'b-stone',
+    title: L('Reflecting'), story: L('Think it through.'),
+    steps: [{ text: L('Type DONE') }],
+    starterCode: '<!-- here -->',
+    checks: [{ type: 'codeIncludes', value: 'DONE', failMessage: L('Type DONE!') }],
+    reflect: { question: L('Which part selects it?'), answer: L('the selector picks it') },
+    predict: {
+      question: L('What happens?'),
+      options: [
+        { text: L('Outcome A'), correct: true },
+        { text: L('Outcome B'), correct: false },
+      ],
+      explain: L('Because A is the right one'),
+    },
+  };
   const runDomChecks = vi.fn(async (checks: unknown[]) => checks.map(() => true));
-  return { QUEST, QUEST2, runDomChecks };
+  return { QUEST, QUEST2, QUEST3, runDomChecks };
 });
 
 vi.mock('../content/quests', () => ({
-  ALL_QUESTS: [QUEST, QUEST2],
-  QUESTS_BY_WORLD: { html: [QUEST, QUEST2], css: [], js: [] },
+  ALL_QUESTS: [QUEST, QUEST2, QUEST3],
+  QUESTS_BY_WORLD: { html: [QUEST, QUEST2, QUEST3], css: [], js: [] },
   QUESTS_BY_WORLD_IDS: { html: ['html-01'], css: [], js: [] },
-  questById: (id: string) => [QUEST, QUEST2].find((q) => q.id === id),
-  nextQuest: (id: string) => (id === 'html-01' ? QUEST2 : null),
+  questById: (id: string) => [QUEST, QUEST2, QUEST3].find((q) => q.id === id),
+  nextQuest: (id: string) => (id === 'html-01' ? QUEST2 : id === 'html-02' ? QUEST3 : null),
 }));
 vi.mock('../features/audio/sounds', () => ({ playSound: vi.fn() }));
 
@@ -71,9 +87,13 @@ import { useProfiles } from '../stores/profileStore';
 import { useGuide } from '../features/guide/guideStore';
 
 function renderQuest() {
+  return renderQuestAt('html-01');
+}
+
+function renderQuestAt(id: string) {
   useProfiles.getState().create('Mai', '🦊');
   useProfiles.getState().select(useProfiles.getState().profiles[0].id);
-  const router = createMemoryRouter(routes, { initialEntries: ['/quest/html-01'] });
+  const router = createMemoryRouter(routes, { initialEntries: [`/quest/${id}`] });
   render(<RouterProvider router={router} />);
   return router;
 }
@@ -164,5 +184,44 @@ describe('QuestScreen', () => {
     render(<RouterProvider router={createMemoryRouter(routes, { initialEntries: ['/quest/nope'] })} />);
     expect(await screen.findByText(/quest not found/i)).toBeInTheDocument();
     expect(useGuide.getState().questCtx).toBeNull();
+  });
+
+  test('a failing check on a reflect quest shows the Think nudge', async () => {
+    renderQuestAt('html-03');
+    fireEvent.click(await screen.findByRole('button', { name: /check my code/i }));
+    expect(await screen.findByText(/peek at the think question/i)).toBeInTheDocument();
+  });
+
+  test('the nudge fires at most once, even after a second failed check', async () => {
+    renderQuestAt('html-03');
+    fireEvent.click(await screen.findByRole('button', { name: /check my code/i }));
+    expect(await screen.findByText(/peek at the think question/i)).toBeInTheDocument();
+    // a second failing check must not re-show the nudge (guard: !nudged)
+    fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
+    await act(async () => {}); // let the second async onCheck settle inside act
+    expect(screen.getByText(/peek at the think question/i)).toBeInTheDocument();
+  });
+
+  test('a passing check never shows the nudge', async () => {
+    renderQuestAt('html-03');
+    fireEvent.change(await screen.findByTestId('code-editor'), { target: { value: 'DONE' } });
+    fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument(); // victory
+    expect(screen.queryByText(/peek at the think question/i)).not.toBeInTheDocument();
+  });
+
+  test('opening the Think answer clears the nudge', async () => {
+    renderQuestAt('html-03');
+    fireEvent.click(await screen.findByRole('button', { name: /check my code/i }));
+    expect(await screen.findByText(/peek at the think question/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /show answer/i }));
+    expect(screen.queryByText(/peek at the think question/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/the selector picks it/i)).toBeInTheDocument();
+  });
+
+  test('committing a predict choice reveals the explanation', async () => {
+    renderQuestAt('html-03');
+    fireEvent.click(await screen.findByRole('button', { name: /outcome a/i }));
+    expect(screen.getByText(/because a is the right one/i)).toBeInTheDocument();
   });
 });

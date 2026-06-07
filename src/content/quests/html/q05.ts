@@ -54,4 +54,14 @@ export const q05: Quest = {
       },
     },
   ],
+  reflect: {
+    question: {
+      en: 'In `<a href="...">Play Now</a>`, which part is the *address* and which part is the *clickable words*?',
+      vi: 'Trong `<a href="...">Play Now</a>`, phần nào là *địa chỉ* và phần nào là *chữ bấm được*?',
+    },
+    answer: {
+      en: 'The `href="..."` is the hidden address the portal jumps to; the words between `<a>` and `</a>` are the glowing part the player sees and clicks.',
+      vi: '`href="..."` là địa chỉ ẩn mà cái cổng nhảy tới; chữ nằm giữa `<a>` và `</a>` là phần phát sáng mà người chơi nhìn thấy và bấm vào.',
+    },
+  },
 };

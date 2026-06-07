@@ -52,4 +52,13 @@ export const q03: Quest = {
       },
     },
   ],
+  predict: {
+    question: { en: 'If you change `64 * 2` to `64 + 2`, what will the Console show?', vi: 'Nếu bạn đổi `64 * 2` thành `64 + 2`, Console sẽ hiện gì?' },
+    options: [
+      { text: { en: '66', vi: '66' }, correct: true },
+      { text: { en: '128', vi: '128' }, correct: false },
+      { text: { en: '642', vi: '642' }, correct: false },
+    ],
+    explain: { en: '`+` adds the numbers, so `64 + 2` is 66. `*` multiplies them, which is how two stacks made 128.', vi: '`+` cộng các số lại, nên `64 + 2` là 66. `*` nhân chúng, đó là cách hai chồng tạo ra 128.' },
+  },
 };

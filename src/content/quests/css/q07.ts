@@ -62,4 +62,13 @@ export const q07: Quest = {
       },
     },
   ],
+  predict: {
+    question: { en: 'You set `gap` to `0px`. Will the two items still sit side by side, or will they stack on top of each other?', vi: 'Bạn đặt `gap` thành `0px`. Hai món vẫn nằm cạnh nhau, hay sẽ chồng lên nhau?' },
+    options: [
+      { text: { en: 'The two items sit right next to each other, touching', vi: 'Hai món nằm sát ngay cạnh nhau, chạm vào nhau' }, correct: true },
+      { text: { en: 'The items stack on top of each other', vi: 'Các món chồng lên nhau' }, correct: false },
+      { text: { en: 'The items spread to opposite ends', vi: 'Các món dạt ra hai đầu' }, correct: false },
+    ],
+    explain: { en: '`gap` only sets the space between flex items. With `0px` there is no space, so they touch — but `display: flex` still keeps them side by side in one row.', vi: '`gap` chỉ đặt khoảng cách giữa các món flex. Với `0px` thì không còn khoảng trống, nên chúng chạm nhau — nhưng `display: flex` vẫn giữ chúng cạnh nhau trên cùng một hàng.' },
+  },
 };

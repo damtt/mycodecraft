@@ -48,4 +48,8 @@ export const q01: Quest = {
       },
     },
   ],
+  experiment: {
+    en: 'Add a second `<p>` with a different message, then run. Where does the new line appear? You can change it back — this part is not graded.',
+    vi: 'Thêm một `<p>` thứ hai với lời nhắn khác rồi chạy thử. Dòng mới xuất hiện ở đâu? Bạn có thể đổi lại — phần này không bị chấm điểm đâu nhé.',
+  },
 };
