@@ -2,7 +2,7 @@ import type { Check } from '../../lib/types';
 
 export type DomCheck = Extract<
   Check,
-  { type: 'elementExists' | 'textIncludes' | 'attrEquals' | 'computedStyle' | 'elementCount' }
+  { type: 'elementExists' | 'textIncludes' | 'textNonEmpty' | 'attrEquals' | 'attrMatches' | 'computedStyle' | 'elementCount' }
 >;
 export type LocalCheck = Extract<Check, { type: 'codeIncludes' | 'consoleIncludes' }>;
 
@@ -23,7 +23,7 @@ export function isDomCheck(check: Check): check is DomCheck {
  */
 export function evaluateDomCheck(
   check: {
-    type: string; selector?: string; value?: string; attr?: string;
+    type: string; selector?: string; value?: string; attr?: string; pattern?: string;
     prop?: string; equalsAny?: string[]; min?: number; failMessage?: unknown;
   },
   doc: Document,
@@ -35,8 +35,15 @@ export function evaluateDomCheck(
     case 'textIncludes':
       return el !== null &&
         (el.textContent || '').toLowerCase().includes((check.value || '').toLowerCase());
+    case 'textNonEmpty':
+      return el !== null && (el.textContent || '').trim() !== '';
     case 'attrEquals':
       return el !== null && el.getAttribute(check.attr || '') === check.value;
+    case 'attrMatches': {
+      if (el === null) return false;
+      const raw = el.getAttribute(check.attr || '');
+      return raw !== null && new RegExp(check.pattern || '').test(raw);
+    }
     case 'computedStyle': {
       if (el === null) return false;
       const view = doc.defaultView || window;

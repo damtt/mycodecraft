@@ -34,7 +34,9 @@ export interface Predict {
 export type Check =
   | { type: 'elementExists'; selector: string; failMessage: Localized }
   | { type: 'textIncludes'; selector: string; value: string; failMessage: Localized }
+  | { type: 'textNonEmpty'; selector: string; failMessage: Localized }
   | { type: 'attrEquals'; selector: string; attr: string; value: string; failMessage: Localized }
+  | { type: 'attrMatches'; selector: string; attr: string; pattern: string; failMessage: Localized }
   | { type: 'computedStyle'; selector: string; prop: string; equalsAny: string[]; failMessage: Localized }
   | { type: 'elementCount'; selector: string; min: number; failMessage: Localized }
   | { type: 'codeIncludes'; value: string; failMessage: Localized }

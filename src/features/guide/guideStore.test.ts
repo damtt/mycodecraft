@@ -1,7 +1,7 @@
 import { useGuide } from './guideStore';
 
 beforeEach(() => {
-  useGuide.setState({ bubble: null, greeted: new Set(), questCtx: null, editorFocused: false });
+  useGuide.setState({ bubble: null, greeted: new Set(), questCtx: null, editorEngaged: false });
 });
 
 describe('guideStore', () => {
@@ -19,8 +19,8 @@ describe('guideStore', () => {
     expect(useGuide.getState().hasGreeted('quest')).toBe(false);
   });
 
-  test('editorFocused flag toggles', () => {
-    useGuide.getState().setEditorFocused(true);
-    expect(useGuide.getState().editorFocused).toBe(true);
+  test('editorEngaged flag toggles', () => {
+    useGuide.getState().setEditorEngaged(true);
+    expect(useGuide.getState().editorEngaged).toBe(true);
   });
 });

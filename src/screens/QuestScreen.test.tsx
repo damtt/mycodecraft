@@ -161,20 +161,71 @@ describe('QuestScreen', () => {
     expect(screen.getByText(/another villager appears/i)).toBeInTheDocument(); // new quest rendered
   });
 
-  test('on phones, shows Lesson/Code/Run tabs and switches panes', async () => {
-    // Phone viewport: min-width queries are false.
+  // Force the phone (tabs) layout: min-width queries report false.
+  function usePhoneViewport() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).matchMedia = (query: string) => ({
       matches: false, media: query, onchange: null,
       addEventListener: () => {}, removeEventListener: () => {},
       addListener: () => {}, removeListener: () => {}, dispatchEvent: () => false,
     });
+  }
+
+  test('on phones, shows Lesson/Code/Run tabs and switches panes', async () => {
+    usePhoneViewport();
     renderQuest();
     expect(await screen.findByRole('tab', { name: /lesson/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /code/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /run/i })).toBeInTheDocument();
     // Story is in the Lesson pane (default tab).
     expect(screen.getByText(/a villager needs a sign/i)).toBeInTheDocument();
+  });
+
+  test('on phones, the check button lives in the Code pane, not the Lesson pane', async () => {
+    usePhoneViewport();
+    renderQuest();
+    await screen.findByRole('tab', { name: /lesson/i });
+    // Panes stay mounted (toggled via CSS), so assert placement, not presence:
+    // the check button shares the Code pane with the editor, away from the story.
+    const codePane = screen.getByRole('button', { name: /check my code/i }).parentElement;
+    expect(codePane).toContainElement(screen.getByTestId('code-editor'));
+    expect(codePane).not.toContainElement(screen.getByText(/a villager needs a sign/i));
+  });
+
+  test('on phones, the Guide buddy steps aside on the Code tab and returns elsewhere', async () => {
+    usePhoneViewport();
+    renderQuest();
+    // Present on the Lesson tab (default)...
+    expect(await screen.findByRole('button', { name: /guide buddy/i })).toBeInTheDocument();
+    // ...hidden on the Code tab so its owl + bubble can't cover the button or error...
+    fireEvent.click(screen.getByRole('tab', { name: /code/i }));
+    expect(screen.queryByRole('button', { name: /guide buddy/i })).not.toBeInTheDocument();
+    // ...and back again on the Run tab.
+    fireEvent.click(screen.getByRole('tab', { name: /run/i }));
+    expect(screen.getByRole('button', { name: /guide buddy/i })).toBeInTheDocument();
+  });
+
+  test('on phones, a failed check stays on the Code tab and floats the error there', async () => {
+    usePhoneViewport();
+    renderQuest();
+    fireEvent.click(await screen.findByRole('tab', { name: /code/i }));
+    fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
+    // The error floats over the editor so the player can fix it in place...
+    expect(await screen.findByRole('alert')).toHaveTextContent('No <p> yet!');
+    // ...and we stay on the Code tab (no jump to Run on failure).
+    expect(screen.getByRole('tab', { name: /code/i })).toHaveAttribute('aria-selected', 'true');
+  });
+
+  test('on phones, a passing check jumps to the Run tab and shows the victory overlay', async () => {
+    usePhoneViewport();
+    renderQuest();
+    fireEvent.click(await screen.findByRole('tab', { name: /code/i }));
+    fireEvent.change(screen.getByTestId('code-editor'), { target: { value: '<p>Hello</p>' } });
+    fireEvent.click(screen.getByRole('button', { name: /check my code/i }));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(useProfiles.getState().profiles[0].quests['html-01']).toBeDefined();
+    // The pass switches the underlying tab to Run.
+    expect(screen.getByRole('tab', { name: /run/i })).toHaveAttribute('aria-selected', 'true');
   });
 
   test('an invalid quest id publishes no guide context (no bogus hint/recap)', async () => {

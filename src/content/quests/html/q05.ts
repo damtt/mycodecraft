@@ -13,8 +13,8 @@ export const q05: Quest = {
   steps: [
     {
       text: {
-        en: 'A link uses the `<a>` tag. The words between `<a>` and `</a>` are what you click. Add an `<a>` that says Play Now.',
-        vi: 'Một đường link dùng tag `<a>`. Chữ nằm giữa `<a>` và `</a>` chính là phần bạn bấm vào. Thêm một `<a>` nói Play Now.',
+        en: 'A link uses the `<a>` tag. The words between `<a>` and `</a>` are the link text — what the player sees and clicks. Add an `<a>` with the link text Play Now.',
+        vi: 'Một đường link dùng tag `<a>`. Chữ nằm giữa `<a>` và `</a>` được gọi là link text — phần người chơi nhìn thấy và bấm vào. Thêm một thẻ `<a>` hiển thị chữ Play Now.',
       },
       hint: {
         en: 'A link looks like this: `<a>Play Now</a>`',
@@ -24,7 +24,7 @@ export const q05: Quest = {
     {
       text: {
         en: 'A link needs to know where to go. Give it an `href` that points to https://example.com — `href` is the portal address.',
-        vi: 'Một đường link cần biết đi tới đâu. Hãy cho nó một `href` trỏ tới https://example.com — `href` chính là địa chỉ của cái cổng.',
+        vi: 'Một đường link cần biết đi tới đâu. Hãy thêm thuộc tính `href` trỏ tới https://example.com — `href` chính là địa chỉ của cái cổng.',
       },
       hint: {
         en: "Add the address inside the tag:\n```\n<a href=\"https://example.com\">Play Now</a>\n```",
@@ -44,24 +44,33 @@ export const q05: Quest = {
       },
     },
     {
-      type: 'attrEquals',
+      type: 'textNonEmpty',
+      selector: 'a',
+      failMessage: {
+        en: 'Your link has no link text yet. Type the words the player will see and click between `<a>` and `</a>`, like `<a>Play Now</a>`.',
+        vi: 'Đường link chưa có link text. Hãy gõ phần chữ người chơi nhìn thấy và bấm vào, đặt giữa `<a>` và `</a>`, ví dụ `<a>Play Now</a>`.',
+      },
+    },
+    {
+      type: 'attrMatches',
       selector: 'a',
       attr: 'href',
-      value: 'https://example.com',
+      // Any full web address: must start with http:// or https:// and have more after it.
+      pattern: '^https?://.+',
       failMessage: {
-        en: 'Your link has no address yet. Set `href="https://example.com"` so the portal goes somewhere!',
-        vi: 'Đường link chưa có địa chỉ. Đặt `href="https://example.com"` để cái cổng dẫn tới đâu đó nhé!',
+        en: 'Your link needs a real web address. Set `href` to a full URL that starts with `http://` or `https://`, like `https://example.com`!',
+        vi: 'Đường link cần một địa chỉ web thật. Đặt `href` thành một URL đầy đủ bắt đầu bằng `http://` hoặc `https://`, ví dụ `https://example.com`!',
       },
     },
   ],
   reflect: {
     question: {
-      en: 'In `<a href="...">Play Now</a>`, which part is the *address* and which part is the *clickable words*?',
-      vi: 'Trong `<a href="...">Play Now</a>`, phần nào là *địa chỉ* và phần nào là *chữ bấm được*?',
+      en: 'In `<a href="...">Play Now</a>`, which part is the *address* and which part is the *link text*?',
+      vi: 'Trong `<a href="...">Play Now</a>`, phần nào là *địa chỉ* và phần nào là *link text*?',
     },
     answer: {
-      en: 'The `href="..."` is the hidden address the portal jumps to; the words between `<a>` and `</a>` are the glowing part the player sees and clicks.',
-      vi: '`href="..."` là địa chỉ ẩn mà cái cổng nhảy tới; chữ nằm giữa `<a>` và `</a>` là phần phát sáng mà người chơi nhìn thấy và bấm vào.',
+      en: 'The `href="..."` is the hidden address the portal jumps to; the link text between `<a>` and `</a>` is the glowing part the player sees and clicks.',
+      vi: '`href="..."` là địa chỉ ẩn mà cái cổng nhảy tới; link text nằm giữa `<a>` và `</a>` là phần phát sáng mà người chơi nhìn thấy và bấm vào.',
     },
   },
 };

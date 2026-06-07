@@ -26,7 +26,7 @@ export default function GuideBuddy() {
   const { t, tl } = useT();
   const bubble = useGuide((s) => s.bubble);
   const questCtx = useGuide((s) => s.questCtx);
-  const editorFocused = useGuide((s) => s.editorFocused);
+  const editorEngaged = useGuide((s) => s.editorEngaged);
   const say = useGuide((s) => s.say);
   const dismiss = useGuide((s) => s.dismiss);
   const hasGreeted = useGuide((s) => s.hasGreeted);
@@ -50,13 +50,13 @@ export default function GuideBuddy() {
   // to replace a passive greeting (but not a hint/help/fail bubble the kid is reading).
   useIdle(IDLE_MS, () => {
     if (!guideOn || !screen) return;
-    const { bubble: current, editorFocused: focused } = useGuide.getState();
-    if (focused) return;
+    const { bubble: current, editorEngaged: engaged } = useGuide.getState();
+    if (engaged) return;
     if (current === null || current === GUIDE.greeting[screen]) say(GUIDE.idle[screen]);
   });
 
   if (!guideOn || !screen) return null;
-  if (editorFocused) return null; // get out of the way while the soft keyboard is up
+  if (editorEngaged) return null; // get out of the way while the editor context is up (keyboard / Code tab)
 
   const revealHint = () => {
     setOpen(false);
